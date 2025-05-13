@@ -1,12 +1,12 @@
 import Navbar from '/src/components/Navbar'
-import GamePage from '/src/components/GamePage'
+import GamePage from '../components/GamePage'
 
 export default function HomePage() {
 
   return(
     <>
       <Navbar />
-        App Initialised and connected
+        <p className='bg-debug'>App Initialised and connected</p>
       <GamePage />
     </>
   )

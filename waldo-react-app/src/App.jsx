@@ -1,4 +1,4 @@
-import '/src/assets/stylesheets/index.css'
+import './assets/stylesheets/index.css'
 import HomePage from '/src/routes/HomePage'
 
 function App() {
