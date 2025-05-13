@@ -1,4 +1,5 @@
-# README
+
+  # README
 
 This README would normally document whatever steps are necessary to get the
 application up and running.
@@ -22,3 +23,26 @@ Things you may want to cover:
 * Deployment instructions
 
 * ...
+
+_______________________________________________________________________________________________________________
+
+# The Odin Project - React Course, [project 4](https://www.theodinproject.com/lessons/react-new-where-s-waldo-a-photo-tagging-app#project-solution): Where's Waldo?
+
+Rails API backend
+
+## General description
+
+A simple Rails API app to serving the following endpoints:
+
+## Technologies
+
+- Rails
+- 
+
+## Usage
+  ### To run the project locally:
+
+  ### To use the hosted app
+
+### Todo's
+  

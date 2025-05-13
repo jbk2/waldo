@@ -1,12 +1,28 @@
-# React + Vite
+# The Odin Project - React Course, [project 4](https://www.theodinproject.com/lessons/react-new-where-s-waldo-a-photo-tagging-app#project-solution): Where's Waldo?
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+daisy UI tailwind, vitest, react
 
-Currently, two official plugins are available:
+## General description
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+A simple React Shopping Cart SPA with React to demonstrate hooks, state, context, routing. Written test first via Vitest.
 
-## Expanding the ESLint configuration
+## Technologies
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+- Vite created React project.
+  - Hooks used; useState, useContext, useEffect, custom hooks.
+- React Router
+- Vitest
+- Tailwind CSS & DaisyUI
+
+
+## Usage
+  ### To run the project locally:
+- Clone the repository
+- Run `npm install` to install the dependencies
+- Run `npm run dev` to start the development server
+- Open the browser and navigate to `http://localhost:5173/`
+  ### To use the hosted app
+- Open the browser and navigate to ``
+
+### Todo's
+  -
