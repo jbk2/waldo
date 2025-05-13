@@ -6,7 +6,6 @@ export default function HomePage() {
   return(
     <>
       <Navbar />
-        <p className='bg-debug'>App Initialised and connected</p>
       <GamePage />
     </>
   )

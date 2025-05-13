@@ -4,7 +4,7 @@ export default {
   theme: {
     extend: {
       colors:   { debug: '#ff00ff' }, // bg-debug
-      // fontFamily: { 'kyiv-sans': ['"kyiv-sans"', 'sans-serif'] },
+      fontFamily: { 'playrite': ['"playrite"'] },
     },
   },
   plugins: [],

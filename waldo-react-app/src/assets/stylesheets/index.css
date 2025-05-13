@@ -2,9 +2,12 @@
 @import "tailwindcss";
 @plugin "daisyui";
 
-/* @tailwind base;
-@tailwind components;
-@tailwind utilities; */
+@font-face {
+  font-family: "playrite";
+  src: url("../fonts/PlayriteVariable.ttf") format("truetype");
+  font-weight: 100 400;
+  font-style: normal;
+}
 
 :root {
 }
