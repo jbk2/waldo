@@ -7,6 +7,5 @@ describe('Game component', ()=> {
     render(<Game />);
     expect(screen.getByRole('img')).toBeInTheDocument();
   });
-
 })
 

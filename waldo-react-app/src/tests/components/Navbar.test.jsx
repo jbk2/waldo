@@ -7,5 +7,10 @@ describe('NavBar component', ()=> {
     render(<Navbar />);
     expect(screen.getByRole('banner').textContent).toMatch("Where's Waldo?");
   });
+  
+  it('renders the ScoreBoard component', () => {
+    render(<Navbar />);
+    expect(screen.getByTestId('score-board')).toBeInTheDocument();
+  });
 
 })
