@@ -1,12 +1,12 @@
 import Navbar from '/src/components/Navbar'
-import GamePage from '../components/GamePage'
+import Game from '../components/Game'
 
 export default function HomePage() {
 
   return(
     <>
       <Navbar />
-      <GamePage />
+      <Game />
     </>
   )
 }

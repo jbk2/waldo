@@ -1,6 +1,6 @@
 import waldo1 from '../assets/images/waldo1.jpg';
 
-export default function GamePage() {
+export default function Game() {
   
   return(
     <div data-testid="game-section">
