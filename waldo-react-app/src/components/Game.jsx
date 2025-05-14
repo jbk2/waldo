@@ -8,9 +8,10 @@ export default function Game({ setAlert, characters, setCharacters }) {
   // const [ characters, setCharacters ] = useState(initialCharacters);
   const [ clickMarker, setClickMarker ] = useState(null);
   const [ clickedCharacter, setClickedCharacter ] = useState(null);
+  const [ fadeOut, setFadeOut ] = useState(false);
   
   // __________________________________
-  
+
   function hasClickedOnCharacter(clickX, clickY, character) {
     return(
       clickX >= character.startX && clickX <= character.endX &&
@@ -32,35 +33,42 @@ export default function Game({ setAlert, characters, setCharacters }) {
   // __________________________________
 
   useEffect(() => {
+    let fadeTimer, clearAlert;
+    const baseClass = "transition-opacity duration-500";
+    
     if(clickedCharacter === null) return;
     
     if(clickedCharacter) {
       setCharacters((prevCharacters) => 
         prevCharacters.map((character) =>
           character.name === clickedCharacter.name
-      ? { ...character, clicked: true }
-      : character
-    )  
-  );
-  
-  setAlert(
-    <div role="alert" className="alert alert-success">
-          <span>'Yay, you found {capitalize(clickedCharacter.name)}'</span>
-        </div>
-      );
+        ? { ...character, clicked: true }
+        : character
+      ));
+    
+    setAlert(
+      <div role="alert" className="alert alert-success w-64
+        transition-opacity duration-1200 opacity-0 ease-custom-ease">
+        <span className='font-[700] w-fit m-auto'>'🎉&nbsp;&nbsp;&nbsp;Yay, you found {capitalize(clickedCharacter.name)}&nbsp;&nbsp;&nbsp;🎉'</span>
+      </div>
+    );
       // should update game status with clicked character here now
       // check whether all chars found and if so stop clock and alert win
     } else if (clickMarker && !clickedCharacter) {
       setAlert(
-        <div role="alert" className="alert alert-error">
-          <span>Nope, no character found here.</span>
+        <div role="alert" className="alert alert-error w-64
+          transition-opacity duration-1200 opacity-0 ease-custom-ease">
+          <span className='font-[700]'>No character found here.&nbsp;&nbsp;👎</span>
         </div>
       );    
     };
+    
     setTimeout(() => {
       setAlert(null)
-    }, 800);
+    }, 1200);
+
     setClickedCharacter(null);
+
   }, [clickedCharacter]);
   
   // __________________________________

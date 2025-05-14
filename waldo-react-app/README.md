@@ -25,4 +25,4 @@ A simple React Shopping Cart SPA with React to demonstrate hooks, state, context
 - Open the browser and navigate to ``
 
 ### Todo's
-  -
+  - Add more tests

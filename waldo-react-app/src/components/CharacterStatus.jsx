@@ -17,9 +17,11 @@ export default function CharacterStatus({ characters }) {
       {characters.map((char) => {
         return(
           <div key={char.name} id={`${char.name}-status`}
-            className='flex flex-col gap-1 items-center w-20'>
+            className={`flex flex-col gap-1 items-center w-20
+              ${char.clicked ? 'animate-scale-pulse-twice font-[620] underline-offset-3 \
+              underline decoration-1.5 decoration-wavy decoration-green-600' : ''}`}>
             <img src={headshots[char.name]} alt={char.name} className='h-10' />
-            <p className='text-sm'>{char.clicked ? 'Found' : 'Not Found'}</p>
+            <p className='text-sm'>{char.clicked ? 'Found ✅' : 'Not Found'}</p>
           </div>
         )
       })}
