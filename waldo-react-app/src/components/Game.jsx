@@ -39,31 +39,31 @@ export default function Game({setAlert}) {
         )  
       );
 
-    setAlert(
-      <div role="alert" className="alert alert-success absolute z-10">
-        <svg xmlns="http://www.w3.org/2000/svg" className="absolute h-6 w-6 shrink-0 stroke-current" fill="none" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-        </svg>
-        <span>'Yay, you found {capitalize(clickedCharacter.name)}'</span>
-      </div>
-    );
-    // should update game status with clicked character here now
-    // check whether all chars found and if so stop clock and alert win
+      setAlert(
+        <div role="alert" className="alert alert-success">
+          <span>'Yay, you found {capitalize(clickedCharacter.name)}'</span>
+        </div>
+      );
+      // should update game status with clicked character here now
+      // check whether all chars found and if so stop clock and alert win
     } else if (clickMarker && !clickedCharacter) {
       setAlert(
-        <div role="alert" className="alert alert-error absolute z-10">
-          <svg xmlns="http://www.w3.org/2000/svg" className="absolute h-6 w-6 shrink-0 stroke-current" fill="none" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
-          </svg>
+        <div role="alert" className="alert alert-error">
           <span>Nope, no character found here.</span>
         </div>
       );
+
     };
+    
+    setTimeout(() => {
+      setAlert(null)
+    }, 800);
+
     setClickedCharacter(null);
   }, [clickedCharacter]);
 
   return(
-    <div data-testid="game-section" className="w-full flex justify-center">
+    <div data-testid="game-section" className="w-full flex justify-center pt-40">
       <div className="relative w-[80vw] max-w-[1400px]">
         <img
           ref={imageRef}
