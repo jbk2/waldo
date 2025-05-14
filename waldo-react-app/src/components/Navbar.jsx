@@ -1,6 +1,6 @@
 import ScoreBoard from './ScoreBoard';
 
-export default function Navbar() {
+export default function Navbar({alert}) {
   
   return(
     <>
@@ -8,7 +8,7 @@ export default function Navbar() {
         <div id="typemark">
           <h1 className="font-playrite text-6xl font-[400] mx-auto w-fit my-8">Where's Waldo?</h1>
         </div>
-        <ScoreBoard />
+        <ScoreBoard alert={alert} />
       </header>
     </>
   )
