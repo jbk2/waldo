@@ -1,6 +1,6 @@
 import { capitalize } from '../utils/stringUtils';
 import { initialCharacters } from '../data/characters'
-import waldo1 from '../assets/images/waldo1.jpg';
+import waldoScene1 from '../assets/images/waldo-scene1.jpg';
 import { useState, useRef, useEffect } from 'react';
 
 export default function Game({setAlert}) {
@@ -67,7 +67,7 @@ export default function Game({setAlert}) {
       <div className="relative w-[80vw] max-w-[1400px]">
         <img
           ref={imageRef}
-          src={waldo1}
+          src={waldoScene1}
           onClick={handleImageClick}
           className="w-full border-2 rounded"
           alt="Waldo"
@@ -83,6 +83,23 @@ export default function Game({setAlert}) {
             }}>
           </div>
         )}
+        { characters.map((char) => {
+          if(char.clicked) {
+            return(
+              <div
+                key={char.name}
+                className="absolute border-4 border-green-600 pointer-events-none p-2"
+                style={{
+                  left: `${char.startX * 100}%`,
+                  top: `${char.startY * 100}%`,
+                  width: `${(char.endX - char.startX) * 100}%`,
+                  height: `${(char.endY - char.startY) * 100}%`,
+                }}>
+
+              </div>
+            )
+          }
+        })}
       </div>
     </div>
   )
