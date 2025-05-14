@@ -1,13 +1,15 @@
 import { capitalize } from '../utils/stringUtils';
-import { initialCharacters } from '../data/characters'
+// import { initialCharacters } from '../data/characters'
 import waldoScene1 from '../assets/images/waldo-scene1.jpg';
 import { useState, useRef, useEffect } from 'react';
 
-export default function Game({setAlert}) {
+export default function Game({ setAlert, characters, setCharacters }) {
   const imageRef = useRef();
-  const [ characters, setCharacters ] = useState(initialCharacters);
+  // const [ characters, setCharacters ] = useState(initialCharacters);
   const [ clickMarker, setClickMarker ] = useState(null);
   const [ clickedCharacter, setClickedCharacter ] = useState(null);
+  
+  // __________________________________
   
   function hasClickedOnCharacter(clickX, clickY, character) {
     return(
@@ -25,22 +27,24 @@ export default function Game({setAlert}) {
     )
     setClickMarker({ x: clickX, y: clickY });
     setClickedCharacter(foundCharacter || false);
-  }; 
+  };
   
+  // __________________________________
+
   useEffect(() => {
     if(clickedCharacter === null) return;
-
+    
     if(clickedCharacter) {
       setCharacters((prevCharacters) => 
         prevCharacters.map((character) =>
           character.name === clickedCharacter.name
-            ? { ...character, clicked: true }
-            : character
-        )  
-      );
-
-      setAlert(
-        <div role="alert" className="alert alert-success">
+      ? { ...character, clicked: true }
+      : character
+    )  
+  );
+  
+  setAlert(
+    <div role="alert" className="alert alert-success">
           <span>'Yay, you found {capitalize(clickedCharacter.name)}'</span>
         </div>
       );
@@ -51,16 +55,15 @@ export default function Game({setAlert}) {
         <div role="alert" className="alert alert-error">
           <span>Nope, no character found here.</span>
         </div>
-      );
-
+      );    
     };
-    
     setTimeout(() => {
       setAlert(null)
     }, 800);
-
     setClickedCharacter(null);
   }, [clickedCharacter]);
+  
+  // __________________________________
 
   return(
     <div data-testid="game-section" className="w-full flex justify-center pt-40">

@@ -4,7 +4,11 @@ export default {
   theme: {
     extend: {
       colors:   { debug: '#ff00ff' }, // bg-debug
-      fontFamily: { 'playrite': ['"playrite"'] },
+      fontFamily: {
+        'playrite': ['"playrite"'],
+        'raleway': ['"raleway"'],
+        'raleway-italic': ['"raleway-italic"'],
+      },
     },
   },
   plugins: [],

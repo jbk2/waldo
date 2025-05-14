@@ -9,5 +9,20 @@
   font-style: normal;
 }
 
+@font-face {
+  font-family: "raleway";
+  src: url("../fonts/RalewayVariable.ttf") format("truetype");
+  font-weight: 100 900;
+  font-style: normal;
+}
+@font-face {
+  font-family: "raleway-italic";
+  src: url("../fonts/RalewayItalicVariable.ttf") format("truetype");
+  font-weight: 100 900;
+  font-style: normal;
+}
+
 :root {
+  font-family: 'raleway';
+  font-variation-settings: "wght" 400;
 }
