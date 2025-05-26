@@ -1,5 +1,4 @@
 import { capitalize } from '../utils/stringUtils';
-// import { initialCharacters } from '../data/characters'
 import waldoScene1 from '../assets/images/waldo-scene1.jpg';
 import { useState, useRef, useEffect } from 'react';
 
@@ -79,11 +78,11 @@ export default function Game({ setAlert, characters, setCharacters }) {
         <img
           ref={imageRef}
           src={waldoScene1}
+          id="waldo-scene-1"
           onClick={handleImageClick}
           className="w-full border-2 rounded"
-          alt="Waldo"
+          alt="Waldo scene 1"
         />
-
         {clickMarker && (
           <div
             className="absolute border-4 border-blue-800 w-6 h-8 pointer-events-none"

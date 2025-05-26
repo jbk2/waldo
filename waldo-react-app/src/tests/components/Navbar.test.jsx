@@ -12,12 +12,17 @@ describe('NavBar component', ()=> {
 
   it('has a typemark', () => {
     render(<Navbar alert={alert} characters={characters} />);
-    expect(screen.getByRole('banner').textContent).toMatch("Where's Waldo?");
+    expect(screen.getByTestId('typemark-col')).toBeInTheDocument();
   });
   
+  it('renders the CharacterStatus component', () => {
+    render(<Navbar alert={alert} characters={characters} />);
+    expect(screen.getByTestId('character-status-col')).toBeInTheDocument();
+  });
+
   it('renders the ScoreBoard component', () => {
     render(<Navbar alert={alert} characters={characters} />);
-    expect(screen.getByTestId('score-board')).toBeInTheDocument();
+    expect(screen.getByTestId('scoreboard-col')).toBeInTheDocument();
   });
 
 })
