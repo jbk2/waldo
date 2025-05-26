@@ -3,9 +3,9 @@ import { capitalize } from '../utils/stringUtils';
 import waldoScene1 from '../assets/images/waldo-scene1.jpg';
 import { useState, useRef, useEffect } from 'react';
 
+
 export default function Game({ setAlert, characters, setCharacters }) {
   const imageRef = useRef();
-  // const [ characters, setCharacters ] = useState(initialCharacters);
   const [ clickMarker, setClickMarker ] = useState(null);
   const [ clickedCharacter, setClickedCharacter ] = useState(null);
   const [ fadeOut, setFadeOut ] = useState(false);
