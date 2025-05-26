@@ -1,5 +1,9 @@
+# README
 
-  # README
+## Environment:
+- Ruby 3.3.0
+- Rails 8.0.2
+- Uses Rails default SQlite3
 
 This README would normally document whatever steps are necessary to get the
 application up and running.
