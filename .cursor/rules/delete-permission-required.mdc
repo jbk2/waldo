@@ -1,0 +1,10 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+---
+description: ensure user permission is provided for agent to delete files.
+---
+
+Ensure agent always asks permission before deleting files.
