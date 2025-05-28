@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_05_27_170516) do
+ActiveRecord::Schema[8.0].define(version: 2025_05_28_155956) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -45,10 +45,10 @@ ActiveRecord::Schema[8.0].define(version: 2025_05_27_170516) do
   create_table "characters", force: :cascade do |t|
     t.string "name"
     t.boolean "clicked"
-    t.decimal "start_x"
-    t.decimal "end_x"
-    t.decimal "start_y"
-    t.decimal "end_y"
+    t.decimal "start_x", precision: 4, scale: 3
+    t.decimal "end_x", precision: 4, scale: 3
+    t.decimal "start_y", precision: 4, scale: 3
+    t.decimal "end_y", precision: 4, scale: 3
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "image_id", null: false
