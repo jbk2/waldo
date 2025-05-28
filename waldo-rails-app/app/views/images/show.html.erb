@@ -1,3 +1,35 @@
-<h1>"Image "<%= @image.title %></h1>
+<h1>Image title - <span id="image-title"><%= @image.title %></span></h1>
+<ul>
+  <% @image.characters.each do |character| %>
+    <li>
+      name: <%= character.name %> |
+      start_x: <%= character.start_x %> |
+      end_x: <%= character.end_x %> |
+      start_y: <%= character.start_y %> |
+      end_y: <%= character.end_y %> |
+    </li>
+  <% end %>
+</ul>
+<div id="image-container">
+  <%= image_tag @image.image, alt: @image.title %>
+  
+  <% @image.characters.each do |character| %>
 
-<%= image_tag @image.image, alt: @image.title %>
+    <div
+      id="character-<%= character.id %>-<%= character.name %>"
+      class="character-marker"
+      style="
+        position: absolute;
+        left: <%= (character.start_x * 100)  %>%;
+        top: <%= character.start_y * 100 %>%;
+        width: <%= (character.end_x - character.start_x) * 100 %>%;
+        height: <%= (character.end_y - character.start_y) * 100 %>%;
+        border: 4px solid red;
+        padding: 4px;
+        background-color: rgba(0, 0, 0, 0.2);
+    "><span><%= character.name %></span>
+    </div>
+
+  <% end %>
+
+</div>
