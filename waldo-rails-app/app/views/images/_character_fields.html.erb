@@ -1,0 +1,19 @@
+
+<div class="character-fields" data-new-image-target="characterFields"
+  data-character-index="<%= char_fields.index %>">
+  <%= char_fields.label :name, "Character Name" %>
+  <%= char_fields.text_field :name %>
+  <%= char_fields.label :start_x %>
+  <%= char_fields.number_field :start_x, step: 0.001 %>
+  <%= char_fields.label :end_x %>
+  <%= char_fields.number_field :end_x, step: 0.001 %>
+  <%= char_fields.label :start_y %>
+  <%= char_fields.number_field :start_y, step: 0.001 %>
+  <%= char_fields.label :end_y %>
+  <%= char_fields.number_field :end_y, step: 0.001 %>
+  <button
+    type="button"
+    class="remove-character-btn"
+    data-action="click->new-image#removeCharacter"
+  >Remove</button>
+</div>

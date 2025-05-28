@@ -1,0 +1,40 @@
+<h1>New Image</h1>
+
+<% if @image.errors.any? %>
+  <ul>
+    <% @image.errors.full_messages.each do |msg| %>
+      <li><%= msg %></li>
+    <% end %>
+  </ul>
+<% end %>
+  
+<%= form_with model: @image, url: images_path, method: :post,
+  data: { controller: "new-image" } do |image_form| %>
+  <%= image_form.label :url, "Upload Image" %>
+  <%= image_form.file_field :image %>
+  <%= image_form.label :title %>
+  <%= image_form.text_field :title %>
+  
+  <h3>Characters</h3>
+  <div id="characters-fields" data-new-image-target="charactersFields">
+    <%= image_form.fields_for :characters do |char_fields| %>
+      <%= render('character_fields', char_fields: char_fields) %>
+    <% end %>
+  </div>
+
+  <!-- Template for new character fields -->
+  <template id="character-fields-template" data-new-image-target="characterFieldsTemplate">
+    <%= image_form.fields_for :characters, Character.new, child_index: "NEW_RECORD" do |char_fields| %>
+      <%= render('character_fields', char_fields: char_fields) %>
+    <% end %>
+  </template>
+
+  <button
+    type="button"
+    data-new-image-target="addCharacter"
+    id="add-character-btn"
+    data-action="click->new-image#addCharacter"
+  >+</button>
+  
+  <%= image_form.submit "Create Image" %>
+<% end %>

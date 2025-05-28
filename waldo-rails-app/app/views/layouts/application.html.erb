@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html data-theme="light">
+  <head>
+    <title>Waldo Rails App</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="turbo-refresh-method" content="morph">
+    <meta name="turbo-refresh-scroll" content="preserve">
+    <meta name="view-transition" content="same-origin">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+    <%= javascript_importmap_tags %>
+  </head>
+
+  <body class="h-screen flex flex-col bg-gray-100" >
+    <main class="">
+      <%= yield %>
+    </main>
+  </body>
+</html>
