@@ -13,6 +13,7 @@ Rails.application.config.middleware.insert_before 0, Rack::Cors do
       puts "You're in production you must set the origin in the frontend app"
       raise "You're in production you must set the origin in the frontend app"
       # origins "http://waldo-react-app-container"
+      # origins Rails.credentials.frontend_url
     end
 
     resource "*",
