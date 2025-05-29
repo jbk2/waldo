@@ -49,6 +49,9 @@ gem "stimulus-rails"
 # For Turbo integration
 gem "turbo-rails"
 
+# To enable CORS, i.e. react front end on different origin to call rails app
+gem 'rack-cors'
+
 
 
 # Use Rack CORS for handling Cross-Origin Resource Sharing (CORS), making cross-origin Ajax possible
@@ -68,5 +71,8 @@ group :development, :test do
 end
 
 group :development do
+end
 
+group :test do
+  gem 'capybara'
 end
