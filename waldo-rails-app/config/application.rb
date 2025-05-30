@@ -28,8 +28,8 @@ module WaldoRailsApp
     # Skip views, helpers and assets when generating a new resource.
     config.api_only = false
 
-    config.middleware.use ActionDispatch::Flash
-    config.middleware.use ActionDispatch::Cookies
-    config.middleware.use ActionDispatch::Session::CookieStore
+    # config.middleware.use ActionDispatch::Flash
+    # config.middleware.use ActionDispatch::Cookies
+    # config.middleware.use ActionDispatch::Session::CookieStore
   end
 end
