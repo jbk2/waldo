@@ -1,7 +1,6 @@
 class Api::SessionsController < ApplicationController
   skip_forgery_protection
-
-  allow_unauthenticated_access only: %i[ create show ]
+  allow_unauthenticated_access only: %i[ create ]
 
   def create
     if user = User.authenticate_by(params.permit(:email_address, :password))
@@ -13,13 +12,8 @@ class Api::SessionsController < ApplicationController
   end
 
   def show
-    # unauthenticated access is allowed to call this action so session is not set,
-    # therefore we need to resume the session in order to get the current user
-    resume_session 
-    puts "cookies.signed[:session_id]: #{cookies.signed[:session_id].inspect}"
-    puts "heres the current_user", current_user.inspect
-    puts "heres the session[:user_id]", session[:user_id]
-    puts "heres the session", session.inspect
+    # puts "cookies.signed[:session_id]: #{cookies.signed[:session_id].inspect}"
+    # puts "heres the current_user", current_user.inspect
     if current_user
       render json: { authenticated: true, user: current_user }
     else
