@@ -12,10 +12,8 @@ class Api::SessionsController < ApplicationController
   end
 
   def show
-    # puts "cookies.signed[:session_id]: #{cookies.signed[:session_id].inspect}"
-    # puts "heres the current_user", current_user.inspect
-    if current_user
-      render json: { authenticated: true, user: current_user }
+    if Current.session.user
+      render json: { authenticated: true, user: Current.session.user }
     else
       render json: { authenticated: false, error: "Not logged in" }, status: :unauthorized
     end

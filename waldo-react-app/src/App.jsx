@@ -6,7 +6,6 @@ import { initialCharacters } from './data/characters'
 import Navbar from './components/Navbar'
 
 function App() {
-
   const [ alert, setAlert ] = useState(null)
   const [ characters, setCharacters ] = useState(initialCharacters);
   const [ loggedIn, setLoggedIn ] = useState(null);
@@ -15,15 +14,14 @@ function App() {
 
   useEffect(() => {
     fetch('/api/session', { credentials: 'include' })
-      .then(res => res.json())
-      .then(data => {
-        console.log('heres the fetch data', data);
-        setAuthChecked(true);
-        setUser(data.user);
-        setLoggedIn(data.authenticated);
-      })
-      .catch(() => setAuthChecked(true));
-    }, []);
+    .then(res => res.json())
+    .then(data => {
+      setAuthChecked(true);
+      setUser(data.user);
+      setLoggedIn(data.authenticated);
+    })
+    .catch(() => setAuthChecked(true));
+  }, []);
     
   useEffect(() => {
     console.log('heres user ', user);
