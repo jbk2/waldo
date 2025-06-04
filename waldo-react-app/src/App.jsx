@@ -62,7 +62,7 @@ function App() {
   return (
     <>
       <Navbar alert={alert} characters={characters} loggedIn={loggedIn} logOut={logOut} />
-      <main>
+      <main className='pt-[8rem] min-h-[calc(100vh-8rem)]'>
         <Outlet context={{loggedIn, handleSignIn, setAlert, characters, setCharacters}} />
       </main>
     </>

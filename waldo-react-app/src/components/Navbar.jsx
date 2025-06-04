@@ -7,7 +7,7 @@ export default function Navbar({alert, characters, loggedIn, logOut}) {
   return(
     <>
       <header className='grid grid-cols-[1fr_auto_1fr] items-center w-full
-        fixed top-0 z-50 bg-white'>
+        fixed top-0 z-50 h-[8rem] bg-white'>
         <div data-testid='character-status-col' className='flex gap-8 mt-3 justify-end mr-20'>
           <CharacterStatus characters={characters} />
         </div>

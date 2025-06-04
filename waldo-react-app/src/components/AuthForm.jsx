@@ -66,28 +66,31 @@ export default function AuthForm({ handleSignIn, setAlert }) {
   }
 
   return(
-    <>
-    <div data-testid="auth-form" className="pt-40 mb-6">
-      <h1 className='text-xl font-bold'>Welcome to Waldo</h1>
-      {isSignUp
-        ? <p>Please sign up to play</p>
-        : <p>Please sign in to play</p>
-      }
+    <div className='card top-[10vh] pt-6 w-80 z-60 bg-base-100 shadow-md mx-auto'>
+      <div data-testid="auth-form" className="card-title flex flex-col">
+        <h1 className='text-xl font-bold -mb-1'>Welcome to Waldo</h1>
+        <div>
+          {isSignUp
+            ? <p className='font-medium'>Please sign up to play</p>
+            : <p className='font-light text-sm'>Please sign in to play</p>
+          }
+        </div>
+
+      </div>
+      <div className='card-body'>
+        <form onSubmit={handleSubmit} className='flex flex-col gap-4'>
+          <input type="email" placeholder="Email" name="email_address" className='input input-sm' />
+          <input type="password" placeholder="Password" name="password" className='input input-sm' />
+          {isSignUp && (
+            <input type="password" placeholder="Password confirmation " name="password_confirmation" className='input' />
+          )}
+          <button type="submit" className='hover:cursor-pointer btn btn-sm w-fit'>{isSignUp ? "Sign Up" : "Sign In" }</button>
+        </form>
+        <button type="button" className='hover:cursor-pointer link mt-4' onClick={() => setIsSignUp((prev) => !prev)}>
+          {isSignUp ? "Already have an account? Sign In" : "Don't have an account? Sign Up"}
+        </button>
+      </div>
     </div>
-    <div className='border-2 border-emerald-100 w-fit rounded'>
-      <form onSubmit={handleSubmit} className='flex flex-col gap-4'>
-        <input type="email" placeholder="Email" name="email_address" />
-        <input type="password" placeholder="Password" name="password" />
-        {isSignUp && (
-          <input type="password" placeholder="Password confirmation " name="password_confirmation" />
-        )}
-        <button type="submit" className='hover:cursor-pointer btn w-20'>{isSignUp ? "Sign Up" : "Sign In" }</button>
-      </form>
-      <button type="button" className='hover:cursor-pointer btn' onClick={() => setIsSignUp((prev) => !prev)}>
-        {isSignUp ? "Already have an account? Sign In" : "Don't have an account? Sign Up"}
-      </button>
-    </div>
-    </>
 
   )
 }

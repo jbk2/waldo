@@ -1,5 +1,5 @@
 import Game from '../components/Game';
-import SignIn from '../components/SignIn';
+import AuthForm from '../components/AuthForm';
 import { useOutletContext } from 'react-router-dom';
 
 export default function HomePage() {
@@ -12,7 +12,7 @@ export default function HomePage() {
         ? 
           <Game setAlert={setAlert} characters={characters} setCharacters={setCharacters}/>
         :
-          <SignIn handleSignIn={handleSignIn} setAlert={setAlert}  />
+          <AuthForm handleSignIn={handleSignIn} setAlert={setAlert}  />
       }
     </>
   )
