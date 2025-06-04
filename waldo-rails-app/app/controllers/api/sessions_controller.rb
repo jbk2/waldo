@@ -19,4 +19,13 @@ class Api::SessionsController < ApplicationController
     end
   end
 
+  def destroy
+    begin
+      terminate_session
+      render json: { notice: 'successfully logged out' }
+    rescue => e
+      render json: { error: "Failed to log out: #{e.message}" }, status: :internal_server_error
+    end
+  end
+
 end

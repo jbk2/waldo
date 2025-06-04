@@ -43,7 +43,7 @@ module Authentication
       Current.session = session
       cookies.signed[:session_id] = {
         value: session.id,
-        httponly: true,
+        httponly: true, # document.cookie cannot be read by JS
         same_site: :lax,
         secure: Rails.env.production?,
         expires: 1.hour.from_now

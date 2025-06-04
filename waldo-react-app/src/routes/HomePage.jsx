@@ -4,7 +4,7 @@ import { useOutletContext } from 'react-router-dom';
 
 export default function HomePage() {
 
-  const { setAlert, characters, setCharacters, loggedIn, handleSignIn } = useOutletContext();
+  const { setAlert, characters, setCharacters, loggedIn, setLoggedIn, handleSignIn } = useOutletContext();
 
   return(
     <>

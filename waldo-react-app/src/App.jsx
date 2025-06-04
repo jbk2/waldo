@@ -35,13 +35,35 @@ function App() {
     setLoggedIn(responseData.authenticated);
   }
 
+  const logOut = (e) => {
+    console.log('navbar logOut button clicked')
+    //must delete cookie and session on rails server
+    fetch('/api/session', {
+      method: 'DELETE'
+    })
+    .then(async res => {
+      const data = await res.json();
+      if (res.ok) {
+        console.log('session delete response was ok, response is here =>', data)
+        setAlert(data.notice)
+        setLoggedIn(false)
+      } else {
+        console.log('session delete response was not ok, response is here =>', data)
+        setAlert(data.errors
+          ? data.errors.join(', ')
+          : "Log out failed, and no errors object in JSON response"
+        )
+      }
+    })
+  }
+
   if (!authChecked) return <div className="grid place-items-center min-h-screen font-bold text-xl">Loading...</div>;
 
   return (
     <>
-      <Navbar alert={alert} characters={characters} />
+      <Navbar alert={alert} characters={characters} loggedIn={loggedIn} logOut={logOut} />
       <main>
-        <Outlet context={{loggedIn, setLoggedIn, handleSignIn, setAlert, characters, setCharacters}} />
+        <Outlet context={{loggedIn, handleSignIn, setAlert, characters, setCharacters}} />
       </main>
     </>
   )

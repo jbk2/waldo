@@ -14,7 +14,8 @@ Rails.application.routes.draw do
   resources :images, only: [:new, :create, :show]
 
   namespace :api do
-    resource :session, only: [:create, :show]
+    resource :session, only: [:create, :show, :destroy]
+    resource :user, only: [:create]
   end
 
 end

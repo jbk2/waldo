@@ -2,7 +2,7 @@ import ScoreBoard from './ScoreBoard';
 import CharacterStatus from './CharacterStatus';
 
 
-export default function Navbar({alert, characters}) {
+export default function Navbar({alert, characters, loggedIn, logOut}) {
   
   return(
     <>
@@ -19,6 +19,13 @@ export default function Navbar({alert, characters}) {
         
         <div data-testid='scoreboard-col' className='flex ml-24'>
           <ScoreBoard alert={alert} />
+          {loggedIn
+            && (
+              <button type="button" onClick={() => logOut()} className='btn w-fit'>
+              LogOut
+            </button>
+            )
+          }
         </div>
       <hr className='col-span-3'/>
       </header>
