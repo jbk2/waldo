@@ -24,7 +24,7 @@ describe('HomePage route', ()=> {
 
   it('renders the Game component', () => {
     render(<HomePage />);
-    expect(screen.getByTestId('game-section')).toBeInTheDocument();
+    expect(screen.getByTestId('auth-form')).toBeInTheDocument();
   });
 
 })

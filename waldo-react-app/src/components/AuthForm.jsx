@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-export default function SignIn({ handleSignIn, setAlert }) {
+export default function AuthForm({ handleSignIn, setAlert }) {
   const [isSignUp, setIsSignUp] = useState(false);
 
   const handleSubmit = (e) => {
@@ -67,7 +67,7 @@ export default function SignIn({ handleSignIn, setAlert }) {
 
   return(
     <>
-    <div className="pt-40 mb-6">
+    <div data-testid="auth-form" className="pt-40 mb-6">
       <h1 className='text-xl font-bold'>Welcome to Waldo</h1>
       {isSignUp
         ? <p>Please sign up to play</p>
