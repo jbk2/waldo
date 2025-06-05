@@ -4,15 +4,15 @@ import { useOutletContext } from 'react-router-dom';
 
 export default function HomePage() {
 
-  const { setAlert, characters, setCharacters, loggedIn, setLoggedIn, handleSignIn } = useOutletContext();
+  const { showAlert, characters, setCharacters, loggedIn, handleSignIn } = useOutletContext();
 
   return(
     <>
       {loggedIn
         ? 
-          <Game setAlert={setAlert} characters={characters} setCharacters={setCharacters}/>
+          <Game showAlert={showAlert} characters={characters} setCharacters={setCharacters}/>
         :
-          <AuthForm handleSignIn={handleSignIn} setAlert={setAlert}  />
+          <AuthForm handleSignIn={handleSignIn} showAlert={showAlert}  />
       }
     </>
   )

@@ -3,7 +3,7 @@ import waldoScene1 from '../assets/images/waldo-scene1.jpg';
 import { useState, useRef, useEffect } from 'react';
 
 
-export default function Game({ setAlert, characters, setCharacters }) {
+export default function Game({ showAlert, characters, setCharacters }) {
   const imageRef = useRef();
   const [ clickMarker, setClickMarker ] = useState(null);
   const [ clickedCharacter, setClickedCharacter ] = useState(null);
@@ -45,7 +45,7 @@ export default function Game({ setAlert, characters, setCharacters }) {
         : character
       ));
     
-    setAlert(
+    showAlert(
       <div role="alert" className="alert alert-success w-64
         transition-opacity duration-1200 opacity-0 ease-custom-ease">
         <span className='font-[700] w-fit m-auto'>'🎉&nbsp;&nbsp;&nbsp;Yay, you found {capitalize(clickedCharacter.name)}&nbsp;&nbsp;&nbsp;🎉'</span>
@@ -54,7 +54,7 @@ export default function Game({ setAlert, characters, setCharacters }) {
       // should update game status with clicked character here now
       // check whether all chars found and if so stop clock and alert win
     } else if (clickMarker && !clickedCharacter) {
-      setAlert(
+      showAlert(
         <div role="alert" className="alert alert-error w-64
           transition-opacity duration-1200 opacity-0 ease-custom-ease">
           <span className='font-[700]'>No character found here.&nbsp;&nbsp;👎</span>
@@ -63,7 +63,7 @@ export default function Game({ setAlert, characters, setCharacters }) {
     };
     
     setTimeout(() => {
-      setAlert(null)
+      showAlert(null)
     }, 1200);
 
     setClickedCharacter(null);

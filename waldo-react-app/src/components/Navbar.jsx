@@ -18,7 +18,7 @@ export default function Navbar({alert, characters, loggedIn, logOut}) {
         </div>
         
         <div data-testid='scoreboard-col' className='flex ml-24'>
-          <ScoreBoard alert={alert} />
+          <ScoreBoard />
           {loggedIn
             && (
               <button type="button" onClick={() => logOut()} className='btn w-fit'>
