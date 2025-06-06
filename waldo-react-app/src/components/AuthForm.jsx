@@ -21,23 +21,22 @@ export default function AuthForm({ handleSignIn, showAlert }) {
           },
         }),
       })
-        .then(async (res) => {
-          const data = await res.json();
-          if (res.ok) {
-            setIsSignUp(false);
-            showAlert(data.notice);
-          } else {
-            showAlert(
-              data.errors
-                ? data.errors.join(", ")
-                : "Sign up failed, and no errors object in JSON response"
-            );
-          }
-        })
-        .catch((err) => {
-          showAlert(err.message || "Sign up failed, was no err.message object");
-        });
-      // in response must set isSignUp to false to render Sign in UI
+      .then(async (res) => {
+        const data = await res.json();
+        if (res.ok) {
+          setIsSignUp(false);
+          showAlert(data.notice);
+        } else {
+          showAlert(
+            data.errors
+              ? data.errors.join(", ")
+              : "Sign up failed, and no errors object in JSON response"
+          );
+        }
+      })
+      .catch((err) => {
+        showAlert(err.message || "Sign up failed, was no err.message object");
+      });
     } else {
       // Sign in - session new
       fetch("/api/session", {
@@ -51,18 +50,18 @@ export default function AuthForm({ handleSignIn, showAlert }) {
           password: e.target.password.value,
         }),
       })
-        .then((res) => res.json())
-        .then((data) => {
-          if (data.user) {
-            handleSignIn(data);
-            showAlert(data.notice);
-          } else {
-            showAlert(data.error || "Sign in failed, was no data.error object");
-          }
-        })
-        .catch((err) => {
-          showAlert(err.message || "Sign in failed, was no err.message object");
-        });
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.user) {
+          handleSignIn(data);
+          showAlert(data.notice);
+        } else {
+          showAlert(data.error || "Sign in failed, was no data.error object");
+        }
+      })
+      .catch((err) => {
+        showAlert(err.message || "Sign in failed, was no err.message object");
+      });
     }
   };
 

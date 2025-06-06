@@ -1,5 +1,4 @@
 class Api::UsersController < ApplicationController
-  skip_forgery_protection
   allow_unauthenticated_access only: %i[ create ]
 
   def create

@@ -7,15 +7,7 @@
 
 Rails.application.config.middleware.insert_before 0, Rack::Cors do
   allow do
-    if Rails.env.development?
-      origins "http://localhost:5173"
-    elsif Rails.env.production?
-      puts "You're in production you must set the origin in the frontend app"
-      raise "You're in production you must set the origin in the frontend app"
-      # origins "http://waldo-react-app-container"
-      # origins Rails.credentials.frontend_url
-    end
-
+    origins Rails.application.credentials.trusted_origins
     resource "*",
       headers: :any,
       methods: [:get, :post, :put, :patch, :delete, :options, :head],
