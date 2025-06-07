@@ -17,11 +17,17 @@ export default function App() {
   // only on mount - call Rails api/session, with session_id cookie, to authenticate user
   useEffect(() => {
     fetch('/api/session', { credentials: 'include' })
-    .then(res => res.json())
-    .then(data => {
-      setAuthChecked(true);
-      setUser(data.user);
-      setLoggedIn(data.authenticated);
+    .then(async res => {
+      const data = await res.json();
+      if(res.ok) {
+        setAuthChecked(true);
+        setUser(data.user);
+        setLoggedIn(data.authenticated);  
+      } else {
+        setLoggedIn(data.authenticated);  
+        setAuthChecked(true);
+        showAlert(data.error || "Authentication failed, fetch response not ok, and was no JSON response errors object");  
+      }
     })
     .catch(() => setAuthChecked(true));
   }, []);

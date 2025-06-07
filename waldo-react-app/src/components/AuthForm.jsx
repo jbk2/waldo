@@ -30,12 +30,12 @@ export default function AuthForm({ handleSignIn, showAlert }) {
           showAlert(
             data.errors
               ? data.errors.join(", ")
-              : "Sign up failed, and no errors object in JSON response"
+              : "Sign up failed, fetch response not ok, and was no JSON response errors object"
           );
         }
       })
       .catch((err) => {
-        showAlert(err.message || "Sign up failed, was no err.message object");
+        showAlert(err.message || "Sign up failed, fetch threw an error, and there was no err.message object");
       });
     } else {
       // Sign in - session new
@@ -50,17 +50,17 @@ export default function AuthForm({ handleSignIn, showAlert }) {
           password: e.target.password.value,
         }),
       })
-      .then((res) => res.json())
-      .then((data) => {
-        if (data.user) {
+      .then(async res => {
+        const data = await res.json();
+        if(res.ok) {
           handleSignIn(data);
           showAlert(data.notice);
         } else {
-          showAlert(data.error || "Sign in failed, was no data.error object");
+          showAlert(data.error || "Sign in failed, fetch response not ok, and was no JSON response errors object");
         }
       })
       .catch((err) => {
-        showAlert(err.message || "Sign in failed, was no err.message object");
+        showAlert(err.message || "Sign in failed, fetch threw an error, and there was no err.message object");
       });
     }
   };
