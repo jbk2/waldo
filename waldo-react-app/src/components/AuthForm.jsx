@@ -71,7 +71,7 @@ export default function AuthForm({ handleSignIn, showAlert }) {
         <h1 className="text-xl font-bold -mb-1">Welcome to Waldo</h1>
         <div>
           {isSignUp ? (
-            <p className="font-medium">Please sign up to play</p>
+            <p className="font-medium text-sm">Please sign up to play</p>
           ) : (
             <p className="font-light text-sm">Please sign in to play</p>
           )}
@@ -101,7 +101,7 @@ export default function AuthForm({ handleSignIn, showAlert }) {
               type="password"
               placeholder="Password confirmation "
               name="password_confirmation"
-              className="input"
+              className="input input-sm"
               minLength="8"
               required
             />
