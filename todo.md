@@ -1,6 +1,7 @@
 # Todo list
 
 ## All
+- Next Refctor - need to refactor all auth form types out to individual components and routes
 - integrate calling react >> Rails API for the images
 - integrate choosing from multiple game images
   - integrate homepage UI design for this
