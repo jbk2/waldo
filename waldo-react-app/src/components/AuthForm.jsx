@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-export default function AuthForm({ handleSignIn, showAlert }) {
+export default function AuthForm({ handleSignIn, showAlert, token }) {
   const [isSignUp, setIsSignUp] = useState(false);
   const [isPasswordEdit, setIsPasswordEdit] = useState(false);
 
@@ -75,11 +75,45 @@ export default function AuthForm({ handleSignIn, showAlert }) {
     }
   };
 
-  const handlePasswordResetSubmission = (e) => {
+  const handlePasswordResetRequest = (e) => {
     e.preventDefault();
     const formData = new FormData(e.target);
+    const email = formData.get('email')
     console.log("just submitted password reset form", formData.get("email"));
+    // request to rails server to send password reset email, with link including token
+    // load password fields form with token
+    fetch("/api/passwords", {
+      method: "POST",
+      headers: { 
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        email_address: email
+      })
+    })
+    .then(async (res) => {
+      const data = await res.json();
+      if(res.ok) {
+        setIsPasswordEdit(false);
+        showAlert("Password reset email sent successfully");
+      } else {
+        showAlert(
+          data.error ||
+            "Password reset request failed, fetch response not ok, and was no JSON response errors object"
+        );
+      }
+    })
+    .catch((err) => {
+      showAlert(
+        err.message ||
+          "Sign in failed, fetch threw an error, and there was no err.message object"
+      );
+    }) 
   };
+
+  const handlePasswordResetSubmission = (e) => {
+    // submit token ad password value to rails password update action, if success route to login screen.
+  }
 
   return (
     <>
@@ -101,8 +135,8 @@ export default function AuthForm({ handleSignIn, showAlert }) {
         <div className="card-body">
           {isPasswordEdit ? (
             <form
-              onSubmit={handlePasswordResetSubmission}
-              className="flex flex-col gap-4"
+              onSubmit={handlePasswordResetRequest}
+              className="flex flex-col gap-3"
             >
               <input
                 type="email"
@@ -148,7 +182,7 @@ export default function AuthForm({ handleSignIn, showAlert }) {
                   required
                 />
                 )}
-                <div className="flex">
+                <div className="flex mt-1">
                   <button
                     type="submit"
                     className="hover:cursor-pointer btn btn-sm w-fit"
@@ -157,10 +191,10 @@ export default function AuthForm({ handleSignIn, showAlert }) {
                   </button>
                   <button
                     type="button"
-                    className="hover:cursor-pointer ml-4 text-sm self-end pb-[2px]"
+                    className="hover:cursor-pointer ml-4 text-xs self-end pb-[1px]"
                     onClick={() => setIsPasswordEdit(true)}
                   >
-                    Reset password
+                    Forgotten password?
                   </button>
                 </div>
               </form>

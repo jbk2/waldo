@@ -12,7 +12,8 @@ const router = createBrowserRouter([
     element: <App />,
     children: [
       { index: true, element: <HomePage /> },
-      { path: '/competition-board', element: <CompetitionBoard /> }
+      { path: '/competition-board', element: <CompetitionBoard /> },
+      { path: '/edit-password', element: <HomePage /> }
     ]
   }
 ])
