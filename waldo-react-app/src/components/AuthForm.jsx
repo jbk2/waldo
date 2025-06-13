@@ -2,6 +2,7 @@ import { useState } from "react";
 
 export default function AuthForm({ handleSignIn, showAlert }) {
   const [isSignUp, setIsSignUp] = useState(false);
+  const [isPasswordEdit, setIsPasswordEdit] = useState(false)
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -65,64 +66,99 @@ export default function AuthForm({ handleSignIn, showAlert }) {
     }
   };
 
+  const handlePasswordResetSubmission = (e) => {
+    e.preventDefault();
+    const formData = new FormData(e.target)
+    console.log("just submitted password reset form", formData.get("email"))
+  }
+
   return (
-    <div className="card top-[10vh] pt-6 w-80 z-60 bg-base-100 shadow-md mx-auto">
-      <div data-testid="auth-form" className="card-title flex flex-col">
-        <h1 className="text-xl font-bold -mb-1">Welcome to Waldo</h1>
-        <div>
-          {isSignUp ? (
-            <p className="font-medium text-sm">Please sign up to play</p>
-          ) : (
-            <p className="font-light text-sm">Please sign in to play</p>
-          )}
-        </div>
-      </div>
-      <div className="card-body">
-        <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-          <input
-            type="email"
-            placeholder="Email"
-            name="email_address"
-            className="input input-sm"
-            required
-          />
-          <input
-            type="password"
-            placeholder="Password"
-            name="password"
-            className="input input-sm"
-            minLength="8"
-            pattern="^(?=.*[A-Z])(?=.*\d)(?=.*[^a-zA-Z\d]).+$"
-            title="Must have at least; 8 chars, x1 capital letter, x1 digit, x1 special char"
-            required
-          />
-          {isSignUp && (
+    <>
+      { 
+        isPasswordEdit ? (
+          <form onSubmit={(e) => {
+            handlePasswordResetSubmission(e)
+          }}>
             <input
-              type="password"
-              placeholder="Password confirmation "
-              name="password_confirmation"
+              type="email"
+              placeholder="Your email address"
+              name="email"
               className="input input-sm"
-              minLength="8"
               required
             />
-          )}
-          <button
-            type="submit"
-            className="hover:cursor-pointer btn btn-sm w-fit"
-          >
-            {isSignUp ? "Sign Up" : "Sign In"}
-          </button>
-        </form>
-        <button
-          type="button"
-          className="hover:cursor-pointer link mt-4"
-          onClick={() => setIsSignUp((prev) => !prev)}
-        >
-          {isSignUp
-            ? "Already have an account? Sign In"
-            : "Don't have an account? Sign Up"}
-        </button>
-      </div>
-    </div>
+          </form>
+      )
+      : (
+        <div className="card top-[10vh] pt-6 w-80 z-60 bg-base-100 shadow-md mx-auto">
+          <div data-testid="auth-form" className="card-title flex flex-col">
+            <h1 className="text-xl font-bold -mb-1">Welcome to Waldo</h1>
+            <div>
+              {isSignUp ? (
+                <p className="font-medium text-sm">Please sign up to play</p>
+              ) : (
+                <p className="font-light text-sm">Please sign in to play</p>
+              )}
+            </div>
+          </div>
+          <div className="card-body">
+            <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+              <input
+                type="email"
+                placeholder="Email"
+                name="email_address"
+                className="input input-sm"
+                required
+              />
+              <input
+                type="password"
+                placeholder="Password"
+                name="password"
+                className="input input-sm"
+                minLength="8"
+                pattern="^(?=.*[A-Z])(?=.*\d)(?=.*[^a-zA-Z\d]).+$"
+                title="Must have at least; 8 chars, x1 capital letter, x1 digit, x1 special char"
+                required
+              />
+              {isSignUp && (
+                <input
+                  type="password"
+                  placeholder="Password confirmation "
+                  name="password_confirmation"
+                  className="input input-sm"
+                  minLength="8"
+                  required
+                />
+              )}
+              <div className="flex">
+                <button
+                  type="submit"
+                  className="hover:cursor-pointer btn btn-sm w-fit"
+                >
+                  {isSignUp ? "Sign Up" : "Sign In"}
+                </button>
+                <button
+                  type="button"
+                  className="hover:cursor-pointer ml-4 text-sm self-end pb-[2px]"
+                  onClick={() => setIsPasswordEdit(true)}
+                >
+                  Reset password
+                </button>
+    
+              </div>
+            </form>
+            <button
+              type="button"
+              className="hover:cursor-pointer link mt-4"
+              onClick={() => setIsSignUp((prev) => !prev)}
+            >
+              {isSignUp
+                ? "Already have an account? Sign In"
+                : "Don't have an account? Sign Up"}
+            </button>
+          </div>
+        </div>
+        )
+      }
+    </>
   );
 }
