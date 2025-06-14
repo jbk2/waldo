@@ -1,20 +1,20 @@
 import Game from '../components/Game';
-import AuthForm from '../components/AuthForm';
-import { useOutletContext, useSearchParams } from 'react-router-dom';
+import { useEffect } from 'react';
+import { useNavigate, useOutletContext, useSearchParams } from 'react-router-dom';
 
 export default function HomePage() {
-  const { showAlert, characters, setCharacters, loggedIn, handleSignIn } = useOutletContext();
-  const [searchParams] = useSearchParams();
-  const token = searchParams.get('token');
+  const { showAlert, characters, setCharacters, loggedIn } = useOutletContext();
+  // const [searchParams] = useSearchParams();
+  // const token = searchParams.get('token');
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if(!loggedIn) {
+      navigate('/sign-in');
+    }
+  }, [loggedIn, navigate])
 
   return(
-    <>
-      {loggedIn
-        ? 
-          <Game showAlert={showAlert} characters={characters} setCharacters={setCharacters}/>
-        :
-          <AuthForm handleSignIn={handleSignIn} showAlert={showAlert} token={token} />
-      }
-    </>
-  )
+    <Game showAlert={showAlert} characters={characters} setCharacters={setCharacters}/>
+  );
 }

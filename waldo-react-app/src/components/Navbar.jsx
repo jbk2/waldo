@@ -1,9 +1,11 @@
+import { useNavigate } from 'react-router-dom';
 import ScoreBoard from './ScoreBoard';
 import CharacterStatus from './CharacterStatus';
 
 
 export default function Navbar({alert, characters, loggedIn, logOut}) {
-  
+  const navigate = useNavigate();
+
   return(
     <>
       <header className='grid grid-cols-[1fr_auto_1fr] items-center w-full
@@ -13,8 +15,10 @@ export default function Navbar({alert, characters, loggedIn, logOut}) {
         </div>
         
         <div data-testid="typemark-col">
-          <h1 className="font-playrite text-6xl font-[400]
-            text-center my-8">Where's Waldo?</h1>
+          <h1
+            className="font-playrite text-6xl font-[400] text-center my-8 hover:cursor-pointer"
+            onClick={() => navigate('/')}
+            >Where's Waldo?</h1>
         </div>
         
         <div data-testid='scoreboard-col' className='flex ml-24'>

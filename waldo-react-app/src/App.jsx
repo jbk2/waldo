@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import { Outlet } from 'react-router-dom'
+import { Outlet, useNavigate } from 'react-router-dom'
 import './assets/stylesheets/index.css'
 import HomePage from '/src/routes/HomePage'
 import { initialCharacters } from './data/characters'
@@ -13,6 +13,7 @@ export default function App() {
   const [ user, setUser ] = useState(null);
   const [ authChecked, setAuthChecked ] = useState(false);
   const alertTimeout = useRef(null)
+  const navigate = useNavigate();
 
   // only on mount - call Rails api/session, with session_id cookie, to authenticate user
   useEffect(() => {
@@ -20,11 +21,12 @@ export default function App() {
     .then(async res => {
       const data = await res.json();
       if(res.ok) {
+        console.log("User authenticated, navigating to /");
         setAuthChecked(true);
         setUser(data.user);
-        setLoggedIn(data.authenticated);  
+        setLoggedIn(true);
       } else {
-        setLoggedIn(data.authenticated);  
+        setLoggedIn(false);  
         setAuthChecked(true);
         showAlert(data.error || "Authentication failed, fetch response not ok, and was no JSON response errors object");  
       }
@@ -37,6 +39,116 @@ export default function App() {
     setAlert(msg)
     if (alertTimeout.current) { clearTimeout(alertTimeout.current) };
     alertTimeout.current = setTimeout(() => setAlert(null), 1500);
+  }
+
+  const signIn = (e) => {
+    e.preventDefault();
+    fetch("/api/session", {
+      method: "POST",
+      credentials: "include",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        email_address: e.target.email_address.value,
+        password: e.target.password.value,
+      }),
+    })
+    .then(async (res) => {
+      const data = await res.json();
+      if (res.ok) {
+        setLoggedIn(true)
+        showAlert(data.notice);
+        navigate('/');
+      } else {
+        showAlert(
+          data.error ||
+            "Sign in failed, fetch response not ok, and was no JSON response errors object"
+        );
+      }
+    })
+    .catch((err) => {
+      showAlert(
+        err.message ||
+          "Sign in failed, fetch threw an error, and there was no err.message object"
+      );
+    });
+  };
+
+  const signUp = (e) => {
+    e.preventDefault();
+    // user create & session new
+    fetch("/api/user", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        user: {
+          email_address: e.target.email_address.value,
+          password: e.target.password.value,
+          password_confirmation: e.target.password_confirmation.value,
+        },
+      }),
+    })
+    .then(async (res) => {
+      const data = await res.json();
+      if (res.ok) {
+        showAlert(data.notice);
+      } else {
+        showAlert(
+          data.errors
+            ? data.errors.join(", ")
+            : "Sign up failed, fetch response not ok, and was no JSON response errors object"
+        );
+      }
+    })
+    .catch((err) => {
+      showAlert(
+        err.message ||
+          "Sign up failed, fetch threw an error, and there was no err.message object"
+      );
+    });
+  }
+
+  const requestResetPassword = (e) => {
+    e.preventDefault();
+    const formData = new FormData(e.target);
+    const email = formData.get('email')
+    console.log("just submitted password reset form", formData.get("email"));
+    // request to rails server to send password reset email, with link including token
+    // load password fields form with token
+    fetch("/api/passwords", {
+      method: "POST",
+      headers: { 
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        email_address: email
+      })
+    })
+    .then(async (res) => {
+      const data = await res.json();
+      if(res.ok) {
+        setIsPasswordEdit(false);
+        showAlert("Password reset email sent successfully");
+      } else {
+        showAlert(
+          data.error ||
+            "Password reset request failed, fetch response not ok, and was no JSON response errors object"
+        );
+      }
+    })
+    .catch((err) => {
+      showAlert(
+        err.message ||
+          "Sign in failed, fetch threw an error, and there was no err.message object"
+      );
+    }) 
+  };
+
+  const resetPassword = (e) => {
+    // submit token ad password value to rails password update action, if success route to login screen.
   }
 
   // set local react state after authentiacted on Rails server
@@ -71,7 +183,7 @@ export default function App() {
       <Alert alert={alert} />
       <Navbar alert={alert} characters={characters} loggedIn={loggedIn} logOut={logOut} />
       <main className='pt-[8rem] min-h-[calc(100vh-8rem)]'>
-        <Outlet context={{loggedIn, handleSignIn, showAlert, characters, setCharacters}} />
+        <Outlet context={{signIn, signUp, requestResetPassword, resetPassword, loggedIn, showAlert, characters, setCharacters}} />
       </main>
     </>
   )
