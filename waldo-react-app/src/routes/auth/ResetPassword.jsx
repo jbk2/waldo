@@ -32,7 +32,7 @@ export default function ResetPassword() {
         <input
           type="password"
           placeholder="New password"
-          name="password"
+          name="new_password"
           value={password}
           onChange={handlePasswordChange}
           className="input input-sm"
@@ -44,7 +44,7 @@ export default function ResetPassword() {
         <input
           type="password"
           placeholder="New password confirmation "
-          name="password_confirmation"
+          name="new_password_confirmation"
           value={passwordConfirmation}
           onChange={handlePasswordConfirmationChange}
           className="input input-sm"

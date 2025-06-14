@@ -149,8 +149,8 @@ export default function App() {
     // submit token ad password value to rails password update action, if success route to login screen.
     e.preventDefault();
     const formData = new FormData(e.target);
-    const password = formData.get('password')
-    const password_confirmation = formData.get('password_confirmation')
+    const new_password = formData.get('new_password')
+    const new_password_confirmation = formData.get('new_password_confirmation')
 
     fetch(`api/passwords/${token}`, {
       method: "PATCH",
@@ -158,8 +158,8 @@ export default function App() {
         "Content-Type": "application/json"
       },
       body: JSON.stringify({
-        password: password,
-        password_confirmation: password_confirmation
+        password: new_password,
+        password_confirmation: new_password_confirmation
       })
     })
     .then(async (res) => {
