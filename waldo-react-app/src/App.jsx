@@ -114,24 +114,22 @@ export default function App() {
   const requestResetPassword = (e) => {
     e.preventDefault();
     const formData = new FormData(e.target);
-    const email = formData.get('email')
-    console.log("just submitted password reset form", formData.get("email"));
-    // request to rails server to send password reset email, with link including token
-    // load password fields form with token
-    fetch("/api/passwords", {
+    const email_address = formData.get('email_address')
+
+    fetch(`/api/passwords`, {
       method: "POST",
       headers: { 
         "Content-Type": "application/json"
       },
       body: JSON.stringify({
-        email_address: email
+        email_address: email_address
       })
     })
     .then(async (res) => {
       const data = await res.json();
       if(res.ok) {
-        setIsPasswordEdit(false);
-        showAlert("Password reset email sent successfully");
+        showAlert(data.notice);
+        navigate('/');
       } else {
         showAlert(
           data.error ||
@@ -147,8 +145,39 @@ export default function App() {
     }) 
   };
 
-  const resetPassword = (e) => {
+  const resetPassword = (e, token) => {
     // submit token ad password value to rails password update action, if success route to login screen.
+    e.preventDefault();
+    const formData = new FormData(e.target);
+    const password = formData.get('password')
+    const password_confirmation = formData.get('password_confirmation')
+
+    fetch(`api/passwords/${token}`, {
+      method: "PATCH",
+      headers: { 
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        password: password,
+        password_confirmation: password_confirmation
+      })
+    })
+    .then(async (res) => {
+      const data = await res.json();
+      if(res.ok) {
+        showAlert(data.notice);
+        navigate('/');
+      } else {
+        showAlert(data.error)
+        navigate('request-reset-password')
+      }
+    })
+    .catch((err) => {
+      showAlert(
+        err.message ||
+          "Password update failed, fetch to server threw an error, and there was no err.message object"
+      );
+    }) 
   }
 
   // set local react state after authentiacted on Rails server
@@ -181,7 +210,7 @@ export default function App() {
   return (
     <>
       <Alert alert={alert} />
-      <Navbar alert={alert} characters={characters} loggedIn={loggedIn} logOut={logOut} />
+      <Navbar alert={alert} characters={characters} loggedIn={loggedIn} logOut={logOut} user={user} />
       <main className='pt-[8rem] min-h-[calc(100vh-8rem)]'>
         <Outlet context={{signIn, signUp, requestResetPassword, resetPassword, loggedIn, showAlert, characters, setCharacters}} />
       </main>

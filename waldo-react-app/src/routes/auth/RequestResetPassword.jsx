@@ -2,18 +2,18 @@ import AuthLayout from "./AuthLayout";
 import { useOutletContext } from "react-router-dom";
 
 export default function requestResetPassword() {
-  const { requestPasswordReset } = useOutletContext();
+  const { requestResetPassword } = useOutletContext();
 
   return(
     <AuthLayout title="Welcome to Waldo" subtitle="Enter your email to reset your password">
       <form
-        onSubmit={requestPasswordReset}
+        onSubmit={requestResetPassword}
         className="flex flex-col gap-3"
       >
         <input
           type="email"
           placeholder="Your email address"
-          name="email"
+          name="email_address"
           className="input input-sm"
           required
         />

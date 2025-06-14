@@ -16,7 +16,7 @@ Rails.application.routes.draw do
   namespace :api do
     resource :session, only: [:create, :show, :destroy]
     resources :users, only: [:create]
-    resources :passwords, only: [:create, :update]
+    resources :passwords, param: :token, only: [:create, :update]
   end
 
 end
