@@ -3,7 +3,7 @@ import ScoreBoard from './ScoreBoard';
 import CharacterStatus from './CharacterStatus';
 
 
-export default function Navbar({alert, characters, loggedIn, logOut}) {
+export default function Navbar({alert, characters, loggedIn, logOut, user}) {
   const navigate = useNavigate();
 
   return(
@@ -22,6 +22,12 @@ export default function Navbar({alert, characters, loggedIn, logOut}) {
         </div>
         
         <div data-testid='scoreboard-col' className='flex ml-24'>
+          <div className='text-xs w-14'>
+            { user
+              ? `is a user ${user.email_address}`
+              : 'is no user'
+            }
+          </div>
           <ScoreBoard />
           {loggedIn
             && (

@@ -73,7 +73,7 @@ export default function Game({ showAlert, characters, setCharacters }) {
   // __________________________________
 
   return(
-    <div data-testid="game-section" className="w-full flex justify-center pt-40">
+    <div data-testid="game-section" className="w-full flex justify-center pt-16">
       <div className="relative w-[80vw] max-w-[1400px]">
         <img
           ref={imageRef}
