@@ -18,7 +18,7 @@ class Api::PasswordsController < ApplicationController
     if @user.update(params.permit(:password, :password_confirmation))
       render json: { notice: "Password has been successfully reset" }
     else
-      render json: { error: "Passwords did not match." }
+      render json: { error: "Passwords did not match" }, status: :unprocessable_entity
     end
   end
 
@@ -26,7 +26,7 @@ class Api::PasswordsController < ApplicationController
   def set_user_by_token
     @user = User.find_by_password_reset_token!(params[:token])
   rescue ActiveSupport::MessageVerifier::InvalidSignature
-    redirect_to new_password_path, alert: "Password reset link is invalid or has expired."
+    render json: { error: "Password reset link is invalid or has expired" }, status: :not_found 
   end
 
   def password_params
