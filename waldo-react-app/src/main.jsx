@@ -9,7 +9,6 @@ import RequestResetPassword from './routes/auth/RequestResetPassword'
 import ResetPassword from './routes/auth/ResetPassword'
 import CompetitionBoard from '/src/routes/CompetitionBoard'
 
-
 const router = createBrowserRouter([
   {
     path: '/',

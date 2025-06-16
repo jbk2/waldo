@@ -1,9 +1,11 @@
 import { capitalize } from '../utils/stringUtils';
 import waldoScene1 from '../assets/images/waldo-scene1.jpg';
 import { useState, useRef, useEffect } from 'react';
+import { useOutletContext } from 'react-router-dom';
 
 
-export default function Game({ showAlert, characters, setCharacters }) {
+export default function Game() {
+  const { showAlert, characters, setCharacters } = useOutletContext();
   const imageRef = useRef();
   const [ clickMarker, setClickMarker ] = useState(null);
   const [ clickedCharacter, setClickedCharacter ] = useState(null);
