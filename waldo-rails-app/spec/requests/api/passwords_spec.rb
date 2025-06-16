@@ -9,7 +9,9 @@ RSpec.describe "Api::Passwords", type: :request do
         post "/api/passwords", params: { email_address: "one@example.com"}
 
         expect(response).to have_http_status(:ok)
-        expect(JSON.parse(response.body)["notice"]).to eq('Password reset email sent')
+        json = JSON.parse(response.body)
+        expect(json["success"]).to be(true)
+        expect(json["message"]).to eq('Password reset email sent')
       end
     end
   end
@@ -20,14 +22,16 @@ RSpec.describe "Api::Passwords", type: :request do
     context "with valid token & password" do
       it "returns a successful response" do
         original_password_digest = user.password_digest
+        
         patch "/api/passwords/#{user.password_reset_token}", params: {
           password: 'newpassword',
           password_confirmation: 'newpassword'
         }
 
         expect(response).to have_http_status(:ok)
-        expect(JSON.parse(response.body)["notice"]).to eq('Password has been successfully reset')
-
+        json = JSON.parse(response.body)
+        expect(json["success"]).to be(true)
+        expect(json["message"]).to eq('Password has been successfully reset')
         user.reload
         expect(user.password_digest).not_to eq(original_password_digest)
       end
@@ -44,6 +48,11 @@ RSpec.describe "Api::Passwords", type: :request do
         }
 
         expect(response).to have_http_status(:ok)
+        json = JSON.parse(response.body)
+        expect(json).to include('success', 'data')
+        expect(json['success']).to be(true)
+        expect(json['message']).to eq("Successfully logged in")
+        expect(json['data']['user']['email_address']).to eq(user.email_address)
       end
     end
 
@@ -55,7 +64,9 @@ RSpec.describe "Api::Passwords", type: :request do
         }
 
         expect(response).to have_http_status(:unprocessable_entity)
-        expect(JSON.parse(response.body)['error']).to eq('Passwords did not match')
+        json = JSON.parse(response.body)
+        expect(json['success']).to be(false)
+        expect(json['message']).to eq('Passwords did not match')
       end
     end
 
@@ -67,7 +78,9 @@ RSpec.describe "Api::Passwords", type: :request do
         }
 
         expect(response).to have_http_status(:not_found)
-        expect(JSON.parse(response.body)['error']).to eq('Password reset link is invalid or has expired')
+        json = JSON.parse(response.body)
+        expect(json['success']).to be(false)
+        expect(json['message']).to eq('Password reset link is invalid or has expired')
       end 
     end
   end
