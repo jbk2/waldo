@@ -47,21 +47,12 @@ export default function Game() {
         : character
       ));
     
-    showAlert(
-      <div role="alert" className="alert alert-success w-64
-        transition-opacity duration-1200 opacity-0 ease-custom-ease">
-        <span className='font-[700] w-fit m-auto'>'🎉&nbsp;&nbsp;&nbsp;Yay, you found {capitalize(clickedCharacter.name)}&nbsp;&nbsp;&nbsp;🎉'</span>
-      </div>
-    );
+      showAlert(`🎉 Yay, you found ${capitalize(clickedCharacter.name)} 🎉`);
+
       // should update game status with clicked character here now
       // check whether all chars found and if so stop clock and alert win
     } else if (clickMarker && !clickedCharacter) {
-      showAlert(
-        <div role="alert" className="alert alert-error w-64
-          transition-opacity duration-1200 opacity-0 ease-custom-ease">
-          <span className='font-[700]'>No character found here.&nbsp;&nbsp;👎</span>
-        </div>
-      );    
+      showAlert('No character found here. 👎');    
     };
     
     setTimeout(() => {
@@ -116,3 +107,4 @@ export default function Game() {
     </div>
   )
 }
+

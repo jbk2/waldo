@@ -13,6 +13,6 @@ export default function HomePage() {
   }, [loggedIn, navigate])
 
   return(
-    <Game showAlert={showAlert} characters={characters} setCharacters={setCharacters}/>
+    <Game />
   );
 }

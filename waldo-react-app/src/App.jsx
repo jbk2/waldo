@@ -28,7 +28,7 @@ export default function App() {
       } else {
         setLoggedIn(false);  
         setAuthChecked(true);
-        showAlert(data.error || "Authentication failed, fetch response not ok, and was no JSON response errors object");  
+        showAlert(data.message || "Authentication failed, fetch response not ok, and was no JSON response errors object");  
       }
     })
     .catch(() => setAuthChecked(true));
@@ -62,11 +62,11 @@ export default function App() {
       const data = await res.json();
       if (res.ok) {
         setLoggedIn(true)
-        showAlert(data.notice);
+        showAlert(data.message);
         navigate('/');
       } else {
         showAlert(
-          data.error ||
+          data.message ||
             "Sign in failed, fetch response not ok, and was no JSON response errors object"
         );
       }
@@ -102,12 +102,11 @@ export default function App() {
     .then(async (res) => {
       const data = await res.json();
       if (res.ok) {
-        showAlert(data.notice);
+        showAlert(data.message);
       } else {
         showAlert(
-          data.errors
-            ? data.errors.join(", ")
-            : "Sign up failed, fetch response not ok, and was no JSON response errors object"
+          data.message ||
+            "Sign up failed, fetch response not ok, and was no JSON response errors object"
         );
       }
     })
@@ -136,11 +135,11 @@ export default function App() {
     .then(async (res) => {
       const data = await res.json();
       if(res.ok) {
-        showAlert(data.notice);
+        showAlert(data.message);
         navigate('/');
       } else {
         showAlert(
-          data.error ||
+          data.message ||
             "Password reset request failed, fetch response not ok, and was no JSON response errors object"
         );
       }
@@ -173,10 +172,10 @@ export default function App() {
     .then(async (res) => {
       const data = await res.json();
       if(res.ok) {
-        showAlert(data.notice);
+        showAlert(data.message);
         navigate('/');
       } else {
-        showAlert(data.error)
+        showAlert(data.message)
         navigate('request-reset-password')
       }
     })
@@ -188,12 +187,6 @@ export default function App() {
     }) 
   }
 
-  // set local react state after authentiacted on Rails server
-  const handleSignIn = (responseData) => {
-    setUser(responseData.user);
-    setLoggedIn(responseData.authenticated);
-  }
-
   const logOut = (e) => {
     fetch('/api/session', {
       method: 'DELETE'
@@ -201,13 +194,11 @@ export default function App() {
     .then(async res => {
       const data = await res.json();
       if (res.ok) {
-        showAlert(data.notice)
+        showAlert(data.message)
         setUser(null)
         setLoggedIn(false)
       } else {
-        showAlert(data.errors
-          ? data.errors.join(', ')
-          : "Log out failed, and no errors object in JSON response"
+        showAlert(data.message || "Log out failed"
         )
       }
     })

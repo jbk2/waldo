@@ -2,7 +2,7 @@ import { useState, useEffect } from "react"
 
 export default function Alert({ alert }) {
   const [visible, setVisible] = useState(false)
-  const [message, setMessage] = useState(false)
+  const [message, setMessage] = useState(null)
 
   useEffect(() => {
     if (alert) {
