@@ -7,12 +7,10 @@ class Api::PasswordsController < ApplicationController
     if user = User.find_by(email_address: email_address)
       PasswordsMailer.reset(user).deliver_later
       render json: {
-        success: true,
         message: "Password reset email sent"
       }
     else
       render json: {
-        success: false,
         message: "Failed to find user with #{email_address}"
       }, status: :unprocessable_entity
     end
@@ -21,12 +19,10 @@ class Api::PasswordsController < ApplicationController
   def update
     if @user.update(params.permit(:password, :password_confirmation))
       render json: {
-        success: true,
         message: "Password has been successfully reset"
       }
     else
       render json: {
-        success: false,
         message: "Passwords did not match"
       }, status: :unprocessable_entity
     end
@@ -37,7 +33,6 @@ class Api::PasswordsController < ApplicationController
     @user = User.find_by_password_reset_token!(params[:token])
   rescue ActiveSupport::MessageVerifier::InvalidSignature
     render json: {
-      success: false,
       message: "Password reset link is invalid or has expired"
     }, status: :not_found 
   end

@@ -5,13 +5,12 @@ class Api::SessionsController < ApplicationController
     if user = User.authenticate_by(params.permit(:email_address, :password))
       start_new_session_for user
       render json: {
-        success: true,
         message: "Successfully logged in",
-        data: { user: user, authenticated: true }
+        user: user,
+        authenticated: true,
       }
     else
-      render json: { 
-        success: false,
+      render json: {
         message: "Invalid email or password"
       }, status: :unauthorized
     end
@@ -20,14 +19,11 @@ class Api::SessionsController < ApplicationController
   def show
     if Current.session.user
       render json: {
-        success: true,
-        data: { authenticated: true,
-          user: Current.session.user
-        }
+        authenticated: true,
+        user: Current.session.user
       }
     else
       render json: {
-        success: false,
         message: "Not logged in"
       }, status: :unauthorized
     end
@@ -37,12 +33,10 @@ class Api::SessionsController < ApplicationController
     begin
       terminate_session
       render json: {
-        success: true,
         message: 'successfully logged out'
       }
     rescue => e
       render json: {
-        success: false,
         message: "Failed to log out: #{e.message}"
       }, status: :internal_server_error
     end

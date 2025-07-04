@@ -10,7 +10,6 @@ RSpec.describe "Api::Passwords", type: :request do
 
         expect(response).to have_http_status(:ok)
         json = JSON.parse(response.body)
-        expect(json["success"]).to be(true)
         expect(json["message"]).to eq('Password reset email sent')
       end
     end
@@ -30,7 +29,6 @@ RSpec.describe "Api::Passwords", type: :request do
 
         expect(response).to have_http_status(:ok)
         json = JSON.parse(response.body)
-        expect(json["success"]).to be(true)
         expect(json["message"]).to eq('Password has been successfully reset')
         user.reload
         expect(user.password_digest).not_to eq(original_password_digest)
@@ -49,10 +47,8 @@ RSpec.describe "Api::Passwords", type: :request do
 
         expect(response).to have_http_status(:ok)
         json = JSON.parse(response.body)
-        expect(json).to include('success', 'data')
-        expect(json['success']).to be(true)
         expect(json['message']).to eq("Successfully logged in")
-        expect(json['data']['user']['email_address']).to eq(user.email_address)
+        expect(json['user']['email_address']).to eq(user.email_address)
       end
     end
 
@@ -65,7 +61,6 @@ RSpec.describe "Api::Passwords", type: :request do
 
         expect(response).to have_http_status(:unprocessable_entity)
         json = JSON.parse(response.body)
-        expect(json['success']).to be(false)
         expect(json['message']).to eq('Passwords did not match')
       end
     end
@@ -79,7 +74,6 @@ RSpec.describe "Api::Passwords", type: :request do
 
         expect(response).to have_http_status(:not_found)
         json = JSON.parse(response.body)
-        expect(json['success']).to be(false)
         expect(json['message']).to eq('Password reset link is invalid or has expired')
       end 
     end

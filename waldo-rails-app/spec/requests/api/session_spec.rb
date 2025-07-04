@@ -15,10 +15,8 @@ RSpec.describe 'Sessions API', type: :request do
 
         expect(response).to have_http_status(:ok)
         json = JSON.parse(response.body)
-        expect(json).to include('success', 'data')
-        expect(json['success']).to be(true)
         expect(json['message']).to eq("Successfully logged in")
-        expect(json['data']['user']['email_address']).to eq(user.email_address)
+        expect(json['user']['email_address']).to eq(user.email_address)
       end
     end
     
@@ -34,7 +32,6 @@ RSpec.describe 'Sessions API', type: :request do
   
           expect(response).to have_http_status(:unauthorized)
           json = JSON.parse(response.body)
-          expect(json['success']).to be(false)
           expect(json['message']).to eq("Invalid email or password")
         end  
       end
@@ -50,7 +47,6 @@ RSpec.describe 'Sessions API', type: :request do
   
           expect(response).to have_http_status(:unauthorized)
           json = JSON.parse(response.body)
-          expect(json['success']).to be(false)
           expect(json['message']).to eq("Invalid email or password")
         end  
       end
