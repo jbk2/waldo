@@ -9,8 +9,8 @@ RSpec.describe 'Users API', type: :request do
         post '/api/users', params: {
           user: {
             email_address: 'new@example.com',
-            password: 'password',
-            password_confirmation: 'password'
+            password: 'Password12!',
+            password_confirmation: 'Password12!'
           }
         }
         expect(response).to have_http_status(:ok)
@@ -24,8 +24,8 @@ RSpec.describe 'Users API', type: :request do
         post '/api/users', params: {
           user: {
             email_address: 'one@example.com',
-            password: 'password2',
-            password_confirmation: 'password2'
+            password: 'Password23!',
+            password_confirmation: 'Password23!'
           }
         }
         expect(response).to have_http_status(:unprocessable_entity)

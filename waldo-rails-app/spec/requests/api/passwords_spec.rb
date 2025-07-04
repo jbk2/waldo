@@ -24,8 +24,8 @@ RSpec.describe "Api::Passwords", type: :request do
         original_password_digest = user.password_digest
         
         patch "/api/passwords/#{user.password_reset_token}", params: {
-          password: 'newpassword',
-          password_confirmation: 'newpassword'
+          password: 'NewPassword12!',
+          password_confirmation: 'NewPassword12!'
         }
 
         expect(response).to have_http_status(:ok)
@@ -38,13 +38,13 @@ RSpec.describe "Api::Passwords", type: :request do
 
       it "allows login with the newly set password" do
         patch "/api/passwords/#{user.password_reset_token}", params: {
-          password: 'newpassword',
-          password_confirmation: 'newpassword'
+          password: 'NewPassword12!',
+          password_confirmation: 'NewPassword12!'
         }
 
         post '/api/session', params: {
           email_address: 'one@example.com',
-          password: 'newpassword'
+          password: 'NewPassword12!'
         }
 
         expect(response).to have_http_status(:ok)
@@ -59,8 +59,8 @@ RSpec.describe "Api::Passwords", type: :request do
     context 'with non matching passwords' do
       it 'returns an error' do
         patch "/api/passwords/#{user.password_reset_token}", params: {
-          password: 'newpassword',
-          password_confirmation: 'different'
+          password: 'NewPassword12!',
+          password_confirmation: 'Different12!'
         }
 
         expect(response).to have_http_status(:unprocessable_entity)
@@ -73,8 +73,8 @@ RSpec.describe "Api::Passwords", type: :request do
     context "with an invalid token" do
       it "returns an error" do
         patch "/api/passwords/invalid_token", params: {
-          password: 'newpassword',
-          password_confirmation: 'newpassword'
+          password: 'NewPassword12!',
+          password_confirmation: 'NewPassword12!'
         }
 
         expect(response).to have_http_status(:not_found)

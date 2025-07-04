@@ -43,6 +43,10 @@ export default function App() {
 
   const signIn = (e) => {
     e.preventDefault();
+    const formData = new FormData(e.target)
+    const email_address = formData.get('email_address')
+    const password = formData.get('password')
+
     fetch("/api/session", {
       method: "POST",
       credentials: "include",
@@ -50,8 +54,8 @@ export default function App() {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        email_address: e.target.email_address.value,
-        password: e.target.password.value,
+        email_address: email_address,
+        password: password,
       }),
     })
     .then(async (res) => {
@@ -77,6 +81,10 @@ export default function App() {
 
   const signUp = (e) => {
     e.preventDefault();
+    const formData = new FormData(e.target)
+    const email_address = formData.get('email_address')
+    const password = formData.get('password')
+    const password_confirmation = formData.get('password_confirmation')
     // user create & session new
     fetch("/api/user", {
       method: "POST",
@@ -85,9 +93,9 @@ export default function App() {
       },
       body: JSON.stringify({
         user: {
-          email_address: e.target.email_address.value,
-          password: e.target.password.value,
-          password_confirmation: e.target.password_confirmation.value,
+          email_address: email_address,
+          password: password,
+          password_confirmation: password_confirmation,
         },
       }),
     })

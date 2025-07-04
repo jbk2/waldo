@@ -1,7 +1,7 @@
 import AuthLayout from "./AuthLayout";
 import { useOutletContext } from "react-router-dom";
 
-export default function requestResetPassword() {
+export default function RequestResetPassword() {
   const { requestResetPassword } = useOutletContext();
 
   return(

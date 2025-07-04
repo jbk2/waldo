@@ -10,7 +10,7 @@ RSpec.describe 'Sessions API', type: :request do
 
         post '/api/session', params: {
           email_address: user.email_address,
-          password: 'password'
+          password: 'Password12!'
         }
 
         expect(response).to have_http_status(:ok)
@@ -29,7 +29,7 @@ RSpec.describe 'Sessions API', type: :request do
   
           post '/api/session', params: {
             email_address: 'non-user@example.com',
-            password: 'password'
+            password: 'Password12!'
           }
   
           expect(response).to have_http_status(:unauthorized)
