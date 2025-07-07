@@ -34,7 +34,7 @@ export default function App() {
     .catch(() => setAuthChecked(true));
   }, []);
 
-  // set alert, set a timeout fn in a userRef, and reset alert to null and clear the timeout
+  // set alert, set a timeout fn in a useRef, and reset alert to null and clear the timeout
   const showAlert = (msg) => {
     setAlert(msg)
     if (alertTimeout.current) { clearTimeout(alertTimeout.current) };
