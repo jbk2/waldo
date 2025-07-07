@@ -209,7 +209,7 @@ export default function App() {
   return (
     <>
       <Alert alert={alert} />
-      <Navbar alert={alert} characters={characters} loggedIn={loggedIn} logOut={logOut} user={user} />
+      <Navbar characters={characters} loggedIn={loggedIn} logOut={logOut} user={user} />
       <main className='pt-[8rem] min-h-[calc(100vh-8rem)]'>
         <Outlet context={{signIn, signUp, requestResetPassword, resetPassword, loggedIn, showAlert, characters, setCharacters}} />
       </main>

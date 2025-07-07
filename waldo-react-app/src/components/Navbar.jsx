@@ -3,7 +3,7 @@ import ScoreBoard from './ScoreBoard';
 import CharacterStatus from './CharacterStatus';
 
 
-export default function Navbar({alert, characters, loggedIn, logOut, user}) {
+export default function Navbar({characters, loggedIn, logOut, user}) {
   const navigate = useNavigate();
 
   return(
