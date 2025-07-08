@@ -6,13 +6,10 @@ export default function HomePage() {
   const { loggedIn } = useOutletContext();
   const navigate = useNavigate();
 
-  useEffect(() => {
-    if(!loggedIn) {
-      navigate('/sign-in');
-    }
-  }, [loggedIn, navigate])
+  if(!loggedIn) {
+    navigate('/sign-in');
+    return null;
+  }
 
-  return(
-    <Game />
-  );
+  return(<Game />);
 }
