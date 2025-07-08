@@ -1,7 +1,6 @@
 # Todo list
 
 ## All
-- fix current failing React tests
 - write more thorough react tests (components, ... )
 - need to refactor and DRY out all auth fetching, into external module
 - integrate calling react >> Rails API for the images
