@@ -3,11 +3,11 @@ import { useOutletContext, useNavigate } from "react-router-dom";
 
 export default function SignUp() {
   const navigate = useNavigate();
-  const { signOut } = useOutletContext();
+  const { signUp } = useOutletContext();
 
   return(
     <AuthLayout title="Welcome to Waldo" subtitle="Please sign up to play">
-      <form onSubmit={signOut} className="flex flex-col gap-4">
+      <form onSubmit={signUp} className="flex flex-col gap-4">
         <input
           type="email"
           placeholder="Email"

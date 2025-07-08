@@ -86,7 +86,7 @@ export default function App() {
     const password = formData.get('password')
     const password_confirmation = formData.get('password_confirmation')
     // user create & session new
-    fetch("/api/user", {
+    fetch("/api/users", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -102,6 +102,7 @@ export default function App() {
     .then(async (res) => {
       const data = await res.json();
       if (res.ok) {
+        navigate('/sign-in');
         showAlert(data.message);
       } else {
         showAlert(

@@ -16,3 +16,6 @@
 
 ## Rails App
 - tidy image creation view - perhaps
+
+## Tests to write:
+- react app - competition board
