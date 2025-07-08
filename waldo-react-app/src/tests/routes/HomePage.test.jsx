@@ -4,17 +4,7 @@ import HomePage from '../../routes/HomePage';
 import SignIn from '../../routes/auth/SignIn';
 import { MemoryRouter, Routes, Route, Outlet } from 'react-router-dom';
 
-// Mock the image import
-vi.mock('../../assets/images/waldo-scene1.jpg', () => ({
-  default: 'mocked-image-path'
-}));
-
-// Mock the stringUtils import
-vi.mock('../../utils/stringUtils', () => ({
-  capitalize: (str) => str.charAt(0).toUpperCase() + str.slice(1)
-}));
-
-function TestWrapper({ loggedIn = false }) {
+function TestOutlet({ loggedIn = false }) {
   return (
     <Outlet context={{
       showAlert: () => {},
@@ -38,7 +28,7 @@ describe('HomePage route integration', () => {
     render(
       <MemoryRouter initialEntries={['/']}>
         <Routes>
-          <Route path='/' element={<TestWrapper loggedIn={false} />}>
+          <Route path='/' element={<TestOutlet loggedIn={false} />}>
             <Route index element={<HomePage />} />
             <Route path='sign-in' element={<SignIn />} />
           </Route>
@@ -55,7 +45,7 @@ describe('HomePage route integration', () => {
     render(
       <MemoryRouter initialEntries={['/']}>
         <Routes>
-          <Route path='/' element={<TestWrapper loggedIn={true} />}>
+          <Route path='/' element={<TestOutlet loggedIn={true} />}>
             <Route index element={<HomePage />} />
             <Route path='sign-in' element={<SignIn />} />
           </Route>

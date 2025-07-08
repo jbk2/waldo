@@ -19,6 +19,7 @@ class Api::SessionsController < ApplicationController
   def show
     if Current.session.user
       render json: {
+        message: 'Session authenticated', 
         authenticated: true,
         user: Current.session.user
       }
@@ -33,7 +34,7 @@ class Api::SessionsController < ApplicationController
     begin
       terminate_session
       render json: {
-        message: 'successfully logged out'
+        message: 'Successfully logged out'
       }
     rescue => e
       render json: {

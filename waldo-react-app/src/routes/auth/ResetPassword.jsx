@@ -43,7 +43,7 @@ export default function ResetPassword() {
         />
         <input
           type="password"
-          placeholder="New password confirmation "
+          placeholder="New password confirmation"
           name="new_password_confirmation"
           value={passwordConfirmation}
           onChange={handlePasswordConfirmationChange}

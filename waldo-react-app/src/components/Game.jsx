@@ -9,34 +9,10 @@ export default function Game() {
   const imageRef = useRef();
   const [ clickMarker, setClickMarker ] = useState(null);
   const [ clickedCharacter, setClickedCharacter ] = useState(null);
-  const [ fadeOut, setFadeOut ] = useState(false);
-  
-  // __________________________________
-
-  function hasClickedOnCharacter(clickX, clickY, character) {
-    return(
-      clickX >= character.startX && clickX <= character.endX &&
-      clickY >= character.startY && clickY <= character.endY
-    )
-  }
-
-  function handleImageClick(e) {
-    const rect = imageRef.current.getBoundingClientRect();
-    const clickX = Math.round(((e.clientX - rect.x) / rect.width) * 1000) / 1000;
-    const clickY = Math.round(((e.clientY - rect.y) / rect.height) * 1000) / 1000;
-    const foundCharacter = characters.find((character) => 
-      hasClickedOnCharacter(clickX, clickY, character)
-    )
-    setClickMarker({ x: clickX, y: clickY });
-    setClickedCharacter(foundCharacter || false);
-  };
-  
+ 
   // __________________________________
 
   useEffect(() => {
-    let fadeTimer, clearAlert;
-    const baseClass = "transition-opacity duration-500";
-    
     if(clickedCharacter === null) return;
     
     if(clickedCharacter) {
@@ -64,6 +40,28 @@ export default function Game() {
   }, [clickedCharacter]);
   
   // __________________________________
+  
+  
+  function hasClickedOnCharacter(clickX, clickY, character) {
+    return(
+      clickX >= character.startX && clickX <= character.endX &&
+      clickY >= character.startY && clickY <= character.endY
+    )
+  }
+  
+  // __________________________________
+
+  function handleImageClick(e) {
+    const rect = imageRef.current.getBoundingClientRect();
+    const clickX = Math.round(((e.clientX - rect.x) / rect.width) * 1000) / 1000;
+    const clickY = Math.round(((e.clientY - rect.y) / rect.height) * 1000) / 1000;
+    const foundCharacter = characters.find((character) => 
+      hasClickedOnCharacter(clickX, clickY, character)
+    )
+    setClickMarker({ x: clickX, y: clickY });
+    setClickedCharacter(foundCharacter || false);
+  };
+  
 
   return(
     <div data-testid="game-section" className="w-full flex justify-center pt-16">

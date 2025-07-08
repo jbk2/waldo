@@ -3,7 +3,7 @@ import { useEffect } from 'react';
 import { useNavigate, useOutletContext } from 'react-router-dom';
 
 export default function HomePage() {
-  const { showAlert, characters, setCharacters, loggedIn } = useOutletContext();
+  const { loggedIn } = useOutletContext();
   const navigate = useNavigate();
 
   useEffect(() => {
