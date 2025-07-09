@@ -11,9 +11,6 @@ export default function Game() {
   const imageRef = useRef();
   const [ clickMarker, setClickMarker ] = useState(null);
   const [ clickedCharacter, setClickedCharacter ] = useState(null);
-  // const { setGameTimer } = useContext(GameContext);
- 
-  // __________________________________
 
   useEffect(() => {
     if(clickedCharacter === null) return;
@@ -42,8 +39,6 @@ export default function Game() {
 
   }, [clickedCharacter]);
   
-  // __________________________________
-  
   
   function hasClickedOnCharacter(clickX, clickY, character) {
     return(
@@ -51,8 +46,6 @@ export default function Game() {
       clickY >= character.startY && clickY <= character.endY
     )
   }
-  
-  // __________________________________
 
   function handleImageClick(e) {
     const rect = imageRef.current.getBoundingClientRect();
@@ -64,9 +57,11 @@ export default function Game() {
     setClickMarker({ x: clickX, y: clickY });
     setClickedCharacter(foundCharacter || false);
   };
+
+  function removeImgBlur() {
+    imageRef.current.classList.remove('blur-sm')
+  }
   
-// load with a fade over the image & a modal with a start game button 
-// on click of start game button commence game timer & unfade the image
   return(
     <div data-testid="game-section" className="w-full flex justify-center pt-16">
       <div className="relative w-[80vw] max-w-[1400px]">
@@ -104,7 +99,7 @@ export default function Game() {
             )
           }
         })}
-        <StartGameDialog />
+        <StartGameDialog removeImgBlur={removeImgBlur} />
       </div>
     </div>
   )

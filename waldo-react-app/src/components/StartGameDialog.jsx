@@ -2,12 +2,13 @@ import { GameContext } from "../contexts/GameContext"
 import { useContext, useRef } from "react"
 
 
-export default function StartGameDialog() {
+export default function StartGameDialog({removeImgBlur}) {
   const { startGame } = useContext(GameContext)
   const dialogRef = useRef()
   
   const handleStartGameClick = () => {
     startGame();
+    removeImgBlur();
     if(dialogRef.current) {
       dialogRef.current.close();
     }
@@ -23,7 +24,7 @@ export default function StartGameDialog() {
         absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2
         border-2 border-indigo-300 hover:border-indigo-400 bg-cyan-400 hover:bg-cyan-500
         font-variation-settings-600 font-raleway tracking-wide underline decoration-wavy
-        decoration-2 decoration-blue-600 underline-offset-4">
+        decoration-2 decoration-blue-600 underline-offset-3">
         PLAY A GAME ?
       </button>
     </dialog>
