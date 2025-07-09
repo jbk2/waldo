@@ -16,7 +16,7 @@ export default function Navbar({characters, loggedIn, logOut, user}) {
         
         <div data-testid="typemark-col">
           <h1
-            className="font-playrite text-6xl font-[400] text-center my-8 hover:cursor-pointer"
+            className="font-playrite text-6xl text-center my-8 hover:cursor-pointer"
             onClick={() => navigate('/')}
             >Where's Waldo?</h1>
         </div>

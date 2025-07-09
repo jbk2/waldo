@@ -6,7 +6,7 @@ export default function StartGameDialog() {
   const { startGame } = useContext(GameContext)
   const dialogRef = useRef()
   
-  const handleBtnClick = () => {
+  const handleStartGameClick = () => {
     startGame();
     if(dialogRef.current) {
       dialogRef.current.close();
@@ -17,9 +17,14 @@ export default function StartGameDialog() {
     <dialog
       ref={dialogRef}
       open
-      className="z-100 border-1 rounded bg-white w-40">
-      <button onClick={handleBtnClick} className="text-3xl font-bold">
-        StartGame?
+      className="border-2 rounded-md top-1/5 left-1/2 -translate-x-1/2 w-90 h-60
+        bg-white justify-center items-center">
+      <button onClick={handleStartGameClick} className="h-fit p-3 px-4 rounded-lg hover:cursor-pointer
+        absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2
+        border-2 border-indigo-300 hover:border-indigo-400 bg-cyan-400 hover:bg-cyan-500
+        font-variation-settings-600 font-raleway tracking-wide underline decoration-wavy
+        decoration-2 decoration-blue-600 underline-offset-4">
+        PLAY A GAME ?
       </button>
     </dialog>
   )

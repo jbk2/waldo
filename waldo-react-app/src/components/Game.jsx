@@ -1,6 +1,6 @@
 import { capitalize } from '../utils/stringUtils';
 import waldoScene1 from '../assets/images/waldo-scene1.jpg';
-import { useState, useRef, useEffect, useContext } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { useOutletContext } from 'react-router-dom';
 import { GameContext } from '../contexts/GameContext';
 import StartGameDialog from './StartGameDialog';
@@ -75,7 +75,7 @@ export default function Game() {
           src={waldoScene1}
           id="waldo-scene-1"
           onClick={handleImageClick}
-          className="w-full border-2 rounded"
+          className="w-full border-2 rounded blur-sm"
           alt="Waldo scene 1"
         />
         {clickMarker && (
