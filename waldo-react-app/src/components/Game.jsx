@@ -1,7 +1,9 @@
 import { capitalize } from '../utils/stringUtils';
 import waldoScene1 from '../assets/images/waldo-scene1.jpg';
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect, useContext } from 'react';
 import { useOutletContext } from 'react-router-dom';
+import { GameContext } from '../contexts/GameContext';
+import StartGameDialog from './StartGameDialog';
 
 
 export default function Game() {
@@ -9,6 +11,7 @@ export default function Game() {
   const imageRef = useRef();
   const [ clickMarker, setClickMarker ] = useState(null);
   const [ clickedCharacter, setClickedCharacter ] = useState(null);
+  // const { setGameTimer } = useContext(GameContext);
  
   // __________________________________
 
@@ -62,7 +65,8 @@ export default function Game() {
     setClickedCharacter(foundCharacter || false);
   };
   
-
+// load with a fade over the image & a modal with a start game button 
+// on click of start game button commence game timer & unfade the image
   return(
     <div data-testid="game-section" className="w-full flex justify-center pt-16">
       <div className="relative w-[80vw] max-w-[1400px]">
@@ -96,11 +100,11 @@ export default function Game() {
                   width: `${(char.endX - char.startX) * 100}%`,
                   height: `${(char.endY - char.startY) * 100}%`,
                 }}>
-
               </div>
             )
           }
         })}
+        <StartGameDialog />
       </div>
     </div>
   )

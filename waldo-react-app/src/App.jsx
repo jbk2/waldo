@@ -5,6 +5,8 @@ import HomePage from '/src/routes/HomePage'
 import { initialCharacters } from './data/characters'
 import Navbar from './components/Navbar'
 import Alert from './components/Alert';
+import GameProvider from './contexts/GameContext'
+
 
 export default function App() {
   const [ alert, setAlert ] = useState(null)
@@ -209,11 +211,13 @@ export default function App() {
 
   return (
     <>
-      <Alert alert={alert} />
-      <Navbar characters={characters} loggedIn={loggedIn} logOut={logOut} user={user} />
-      <main className='pt-[8rem] min-h-[calc(100vh-8rem)]'>
-        <Outlet context={{signIn, signUp, requestResetPassword, resetPassword, loggedIn, showAlert, characters, setCharacters}} />
-      </main>
+      <GameProvider>
+        <Alert alert={alert} />
+        <Navbar characters={characters} loggedIn={loggedIn} logOut={logOut} user={user} />
+        <main className='pt-[8rem] min-h-[calc(100vh-8rem)]'>
+          <Outlet context={{signIn, signUp, requestResetPassword, resetPassword, loggedIn, showAlert, characters, setCharacters}} />
+        </main>
+      </GameProvider>
     </>
   )
 }
