@@ -3,44 +3,6 @@ import { render, screen, waitFor, act, fireEvent } from '@testing-library/react'
 import { RouterProvider } from "react-router-dom";
 import createTestRouter from "../../utils/testRouter";
 
-// Mock useOutletContext
-// vi.mock('react-router-dom', async (importOriginal) => {
-//   const actual = await importOriginal();
-//   return {
-//     ...actual,
-//     useOutletContext: vi.fn(),
-//     useNavigate: () => vi.fn()
-//   }
-// });
-
-// describe('SignIn route integration', () => {
-  
-//   beforeEach(() => {
-//     vi.clearAllMocks();
-//     vi.mocked(useOutletContext).mockReturnValue({
-//       showAlert: () => {},
-//       characters: [],
-//       setCharacters: () => {},
-//       loggedIn: false,
-//       signIn: () => {},
-//       signUp: () => {},
-//       requestResetPassword: () => {},
-//       resetPassword: () => {}
-//     });
-//   });
-
-//   it('renders sign-in page when visiting /sign-in directly', async () => {
-    
-//     render(
-//       <MemoryRouter initialEntries={['/sign-in']}>
-//         <Routes>
-//           <Route path='/sign-in' element={<SignIn />} />
-//         </Routes>
-//       </MemoryRouter>
-//     );
-//     expect(screen.getByText('Welcome to Waldo')).toBeInTheDocument();
-//   });
-// });
 const mockFailedAuthFetchOnce = () => {
   fetch.mockResolvedValueOnce({
     ok: false,

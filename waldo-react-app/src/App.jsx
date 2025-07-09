@@ -188,7 +188,7 @@ export default function App() {
     }) 
   }
 
-  const logOut = (e) => {
+  const logOut = () => {
     fetch('/api/session', {
       method: 'DELETE'
     })
