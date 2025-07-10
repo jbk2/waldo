@@ -1,6 +1,6 @@
 import { capitalize } from '../utils/stringUtils';
 import waldoScene1 from '../assets/images/waldo-scene1.jpg';
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect, useContext } from 'react';
 import { useOutletContext } from 'react-router-dom';
 import { GameContext } from '../contexts/GameContext';
 import StartGameDialog from './StartGameDialog';
@@ -9,36 +9,27 @@ import StartGameDialog from './StartGameDialog';
 export default function Game() {
   const { showAlert, characters, setCharacters } = useOutletContext();
   const imageRef = useRef();
+  const { stopGame } = useContext(GameContext)
   const [ clickMarker, setClickMarker ] = useState(null);
   const [ clickedCharacter, setClickedCharacter ] = useState(null);
+  const [ gameCompleted, setGameCompleted ] = useState(false)
 
+  // handles updating characters clicked state, & alerting
   useEffect(() => {
-    if(clickedCharacter === null) return;
-    
-    if(clickedCharacter) {
-      setCharacters((prevCharacters) => 
-        prevCharacters.map((character) =>
-          character.name === clickedCharacter.name
-        ? { ...character, clicked: true }
-        : character
-      ));
-    
-      showAlert(`🎉 Yay, you found ${capitalize(clickedCharacter.name)} 🎉`);
+    if(gameCompleted) {
+      // do appropriate UI thing to:
+      // - stop any more clicking
+      // - congratulate completed game
+      // - show game completed time
+      // - update game time to scoreboard
+    }
 
-      // should update game status with clicked character here now
-      // check whether all chars found and if so stop clock and alert win
-    } else if (clickMarker && !clickedCharacter) {
-      showAlert('No character found here. 👎');    
+    return () => {
+      // setClickMarker(null);
+      setClickedCharacter(null);
     };
-    
-    setTimeout(() => {
-      showAlert(null)
-    }, 1200);
 
-    setClickedCharacter(null);
-
-  }, [clickedCharacter]);
-  
+  }, [gameCompleted]);
   
   function hasClickedOnCharacter(clickX, clickY, character) {
     return(
@@ -51,11 +42,36 @@ export default function Game() {
     const rect = imageRef.current.getBoundingClientRect();
     const clickX = Math.round(((e.clientX - rect.x) / rect.width) * 1000) / 1000;
     const clickY = Math.round(((e.clientY - rect.y) / rect.height) * 1000) / 1000;
+    
+    setClickMarker({ x: clickX, y: clickY });
+    
     const foundCharacter = characters.find((character) => 
       hasClickedOnCharacter(clickX, clickY, character)
     )
-    setClickMarker({ x: clickX, y: clickY });
-    setClickedCharacter(foundCharacter || false);
+
+    if(foundCharacter) { 
+      setClickedCharacter(foundCharacter)
+      
+      const updatedCharacters = characters.map((character) =>
+        character.name === foundCharacter.name
+          ? { ...character, clicked: true }
+          : character
+      );
+      const allCharactersClicked = updatedCharacters.every((character) => character.clicked === true);
+
+      if(allCharactersClicked) {
+        console.log("from Game's useEffect - all chars are clicked");
+        setGameCompleted(true)
+        showAlert(`🎉 Yay, you clicked all characters 🎉`);
+        stopGame();
+      } else {
+        showAlert(`🎉 Yay, you found ${capitalize(foundCharacter.name)} 🎉`);
+      }
+
+      setCharacters(updatedCharacters);
+    } else {
+      showAlert('No character found here. 👎');    
+    };
   };
 
   function removeImgBlur() {
@@ -73,16 +89,18 @@ export default function Game() {
           className="w-full border-2 rounded blur-sm"
           alt="Waldo scene 1"
         />
+        {/* sets click boundary marker */}
         {clickMarker && (
           <div
-            className="absolute border-4 border-blue-800 w-6 h-8 pointer-events-none"
-            style={{
-              left: `${clickMarker.x * 100}%`,
-              top: `${clickMarker.y * 100}%`,
-              transform: 'translate(-50%, -50%)',
-            }}>
+          className="absolute border-4 border-blue-800 w-6 h-8 pointer-events-none"
+          style={{
+            left: `${clickMarker.x * 100}%`,
+            top: `${clickMarker.y * 100}%`,
+            transform: 'translate(-50%, -50%)',
+          }}>
           </div>
         )}
+        {/* sets character boundary marker if character clicked */}
         { characters.map((char) => {
           if(char.clicked) {
             return(

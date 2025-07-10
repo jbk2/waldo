@@ -24,14 +24,20 @@ export default function GameProvider({children}) {
     setGameTimer(0);
     setGameRunning(true);
   }
+  
+  const stopGame = () => {
+    setGameRunning(false);
+    console.log('game stopped, it took:', gameTimer, 'seconds')
+  }
 
   const value = {
     gameTimer,
-    startGame
+    startGame,
+    stopGame
   }
 
   return (
-    <GameContext.Provider value={value} >
+    <GameContext.Provider value={value}>
       {children}
     </GameContext.Provider>
   )

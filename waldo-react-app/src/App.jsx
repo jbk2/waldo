@@ -7,7 +7,6 @@ import Navbar from './components/Navbar'
 import Alert from './components/Alert';
 import GameProvider from './contexts/GameContext'
 
-
 export default function App() {
   const [ alert, setAlert ] = useState(null)
   const [ characters, setCharacters ] = useState(initialCharacters);
