@@ -1,6 +1,16 @@
 # Todo list
 
 ## All
+- Game play:
+  - disable further clicks
+  - record game time:
+    - report it in scoreboard
+    - record it in competition board
+    - if user account - rank a best user score
+      - report best user score to competition board
+    - Add a play again button to nav bar
+    - Add play a different game button to navbar
+- log out should clear characterStatus & erase game
 - allow non auth'd users to play a game, only prompt sign in or
   account creatiion upon completion of first game.
 - integrate calling react >> Rails API for the images
