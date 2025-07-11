@@ -2,6 +2,7 @@
 
 ## All
 - Game play:
+  - review end of game logic to be clearer between GameContext#stopGame, Game#useEffect & #handleImgClick
   - disable further clicks
   - record game time:
     - report it in scoreboard
