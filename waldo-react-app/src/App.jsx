@@ -5,6 +5,7 @@ import HomePage from '/src/routes/HomePage'
 import { initialCharacters } from './data/characters'
 import Navbar from './components/Navbar'
 import Alert from './components/Alert';
+import Confetti from './components/Confetti';
 import GameProvider from './contexts/GameContext'
 
 export default function App() {
@@ -14,6 +15,7 @@ export default function App() {
   const [ user, setUser ] = useState(null);
   const [ authChecked, setAuthChecked ] = useState(false);
   const alertTimeout = useRef(null)
+  const confettiRef = useRef(null);
   const navigate = useNavigate();
 
   // only on mount - call Rails api/session, with session_id cookie, to authenticate user
@@ -40,6 +42,26 @@ export default function App() {
     setAlert(msg)
     if (alertTimeout.current) { clearTimeout(alertTimeout.current) };
     alertTimeout.current = setTimeout(() => setAlert(null), 1500);
+  }
+
+  function launchConfetti() {
+    if(confettiRef.current) { 
+      confettiRef.current.innerHTML = ''; // Clear previous confetti
+    }
+  
+    const confettiCount = 120;
+  
+    for (let i = 0; i < confettiCount; i++) {
+      const confetti = document.createElement('div');
+      confetti.classList.add('confetti-piece');
+      
+      // Random horizontal position and slight staggered delay
+      confetti.style.left = `${Math.random() * 100}vw`;
+      confetti.style.top = `${Math.random() * -120 - 30}vh`;
+      confetti.style.animationDelay = `${Math.random() * 0.5}s`;
+  
+      confettiRef.current.appendChild(confetti);
+    }
   }
 
   const signIn = (e) => {
@@ -211,10 +233,11 @@ export default function App() {
   return (
     <>
       <GameProvider>
+        <Confetti ref={confettiRef} />
         <Alert alert={alert} />
         <Navbar characters={characters} loggedIn={loggedIn} logOut={logOut} user={user} />
         <main className='pt-[8rem] min-h-[calc(100vh-8rem)]'>
-          <Outlet context={{signIn, signUp, requestResetPassword, resetPassword, loggedIn, showAlert, characters, setCharacters}} />
+          <Outlet context={{signIn, signUp, requestResetPassword, resetPassword, loggedIn, showAlert, launchConfetti, characters, setCharacters}} />
         </main>
       </GameProvider>
     </>

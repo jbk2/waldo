@@ -8,7 +8,7 @@ import StartGameDialog from './StartGameDialog';
 
 export default function Game() {
   const imageRef = useRef();
-  const { showAlert, characters, setCharacters } = useOutletContext();
+  const { showAlert, characters, setCharacters, launchConfetti } = useOutletContext();
   const { stopGame, gameRunning, gamePlayed } = useContext(GameContext)
   // const [ gameCompleted, setGameCompleted ] = useState(false)
   const [ clickLocation, setClickLocation ] = useState(null);
@@ -17,6 +17,7 @@ export default function Game() {
   // handles updating characters clicked state, & alerting
   useEffect(() => {
     if(gamePlayed) {
+      launchConfetti();
       // do appropriate UI thing to:
       // - stop any more clicking - done
       // show modal with
@@ -65,9 +66,9 @@ export default function Game() {
 
       if(allCharactersClicked) {
         console.log("from Game's useEffect - all chars are clicked");
-        setGameCompleted(true)
         showAlert(`🎉 Yay, you found ${capitalize(foundCharacter.name)}, and all characters 🎉`);
         stopGame();
+        addImgBlur();
       } else {
         showAlert(`🎉 Yay, you found ${capitalize(foundCharacter.name)} 🎉`);
       }
@@ -81,6 +82,10 @@ export default function Game() {
     setBlurImg(false)
   }
   
+  function addImgBlur() {
+    setBlurImg(true)
+  }
+  
   return(
     <div data-testid="game-section" className="w-full flex justify-center pt-16">
       <div className="relative w-[80vw] max-w-[1400px]">
@@ -89,7 +94,7 @@ export default function Game() {
           src={waldoScene1}
           id="waldo-scene-1"
           onClick={handleImageClick}
-          className={`w-full border-2 rounded ${blurImg && 'blur-sm'}
+          className={`w-full border-2 rounded ${blurImg && 'blur-xs opacity-80'}
             ${gameRunning && 'hover:cursor-pointer'}`}
           alt="Waldo scene 1"
         />
