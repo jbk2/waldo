@@ -3,15 +3,16 @@ import { createContext, useEffect, useState, useRef } from "react";
 const GameContext = createContext();
 
 export default function GameProvider({children}) {
-  const [ gameTimer, setGameTimer ] = useState(0);
+  const [ gameElapsedTime, setGameElapsedTime ] = useState(0);
   const [ gameRunning, setGameRunning ] = useState(false)
   const intervalRef = useRef(null);
   
   useEffect(() => {
     if(gameRunning) {
+      const gameStartTime = Date.now();
       intervalRef.current = setInterval(() => {
-        setGameTimer((prev) => prev + 1);
-      }, 1000)
+        setGameElapsedTime(Date.now() - gameStartTime);
+      }, 10)
     } else {
       if(intervalRef.current) {
         clearInterval(intervalRef.current);
@@ -21,17 +22,17 @@ export default function GameProvider({children}) {
   }, [gameRunning])
 
   const startGame = () => {
-    setGameTimer(0);
+    setGameElapsedTime(0);
     setGameRunning(true);
   }
   
   const stopGame = () => {
     setGameRunning(false);
-    console.log('game stopped, it took:', gameTimer, 'seconds')
+    console.log('game stopped, it took:', gameElapsedTime, 'milliseconds')
   }
 
   const value = {
-    gameTimer,
+    gameElapsedTime,
     gameRunning,
     startGame,
     stopGame
