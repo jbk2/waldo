@@ -23,7 +23,7 @@ export default function StartGameDialog({removeImgBlur}) {
       <button onClick={handleStartGameClick} className="h-fit p-3 px-4 rounded-lg hover:cursor-pointer
         absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2
         border-2 border-indigo-300 hover:border-indigo-400 bg-cyan-400 hover:bg-cyan-500
-        font-variation-settings-600 font-raleway tracking-wide underline decoration-wavy
+        font-variation-settings-wght-600 font-raleway tracking-wide underline decoration-wavy
         decoration-2 decoration-blue-600 underline-offset-3">
         PLAY A GAME ?
       </button>

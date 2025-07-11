@@ -21,19 +21,13 @@ export default function Navbar({characters, loggedIn, logOut, user}) {
             >Where's Waldo?</h1>
         </div>
         
-        <div data-testid='scoreboard-col' className='flex ml-24'>
-          <div className='text-xs w-14'>
-            { user
-              ? `is a user ${user.email_address}`
-              : 'is no user'
-            }
-          </div>
+        <div data-testid='scoreboard-col' className='flex ml-24 items-center'>
           <ScoreBoard />
           {loggedIn
             && (
-              <button type="button" onClick={() => logOut()} className='btn w-fit'>
-              LogOut
-            </button>
+              <button type="button" onClick={() => logOut()} className='btn w-fit ml-2'>
+                LogOut
+              </button>
             )
           }
         </div>

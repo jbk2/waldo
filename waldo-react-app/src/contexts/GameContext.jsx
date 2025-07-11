@@ -5,6 +5,7 @@ const GameContext = createContext();
 export default function GameProvider({children}) {
   const [ gameElapsedTime, setGameElapsedTime ] = useState(0);
   const [ gameRunning, setGameRunning ] = useState(false)
+  const [ gamePlayed, setGamePlayed ] = useState(false)
   const intervalRef = useRef(null);
   
   useEffect(() => {
@@ -28,6 +29,7 @@ export default function GameProvider({children}) {
   
   const stopGame = () => {
     setGameRunning(false);
+    setGamePlayed(true);
     console.log('game stopped, it took:', gameElapsedTime, 'milliseconds')
   }
 
@@ -35,7 +37,8 @@ export default function GameProvider({children}) {
     gameElapsedTime,
     gameRunning,
     startGame,
-    stopGame
+    stopGame,
+    gamePlayed
   }
 
   return (

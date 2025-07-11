@@ -42,36 +42,36 @@
       transform: translateY(0) scale(1);
     }
   }
+  
   .animate-slide-bounce-in {
     animation: slide-bounce-in 0.8s cubic-bezier(0.22, 1, 0.36, 1);
   }
-  @layer utilities {
-    .font-variation-settings-100 {
-      font-variation-settings: "wght" 100;
-    }
-    .font-variation-settings-200 {
-      font-variation-settings: "wght" 200;
-    }
-    .font-variation-settings-300 {
-      font-variation-settings: "wght" 300;
-    }
-    .font-variation-settings-400 {
-      font-variation-settings: "wght" 400;
-    }
-    .font-variation-settings-500 {
-      font-variation-settings: "wght" 500;
-    }
-    .font-variation-settings-600 {
-      font-variation-settings: "wght" 600;
-    }
-    .font-variation-settings-700 {
-      font-variation-settings: "wght" 700;
-    }
-    .font-variation-settings-800 {
-      font-variation-settings: "wght" 800;
-    }
-    .font-variation-settings-900 {
-      font-variation-settings: "wght" 900;
-    }
+  .font-variation-settings-wght-100 {
+    font-variation-settings: "wght" 100;
   }
+  .font-variation-settings-wght-200 {
+    font-variation-settings: "wght" 200;
+  }
+  .font-variation-settings-wght-300 {
+    font-variation-settings: "wght" 300;
+  }
+  .font-variation-settings-wght-400 {
+    font-variation-settings: "wght" 400;
+  }
+  .font-variation-settings-wght-500 {
+    font-variation-settings: "wght" 500;
+  }
+  .font-variation-settings-wght-600 {
+    font-variation-settings: "wght" 600;
+  }
+  .font-variation-settings-wght-700 {
+    font-variation-settings: "wght" 700;
+  }
+  .font-variation-settings-wght-800 {
+    font-variation-settings: "wght" 800;
+  }
+  .font-variation-settings-wght-900 {
+    font-variation-settings: "wght" 900;
+  }
+
 }

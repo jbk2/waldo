@@ -9,16 +9,20 @@ import StartGameDialog from './StartGameDialog';
 export default function Game() {
   const imageRef = useRef();
   const { showAlert, characters, setCharacters } = useOutletContext();
-  const { stopGame, gameRunning } = useContext(GameContext)
-  const [ gameCompleted, setGameCompleted ] = useState(false)
+  const { stopGame, gameRunning, gamePlayed } = useContext(GameContext)
+  // const [ gameCompleted, setGameCompleted ] = useState(false)
   const [ clickLocation, setClickLocation ] = useState(null);
   const [blurImg, setBlurImg] = useState(true)
 
   // handles updating characters clicked state, & alerting
   useEffect(() => {
-    if(gameCompleted) {
+    if(gamePlayed) {
       // do appropriate UI thing to:
-      // - stop any more clicking
+      // - stop any more clicking - done
+      // show modal with
+      //    - time
+      //    - best time
+      //    - rank against other users time
       // - congratulate completed game
       // - show game completed time
       // - update game time to scoreboard
@@ -27,7 +31,7 @@ export default function Game() {
     return () => {
       setClickLocation(null);
     };
-  }, [gameCompleted]);
+  }, [gamePlayed]);
   
   function hasClickedOnACharacter(clickX, clickY, character) {
     return(
