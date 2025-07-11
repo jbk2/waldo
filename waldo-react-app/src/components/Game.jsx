@@ -17,6 +17,7 @@ export default function Game() {
   // handles updating characters clicked state, & alerting
   useEffect(() => {
     if(gamePlayed) {
+      addImgBlur();
       launchConfetti();
       // do appropriate UI thing to:
       // - stop any more clicking - done
@@ -68,7 +69,6 @@ export default function Game() {
         console.log("from Game's useEffect - all chars are clicked");
         showAlert(`🎉 Yay, you found ${capitalize(foundCharacter.name)}, and all characters 🎉`);
         stopGame();
-        addImgBlur();
       } else {
         showAlert(`🎉 Yay, you found ${capitalize(foundCharacter.name)} 🎉`);
       }
