@@ -7,12 +7,12 @@ import StartGameDialog from './StartGameDialog';
 
 
 export default function Game() {
-  const { showAlert, characters, setCharacters } = useOutletContext();
   const imageRef = useRef();
-  const { stopGame } = useContext(GameContext)
-  const [ clickMarker, setClickMarker ] = useState(null);
-  const [ clickedCharacter, setClickedCharacter ] = useState(null);
+  const { showAlert, characters, setCharacters } = useOutletContext();
+  const { stopGame, gameRunning } = useContext(GameContext)
   const [ gameCompleted, setGameCompleted ] = useState(false)
+  const [ clickLocation, setClickLocation ] = useState(null);
+  const [blurImg, setBlurImg] = useState(true)
 
   // handles updating characters clicked state, & alerting
   useEffect(() => {
@@ -25,13 +25,11 @@ export default function Game() {
     }
 
     return () => {
-      // setClickMarker(null);
-      setClickedCharacter(null);
+      setClickLocation(null);
     };
-
   }, [gameCompleted]);
   
-  function hasClickedOnCharacter(clickX, clickY, character) {
+  function hasClickedOnACharacter(clickX, clickY, character) {
     return(
       clickX >= character.startX && clickX <= character.endX &&
       clickY >= character.startY && clickY <= character.endY
@@ -39,19 +37,21 @@ export default function Game() {
   }
 
   function handleImageClick(e) {
+    if(!gameRunning) {
+      return null;
+    }
+
     const rect = imageRef.current.getBoundingClientRect();
     const clickX = Math.round(((e.clientX - rect.x) / rect.width) * 1000) / 1000;
     const clickY = Math.round(((e.clientY - rect.y) / rect.height) * 1000) / 1000;
     
-    setClickMarker({ x: clickX, y: clickY });
+    setClickLocation({ x: clickX, y: clickY });
     
     const foundCharacter = characters.find((character) => 
-      hasClickedOnCharacter(clickX, clickY, character)
+      hasClickedOnACharacter(clickX, clickY, character)
     )
 
     if(foundCharacter) { 
-      setClickedCharacter(foundCharacter)
-      
       const updatedCharacters = characters.map((character) =>
         character.name === foundCharacter.name
           ? { ...character, clicked: true }
@@ -62,12 +62,11 @@ export default function Game() {
       if(allCharactersClicked) {
         console.log("from Game's useEffect - all chars are clicked");
         setGameCompleted(true)
-        showAlert(`🎉 Yay, you clicked all characters 🎉`);
+        showAlert(`🎉 Yay, you found ${capitalize(foundCharacter.name)}, and all characters 🎉`);
         stopGame();
       } else {
         showAlert(`🎉 Yay, you found ${capitalize(foundCharacter.name)} 🎉`);
       }
-
       setCharacters(updatedCharacters);
     } else {
       showAlert('No character found here. 👎');    
@@ -75,7 +74,7 @@ export default function Game() {
   };
 
   function removeImgBlur() {
-    imageRef.current.classList.remove('blur-sm')
+    setBlurImg(false)
   }
   
   return(
@@ -86,16 +85,17 @@ export default function Game() {
           src={waldoScene1}
           id="waldo-scene-1"
           onClick={handleImageClick}
-          className="w-full border-2 rounded blur-sm"
+          className={`w-full border-2 rounded ${blurImg && 'blur-sm'}
+            ${gameRunning && 'hover:cursor-pointer'}`}
           alt="Waldo scene 1"
         />
         {/* sets click boundary marker */}
-        {clickMarker && (
+        {clickLocation && (
           <div
           className="absolute border-4 border-blue-800 w-6 h-8 pointer-events-none"
           style={{
-            left: `${clickMarker.x * 100}%`,
-            top: `${clickMarker.y * 100}%`,
+            left: `${clickLocation.x * 100}%`,
+            top: `${clickLocation.y * 100}%`,
             transform: 'translate(-50%, -50%)',
           }}>
           </div>

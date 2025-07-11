@@ -32,6 +32,7 @@ export default function GameProvider({children}) {
 
   const value = {
     gameTimer,
+    gameRunning,
     startGame,
     stopGame
   }
