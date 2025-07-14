@@ -1,11 +1,13 @@
 // import { characters } from '';
+import { useContext } from 'react';
 import waldo from '../assets/images/waldo-head.png';
 import wenda from '../assets/images/wenda-head.png';
 import odlaw from '../assets/images/odlaw-head.png';
 import { capitalize } from '../utils/stringUtils';
+import { GameContext } from "../contexts/GameContext"
 
-export default function CharacterStatus({ characters }) {
-
+export default function CharacterStatus() {
+  const { characters } = useContext(GameContext)
   const headshots = {
     waldo: waldo,
     wenda: wenda,

@@ -4,36 +4,15 @@ import { useState, useRef, useEffect, useContext } from 'react';
 import { useOutletContext } from 'react-router-dom';
 import { GameContext } from '../contexts/GameContext';
 import StartGameDialog from './StartGameDialog';
+import EndGameDialog from './EndGameDialog';
 
 
 export default function Game() {
   const imageRef = useRef();
-  const { showAlert, characters, setCharacters, launchConfetti } = useOutletContext();
-  const { stopGame, gameRunning, gamePlayed } = useContext(GameContext)
-  // const [ gameCompleted, setGameCompleted ] = useState(false)
+  const { showAlert, launchConfetti } = useOutletContext();
+  const { characters, setCharacters, stopGame, gameRunning, gamePlayed } = useContext(GameContext)
   const [ clickLocation, setClickLocation ] = useState(null);
   const [blurImg, setBlurImg] = useState(true)
-
-  // handles updating characters clicked state, & alerting
-  useEffect(() => {
-    if(gamePlayed) {
-      addImgBlur();
-      launchConfetti();
-      // do appropriate UI thing to:
-      // - stop any more clicking - done
-      // show modal with
-      //    - time
-      //    - best time
-      //    - rank against other users time
-      // - congratulate completed game
-      // - show game completed time
-      // - update game time to scoreboard
-    }
-
-    return () => {
-      setClickLocation(null);
-    };
-  }, [gamePlayed]);
   
   function hasClickedOnACharacter(clickX, clickY, character) {
     return(
@@ -43,9 +22,7 @@ export default function Game() {
   }
 
   function handleImageClick(e) {
-    if(!gameRunning) {
-      return null;
-    }
+    if(!gameRunning) return null;
 
     const rect = imageRef.current.getBoundingClientRect();
     const clickX = Math.round(((e.clientX - rect.x) / rect.width) * 1000) / 1000;
@@ -66,9 +43,9 @@ export default function Game() {
       const allCharactersClicked = updatedCharacters.every((character) => character.clicked === true);
 
       if(allCharactersClicked) {
-        console.log("from Game's useEffect - all chars are clicked");
         showAlert(`🎉 Yay, you found ${capitalize(foundCharacter.name)}, and all characters 🎉`);
         stopGame();
+        launchConfetti();
       } else {
         showAlert(`🎉 Yay, you found ${capitalize(foundCharacter.name)} 🎉`);
       }
@@ -126,7 +103,9 @@ export default function Game() {
             )
           }
         })}
-        <StartGameDialog removeImgBlur={removeImgBlur} />
+        { !gameRunning && !gamePlayed && <StartGameDialog removeImgBlur={removeImgBlur} /> }
+        { !gameRunning && gamePlayed && <EndGameDialog /> }
+
       </div>
     </div>
   )

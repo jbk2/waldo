@@ -10,7 +10,6 @@ import GameProvider from './contexts/GameContext'
 
 export default function App() {
   const [ alert, setAlert ] = useState(null)
-  const [ characters, setCharacters ] = useState(initialCharacters);
   const [ loggedIn, setLoggedIn ] = useState(null);
   const [ user, setUser ] = useState(null);
   const [ authChecked, setAuthChecked ] = useState(false);
@@ -235,9 +234,9 @@ export default function App() {
       <GameProvider>
         <Confetti ref={confettiRef} />
         <Alert alert={alert} />
-        <Navbar characters={characters} loggedIn={loggedIn} logOut={logOut} user={user} />
+        <Navbar loggedIn={loggedIn} logOut={logOut} user={user} />
         <main className='pt-[8rem] min-h-[calc(100vh-8rem)]'>
-          <Outlet context={{signIn, signUp, requestResetPassword, resetPassword, loggedIn, showAlert, launchConfetti, characters, setCharacters}} />
+          <Outlet context={{signIn, signUp, requestResetPassword, resetPassword, loggedIn, showAlert, launchConfetti}} />
         </main>
       </GameProvider>
     </>
