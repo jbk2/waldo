@@ -9,14 +9,12 @@ export default function StartGameDialog({removeImgBlur}) {
   const handleStartGameClick = () => {
     startGame();
     removeImgBlur();
-    if(dialogRef.current) {
-      dialogRef.current.close();
-    }
+    if(dialogRef.current) dialogRef.current.close();
   };
 
   return(
     <dialog
-      ref={dialogRef}
+      ref={dialogRef} id="startGameDialog"
       open
       className="border-2 rounded-md top-1/5 left-1/2 -translate-x-1/2 w-90 h-60
         bg-white justify-center items-center">
