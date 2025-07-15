@@ -22,12 +22,14 @@ export default function Navbar({loggedIn, logOut}) {
         </div>
         
         <div data-testid='scoreboard-col' className='flex ml-24 items-center'>
-          <ScoreBoard />
           {loggedIn
             && (
-              <button type="button" onClick={() => logOut()} className='btn w-fit ml-2'>
-                LogOut
-              </button>
+              <>
+                <ScoreBoard />
+                <button type="button" onClick={() => logOut()} className='btn w-fit ml-2'>
+                  LogOut
+                </button>
+              </>
             )
           }
         </div>
