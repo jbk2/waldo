@@ -2,7 +2,6 @@ import { useState, useEffect, useRef } from 'react';
 import { Outlet, useNavigate } from 'react-router-dom'
 import './assets/stylesheets/index.css'
 import HomePage from '/src/routes/HomePage'
-import { initialCharacters } from './data/characters'
 import Navbar from './components/Navbar'
 import Alert from './components/Alert';
 import Confetti from './components/Confetti';

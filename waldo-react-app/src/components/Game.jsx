@@ -1,11 +1,10 @@
 import { capitalize } from '../utils/stringUtils';
 import waldoScene1 from '../assets/images/waldo-scene1.jpg';
-import { useState, useRef, useEffect, useContext } from 'react';
+import { useState, useRef, useContext } from 'react';
 import { useOutletContext } from 'react-router-dom';
 import { GameContext } from '../contexts/GameContext';
 import StartGameDialog from './StartGameDialog';
 import EndGameDialog from './EndGameDialog';
-
 
 export default function Game() {
   const imageRef = useRef();
