@@ -1,6 +1,7 @@
-import { useState, useEffect, useRef } from 'react';
-import { Outlet, useNavigate } from 'react-router-dom'
 import './assets/stylesheets/index.css'
+import { useState, useEffect, useRef, useContext } from 'react';
+import { Outlet, useNavigate } from 'react-router-dom'
+import { UIContext } from './contexts/UIContext';
 import HomePage from '/src/routes/HomePage'
 import Navbar from './components/Navbar'
 import Alert from './components/Alert';
@@ -8,13 +9,12 @@ import Confetti from './components/Confetti';
 import GameProvider from './contexts/GameContext'
 
 export default function App() {
-  const [ alert, setAlert ] = useState(null)
   const [ loggedIn, setLoggedIn ] = useState(null);
   const [ user, setUser ] = useState(null);
   const [ authChecked, setAuthChecked ] = useState(false);
-  const alertTimeout = useRef(null)
   const confettiRef = useRef(null);
   const navigate = useNavigate();
+  const { showAlert } = useContext(UIContext);
 
   // only on mount - call Rails api/session, with session_id cookie, to authenticate user
   useEffect(() => {
@@ -34,13 +34,6 @@ export default function App() {
     })
     .catch(() => setAuthChecked(true));
   }, []);
-
-  // set alert, set a timeout fn in a useRef, and reset alert to null and clear the timeout
-  const showAlert = (msg) => {
-    setAlert(msg)
-    if (alertTimeout.current) { clearTimeout(alertTimeout.current) };
-    alertTimeout.current = setTimeout(() => setAlert(null), 1500);
-  }
 
   function launchConfetti() {
     if(confettiRef.current) { 
@@ -232,7 +225,7 @@ export default function App() {
     <>
       <GameProvider>
         <Confetti ref={confettiRef} />
-        <Alert alert={alert} />
+        <Alert />
         <Navbar loggedIn={loggedIn} logOut={logOut} user={user} />
         <main className='pt-[8rem] min-h-[calc(100vh-8rem)]'>
           <Outlet context={{signIn, signUp, requestResetPassword, resetPassword, loggedIn, showAlert, launchConfetti}} />

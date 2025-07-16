@@ -8,6 +8,7 @@ import SignUp from './routes/auth/SignUp'
 import RequestResetPassword from './routes/auth/RequestResetPassword'
 import ResetPassword from './routes/auth/ResetPassword'
 import CompetitionBoard from '/src/routes/CompetitionBoard'
+import UIProvider from './contexts/UIContext'
 
 const router = createBrowserRouter([
   {
@@ -26,6 +27,8 @@ const router = createBrowserRouter([
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <RouterProvider router={router} />
+    <UIProvider>
+      <RouterProvider router={router} />
+    </UIProvider>
   </StrictMode>,
 )

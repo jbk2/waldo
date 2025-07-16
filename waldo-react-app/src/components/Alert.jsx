@@ -1,8 +1,10 @@
-import { useState, useEffect } from "react"
+import { useState, useEffect, useContext } from "react"
+import { UIContext } from "../contexts/UIContext"
 
-export default function Alert({ alert }) {
+export default function Alert() {
   const [visible, setVisible] = useState(false)
   const [message, setMessage] = useState(null)
+  const { alert } = useContext(UIContext);
 
   useEffect(() => {
     if (alert) {
