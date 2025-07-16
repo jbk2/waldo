@@ -3,7 +3,7 @@ class Api::SessionsController < ApplicationController
 
   def create
     if user = User.authenticate_by(params.permit(:email_address, :password))
-      start_new_session_for user
+      start_new_session_for(user)
       render json: {
         message: "Successfully logged in",
         user: user,
