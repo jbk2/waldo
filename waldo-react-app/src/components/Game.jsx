@@ -1,14 +1,14 @@
 import { capitalize } from '../utils/stringUtils';
 import waldoScene1 from '../assets/images/waldo-scene1.jpg';
 import { useState, useRef, useContext } from 'react';
-import { useOutletContext } from 'react-router-dom';
 import { GameContext } from '../contexts/GameContext';
 import StartGameDialog from './StartGameDialog';
 import EndGameDialog from './EndGameDialog';
+import { UIContext } from '../contexts/UIContext';
 
 export default function Game() {
   const imageRef = useRef();
-  const { showAlert, launchConfetti } = useOutletContext();
+  const { showAlert, showConfetti } = useContext(UIContext);
   const { characters, setCharacters, stopGame, gameRunning, gamePlayed } = useContext(GameContext)
   const [ clickLocation, setClickLocation ] = useState(null);
   const [blurImg, setBlurImg] = useState(true)
@@ -44,7 +44,7 @@ export default function Game() {
       if(allCharactersClicked) {
         showAlert(`🎉 Yay, you found ${capitalize(foundCharacter.name)}, and all characters 🎉`);
         stopGame();
-        launchConfetti();
+        showConfetti();
       } else {
         showAlert(`🎉 Yay, you found ${capitalize(foundCharacter.name)} 🎉`);
       }

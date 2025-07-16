@@ -12,7 +12,6 @@ export default function App() {
   const [ loggedIn, setLoggedIn ] = useState(null);
   const [ user, setUser ] = useState(null);
   const [ authChecked, setAuthChecked ] = useState(false);
-  const confettiRef = useRef(null);
   const navigate = useNavigate();
   const { showAlert } = useContext(UIContext);
 
@@ -34,26 +33,6 @@ export default function App() {
     })
     .catch(() => setAuthChecked(true));
   }, []);
-
-  function launchConfetti() {
-    if(confettiRef.current) { 
-      confettiRef.current.innerHTML = ''; // Clear previous confetti
-    }
-  
-    const confettiCount = 120;
-  
-    for (let i = 0; i < confettiCount; i++) {
-      const confetti = document.createElement('div');
-      confetti.classList.add('confetti-piece');
-      
-      // Random horizontal position and slight staggered delay
-      confetti.style.left = `${Math.random() * 100}vw`;
-      confetti.style.top = `${Math.random() * -120 - 30}vh`;
-      confetti.style.animationDelay = `${Math.random() * 0.5}s`;
-  
-      confettiRef.current.appendChild(confetti);
-    }
-  }
 
   const signIn = (e) => {
     e.preventDefault();
@@ -224,11 +203,10 @@ export default function App() {
   return (
     <>
       <GameProvider>
-        <Confetti ref={confettiRef} />
         <Alert />
         <Navbar loggedIn={loggedIn} logOut={logOut} user={user} />
         <main className='pt-[8rem] min-h-[calc(100vh-8rem)]'>
-          <Outlet context={{signIn, signUp, requestResetPassword, resetPassword, loggedIn, showAlert, launchConfetti}} />
+          <Outlet context={{signIn, signUp, requestResetPassword, resetPassword, loggedIn, showAlert}} />
         </main>
       </GameProvider>
     </>
