@@ -1,11 +1,9 @@
 import { createContext, useState, useContext } from "react";
-// import { useNavigate } from "react-router-dom";
 import { UIContext } from "./UIContext";
 
 const AuthContext = createContext();
 
 export default function AuthProvider({children}) {
-  // const navigate = useNavigate();
   const [ signedIn, setSignedIn ] = useState(null);
   const [ user, setUser ] = useState(null);
   const [ authChecked, setAuthChecked ] = useState(false);
@@ -29,7 +27,7 @@ export default function AuthProvider({children}) {
       } else {
         setSignedIn(false)
         setAuthChecked(true)
-        showAlert(data.message || "Authentication failed, fetch response not ok, and was no JSON response errors object");
+        console.log(data.message || "Authentication failed, fetch response not ok, and was no JSON response errors object");
       }
     })
     .catch((error) => {
@@ -38,11 +36,43 @@ export default function AuthProvider({children}) {
       showAlert(`Auth fetch failed: ${error.message}`);
     })
   }
+
+  function signUp(formData, navigate) {
+    fetch("/api/users", {
+      method: "POST",
+      headers: {
+        "Accept": "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        user: {
+          email_address: formData.get('email_address'),
+          password: formData.get('password'),
+          password_confirmation: formData.get('password_confirmation'),
+        },
+      }),
+    })
+    .then(async (res) => {
+      const data = await res.json();
+      if (res.ok) {
+        navigate('/sign-in');
+        showAlert(data.message);
+      } else {
+        showAlert(
+          data.message ||
+            "Sign up failed, fetch response not ok, and was no JSON response errors object"
+        );
+      }
+    })
+    .catch((err) => {
+      showAlert(
+        err.message ||
+          "Sign up failed, fetch threw an error, and there was no err.message object"
+      );
+    });
+  }
   
   function signIn(formData, navigate) {
-    const email_address = formData.get('email_address')
-    const password = formData.get('password')
-
     fetch("/api/session", {
       method: "POST",
       credentials: "include",
@@ -51,8 +81,8 @@ export default function AuthProvider({children}) {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        email_address: email_address,
-        password: password,
+        email_address: formData.get('email_address'),
+        password: formData.get('password'),
       }),
     })
     .then(async (res) => {
@@ -96,46 +126,78 @@ export default function AuthProvider({children}) {
     })
   }
 
-  function signUp(formData, navigate) {
-    const email_address = formData.get('email_address')
-    const password = formData.get('password')
-    const password_confirmation = formData.get('password_confirmation')
-    
-    fetch("/api/users", {
+  function requestResetPassword(formData, navigate) {
+    fetch(`/api/passwords`, {
       method: "POST",
-      headers: {
+      headers: { 
         "Accept": "application/json",
-        "Content-Type": "application/json",
+        "Content-Type": "application/json"
       },
       body: JSON.stringify({
-        user: {
-          email_address: email_address,
-          password: password,
-          password_confirmation: password_confirmation,
-        },
-      }),
+        email_address: formData.get('email_address')
+      })
     })
     .then(async (res) => {
       const data = await res.json();
-      if (res.ok) {
-        navigate('/sign-in');
+      if(res.ok) {
         showAlert(data.message);
+        navigate('/');
       } else {
         showAlert(
           data.message ||
-            "Sign up failed, fetch response not ok, and was no JSON response errors object"
+            "Password reset request failed, fetch response not ok, and was no JSON response errors object"
         );
       }
     })
     .catch((err) => {
       showAlert(
         err.message ||
-          "Sign up failed, fetch threw an error, and there was no err.message object"
+          "Sign in failed, fetch threw an error, and there was no err.message object"
       );
-    });
+    }) 
+  }
+
+  function resetPassword(formData, token, navigate) {
+    fetch(`api/passwords/${token}`, {
+      method: "PATCH",
+      headers: { 
+        "Accept": "application/json",
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        password: formData.get('new_password'),
+        password_confirmation: formData.get('new_password_confirmation')
+      })
+    })
+    .then(async (res) => {
+      const data = await res.json();
+      if(res.ok) {
+        showAlert(data.message);
+        navigate('/');
+      } else {
+        showAlert(data.message)
+        navigate('request-reset-password')
+      }
+    })
+    .catch((err) => {
+      showAlert(
+        err.message ||
+          "Password update failed, fetch to server threw an error, and there was no err.message object"
+      );
+    }) 
   }
   
-  const value = { authenticate, authChecked, signUp, signIn, signOut, signedIn, user };
+  const value = {
+    authenticate,
+    authChecked,
+    signUp,
+    signIn,
+    signOut,
+    requestResetPassword,
+    resetPassword,
+    signedIn,
+    user
+  };
 
   return(
     <AuthContext.Provider value={value}>

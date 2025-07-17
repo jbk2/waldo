@@ -1,15 +1,25 @@
-import { useState, useEffect } from "react";
-import { useOutletContext, useSearchParams } from "react-router-dom";
+import { useState, useEffect, useContext, use } from "react";
+import { useSearchParams, useNavigate } from "react-router-dom";
 import AuthLayout from "./AuthLayout";
+import { AuthContext } from "../../contexts/AuthContext";
 
 export default function ResetPassword() {
-  const { resetPassword } = useOutletContext();
+  const navigate = useNavigate();
+  const { resetPassword } = useContext(AuthContext);
   const [searchParams] = useSearchParams();
   const token = searchParams.get('token');
   const [password, setPassword] = useState('');
   const [passwordConfirmation, setPasswordConfirmation] = useState('');
   const [passwordsMatch, setPasswordsMatch] = useState(false);
 
+
+  const handleResetPassword = (e) => {
+    e.preventDefault();
+    const formData = new FormData(e.target);
+    resetPassword(formData, token, navigate)
+  }
+
+  // Password & password conf match check to enable form submit
   const handlePasswordChange = (e) => {
     setPassword(e.target.value)
   }
@@ -28,7 +38,7 @@ export default function ResetPassword() {
 
   return(
     <AuthLayout title="Welcome to Waldo" subtitle="Enter your new password">
-      <form onSubmit={(e) => resetPassword(e, token)} className="flex flex-col gap-4">
+      <form onSubmit={(e) => handleResetPassword(e, token)} className="flex flex-col gap-4">
         <input
           type="password"
           placeholder="New password"

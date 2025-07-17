@@ -1,13 +1,22 @@
+import { useContext } from "react";
+import { useNavigate } from "react-router-dom";
+import { AuthContext } from "../../contexts/AuthContext";
 import AuthLayout from "./AuthLayout";
-import { useOutletContext } from "react-router-dom";
 
 export default function RequestResetPassword() {
-  const { requestResetPassword } = useOutletContext();
+  const navigate = useNavigate();
+  const { requestResetPassword } = useContext(AuthContext);
+
+  const handleRequestResetPassword = (e) => {
+    e.preventDefault();
+    const formData = new FormData(e.target);
+    requestResetPassword(formData, navigate);
+  }
 
   return(
     <AuthLayout title="Welcome to Waldo" subtitle="Enter your email to reset your password">
       <form
-        onSubmit={requestResetPassword}
+        onSubmit={handleRequestResetPassword}
         className="flex flex-col gap-3"
       >
         <input
