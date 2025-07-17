@@ -1,10 +1,13 @@
+import { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import ScoreBoard from './ScoreBoard';
 import CharacterStatus from './CharacterStatus';
+import { AuthContext } from '../contexts/AuthContext';
 
 
-export default function Navbar({loggedIn, logOut}) {
+export default function Navbar() {
   const navigate = useNavigate();
+  const { signedIn, signOut } = useContext(AuthContext);
 
   return(
     <>
@@ -22,11 +25,11 @@ export default function Navbar({loggedIn, logOut}) {
         </div>
         
         <div data-testid='scoreboard-col' className='flex ml-24 items-center'>
-          {loggedIn
+          {signedIn
             && (
               <>
                 <ScoreBoard />
-                <button type="button" onClick={() => logOut()} className='btn w-fit ml-2'>
+                <button type="button" onClick={() => signOut()} className='btn w-fit ml-2'>
                   LogOut
                 </button>
               </>

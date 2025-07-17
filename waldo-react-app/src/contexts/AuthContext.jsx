@@ -6,10 +6,13 @@ const AuthContext = createContext();
 
 export default function AuthProvider({children}) {
   // const navigate = useNavigate();
+  const [ signedIn, setSignedIn ] = useState(null);
+  const [ user, setUser ] = useState(null);
+  const [ authChecked, setAuthChecked ] = useState(false);
   const { showAlert } = useContext(UIContext);
 
   
-  function authenticate(setAuthChecked, setUser, setLoggedIn) {
+  function authenticate() {
     fetch('/api/session', {
       credentials: 'include',
       headers: {
@@ -22,9 +25,9 @@ export default function AuthProvider({children}) {
         console.log("user successfully authd");
         setAuthChecked(true);
         setUser(data.user);
-        setLoggedIn(true);
+        setSignedIn(true);
       } else {
-        setLoggedIn(false)
+        setSignedIn(false)
         setAuthChecked(true)
         showAlert(data.message || "Authentication failed, fetch response not ok, and was no JSON response errors object");
       }
@@ -36,47 +39,64 @@ export default function AuthProvider({children}) {
     })
   }
   
-  // function signIn(event, setUser, setLoggedIn) {
-  //   event.preventDefault();
-  //   const formData = new FormData(event.target)
-  //   const email_address = formData.get('email_address')
-  //   const password = formData.get('password')
+  function signIn(formData, navigate) {
+    const email_address = formData.get('email_address')
+    const password = formData.get('password')
 
-  //   fetch("/api/session", {
-  //     method: "POST",
-  //     credentials: "include",
-  //     headers: {
-  //       "Accept": "application/json",
-  //       "Content-Type": "application/json",
-  //     },
-  //     body: JSON.stringify({
-  //       email_address: email_address,
-  //       password: password,
-  //     }),
-  //   })
-  //   .then(async (res) => {
-  //     const data = await res.json();
-  //     if (res.ok) {
-  //       setLoggedIn(true)
-  //       showAlert(data.message);
-  //       // navigate('/');
-  //     } else {
-  //       showAlert(
-  //         data.message ||
-  //           "Sign in failed, fetch response not ok, and was no JSON response errors object"
-  //       );
-  //     }
-  //   })
-  //   .catch((err) => {
-  //     showAlert(
-  //       err.message ||
-  //         "Sign in failed, fetch threw an error, and there was no err.message object"
-  //     );
-  //   });
-  // }
+    fetch("/api/session", {
+      method: "POST",
+      credentials: "include",
+      headers: {
+        "Accept": "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        email_address: email_address,
+        password: password,
+      }),
+    })
+    .then(async (res) => {
+      const data = await res.json();
+      if (res.ok) {
+        setSignedIn(true)
+        showAlert(data.message);
+        navigate('/');
+      } else {
+        showAlert(
+          data.message ||
+            "Sign in failed, fetch response not ok, and was no JSON response errors object"
+        );
+      }
+    })
+    .catch((err) => {
+      showAlert(
+        err.message ||
+          "Sign in failed, fetch threw an error, and there was no err.message object"
+      );
+    });
+  }
   
+  function signOut() {
+    fetch('/api/session', {
+      method: 'DELETE',
+      headers: { 
+        "Accept": "application/json"
+      },
+    })
+    .then(async res => {
+      const data = await res.json();
+      if (res.ok) {
+        showAlert(data.message)
+        setUser(null)
+        setSignedIn(false)
+      } else {
+        showAlert(data.message || "Log out failed"
+        )
+      }
+    })
+  }
   
-  const value = { authenticate};
+  const value = { authenticate, authChecked, signIn, signOut, signedIn, user };
 
   return(
     <AuthContext.Provider value={value}>

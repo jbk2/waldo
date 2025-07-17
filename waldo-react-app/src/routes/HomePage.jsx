@@ -1,18 +1,19 @@
 import Game from '../components/Game';
-import { useEffect } from 'react';
-import { Navigate, useNavigate, useOutletContext } from 'react-router-dom';
+import { useEffect, useContext } from 'react';
+import { Navigate, useNavigate } from 'react-router-dom';
+import { AuthContext } from '../contexts/AuthContext';
 
 export default function HomePage() {
-  const { loggedIn } = useOutletContext();
+  const { signedIn } = useContext(AuthContext);
   const navigate = useNavigate();
 
   useEffect(() => {
-    if(!loggedIn) {
+    if(!signedIn) {
       navigate('/sign-in');
     }
-  }, [loggedIn, navigate])
+  }, [signedIn, navigate])
 
-  if(!loggedIn) {
+  if(!signedIn) {
     return(
       <div>
         <img src="/assets/images/spinner" alt="Loading" />
