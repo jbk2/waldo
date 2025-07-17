@@ -48,7 +48,14 @@ ________________________________________________________________________________
 
 ## Usage
 ### Tests
+    - see /src/tests/utils/testDatabase.js & /src/tests/setup.js, and the Rails app's
+      /app/controllers/api/test_controller.rb, which have set up end points to create and clean
+      test fixtures from the rails testdb. Therefore a Rails server needs to be spun up with:
+      `RAILS_ENV=test bin/rails server -p 3001 --log-to-stdout` before integration tests can be successfully run.
+    - many integration tests make actual http requests to rails dev server,
+      so dev server must be running for tests to propery run.
     - Run and read tests via package.json vitest script; `npm run test`
+
 
 ### To run the project locally:
 - Clone the repository
