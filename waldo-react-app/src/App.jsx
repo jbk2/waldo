@@ -7,7 +7,7 @@ import Navbar from './components/Navbar'
 import Alert from './components/Alert';
 
 export default function App() {
-  const { authenticate, authChecked, signedIn, user } = useContext(AuthContext);
+  const { authenticate, authChecked } = useContext(AuthContext);
 
   // only on mount - call Rails api/session, with session_id cookie, to authenticate user
   useEffect(() => {

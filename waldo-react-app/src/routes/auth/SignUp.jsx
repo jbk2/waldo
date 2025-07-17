@@ -1,13 +1,21 @@
-import AuthLayout from "./AuthLayout";
 import { useOutletContext, useNavigate } from "react-router-dom";
+import { useContext } from "react";
+import AuthLayout from "./AuthLayout";
+import { AuthContext } from "../../contexts/AuthContext";
 
 export default function SignUp() {
+  const { signUp } = useContext(AuthContext);
   const navigate = useNavigate();
-  const { signUp } = useOutletContext();
+
+  const handleSignUp = (e) => {
+    e.preventDefault();
+    const formData = new FormData(e.target);
+    signUp(formData, navigate);
+  }
 
   return(
     <AuthLayout title="Welcome to Waldo" subtitle="Please sign up to play">
-      <form onSubmit={signUp} className="flex flex-col gap-4">
+      <form onSubmit={handleSignUp} className="flex flex-col gap-4">
         <input
           type="email"
           placeholder="Email"
