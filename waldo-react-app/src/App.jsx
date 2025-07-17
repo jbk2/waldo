@@ -2,11 +2,9 @@ import './assets/stylesheets/index.css'
 import { useState, useEffect, useContext } from 'react';
 import { Outlet, useNavigate } from 'react-router-dom'
 import { UIContext } from './contexts/UIContext';
-import HomePage from '/src/routes/HomePage'
+import { AuthContext } from './contexts/AuthContext';
 import Navbar from './components/Navbar'
 import Alert from './components/Alert';
-import Confetti from './components/Confetti';
-import GameProvider from './contexts/GameContext'
 
 export default function App() {
   const [ loggedIn, setLoggedIn ] = useState(null);
@@ -14,30 +12,35 @@ export default function App() {
   const [ authChecked, setAuthChecked ] = useState(false);
   const navigate = useNavigate();
   const { showAlert } = useContext(UIContext);
+  const { authenticate } = useContext(AuthContext);
 
   // only on mount - call Rails api/session, with session_id cookie, to authenticate user
   useEffect(() => {
-    fetch('/api/session', {
-      credentials: 'include',
-      headers: {
-        "Accept": "application/json"
-      }
-    })
-    .then(async res => {
-      const data = await res.json();
-      if(res.ok) {
-        console.log("User authenticated, navigating to /");
-        setAuthChecked(true);
-        setUser(data.user);
-        setLoggedIn(true);
-      } else {
-        setLoggedIn(false);  
-        setAuthChecked(true);
-        showAlert(data.message || "Authentication failed, fetch response not ok, and was no JSON response errors object");  
-      }
-    })
-    .catch(() => setAuthChecked(true));
-  }, []);
+    authenticate(setAuthChecked, setUser, setLoggedIn)
+  }, [])
+  
+  // useEffect(() => {
+  //   fetch('/api/session', {
+  //     credentials: 'include',
+  //     headers: {
+  //       "Accept": "application/json"
+  //     }
+  //   })
+  //   .then(async res => {
+  //     const data = await res.json();
+  //     if(res.ok) {
+  //       console.log("User successfully authenticated");
+  //       setAuthChecked(true);
+  //       setUser(data.user);
+  //       setLoggedIn(true);
+  //     } else {
+  //       setLoggedIn(false);  
+  //       setAuthChecked(true);
+  //       showAlert(data.message || "Authentication failed, fetch response not ok, and was no JSON response errors object");  
+  //     }
+  //   })
+  //   .catch(() => setAuthChecked(true));
+  // }, []);
 
   const signIn = (e) => {
     e.preventDefault();
@@ -78,6 +81,7 @@ export default function App() {
     });
   };
 
+  
   const signUp = (e) => {
     e.preventDefault();
     const formData = new FormData(e.target)
@@ -214,13 +218,11 @@ export default function App() {
 
   return (
     <>
-      <GameProvider>
-        <Alert />
-        <Navbar loggedIn={loggedIn} logOut={logOut} user={user} />
-        <main className='pt-[8rem] min-h-[calc(100vh-8rem)]'>
-          <Outlet context={{signIn, signUp, requestResetPassword, resetPassword, loggedIn, showAlert}} />
-        </main>
-      </GameProvider>
+      <Alert />
+      <Navbar loggedIn={loggedIn} logOut={logOut} user={user} />
+      <main className='pt-[8rem] min-h-[calc(100vh-8rem)]'>
+        <Outlet context={{signIn, signUp, requestResetPassword, resetPassword, loggedIn, showAlert}} />
+      </main>
     </>
   )
 }

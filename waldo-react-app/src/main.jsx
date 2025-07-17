@@ -9,6 +9,8 @@ import RequestResetPassword from './routes/auth/RequestResetPassword'
 import ResetPassword from './routes/auth/ResetPassword'
 import CompetitionBoard from '/src/routes/CompetitionBoard'
 import UIProvider from './contexts/UIContext'
+import AuthProvider from './contexts/AuthContext'
+import GameProvider from './contexts/GameContext'
 
 const router = createBrowserRouter([
   {
@@ -28,7 +30,12 @@ const router = createBrowserRouter([
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <UIProvider>
-      <RouterProvider router={router} />
+      <AuthProvider>
+        <GameProvider>
+          <RouterProvider router={router}>
+          </RouterProvider>
+        </GameProvider>
+      </AuthProvider>
     </UIProvider>
   </StrictMode>,
 )
