@@ -30,7 +30,6 @@ export default function UIProvider({children}) {
       confetti.style.left = `${Math.random() * 100}vw`;
       confetti.style.top = `${Math.random() * -120 - 30}vh`;
       confetti.style.animationDelay = `${Math.random() * 0.5}s`;
-  
       confettiRef.current.appendChild(confetti);
     }
   }

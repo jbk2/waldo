@@ -12,9 +12,6 @@ export default function GameProvider({children}) {
   const intervalRef = useRef(null);
   const gameStartTimeRef = useRef(0);
   
-  useEffect(() => {
-  }, [])
-  
   function startGameTimer() {
     console.log('startGameTimer called with gameRunning:', gameRunning);
   
@@ -32,7 +29,7 @@ export default function GameProvider({children}) {
     }, 10);  
   }
   
-  function stopGameTimer( ){
+  function stopGameTimer() {
     console.log('stopGameTimer called .....')
     if(intervalRef.current) {
       const gameLength = Date.now() - gameStartTimeRef.current;
@@ -42,13 +39,13 @@ export default function GameProvider({children}) {
     }
   }
   
-  const startGame = () => {
+  function startGame() {
     setCharacters(initialCharacters);
     setGameRunning(true);
     startGameTimer();
   }
   
-  const stopGame = () => {
+  function stopGame() {
     setGameRunning(false);
     stopGameTimer();
     setGamePlayed(true);
