@@ -1,5 +1,5 @@
 import './assets/stylesheets/index.css'
-import { useState, useEffect, useRef, useContext } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { Outlet, useNavigate } from 'react-router-dom'
 import { UIContext } from './contexts/UIContext';
 import HomePage from '/src/routes/HomePage'
@@ -17,7 +17,12 @@ export default function App() {
 
   // only on mount - call Rails api/session, with session_id cookie, to authenticate user
   useEffect(() => {
-    fetch('/api/session', { credentials: 'include' })
+    fetch('/api/session', {
+      credentials: 'include',
+      headers: {
+        "Accept": "application/json"
+      }
+    })
     .then(async res => {
       const data = await res.json();
       if(res.ok) {
@@ -44,6 +49,7 @@ export default function App() {
       method: "POST",
       credentials: "include",
       headers: {
+        "Accept": "application/json",
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
@@ -82,6 +88,7 @@ export default function App() {
     fetch("/api/users", {
       method: "POST",
       headers: {
+        "Accept": "application/json",
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
@@ -120,6 +127,7 @@ export default function App() {
     fetch(`/api/passwords`, {
       method: "POST",
       headers: { 
+        "Accept": "application/json",
         "Content-Type": "application/json"
       },
       body: JSON.stringify({
@@ -156,6 +164,7 @@ export default function App() {
     fetch(`api/passwords/${token}`, {
       method: "PATCH",
       headers: { 
+        "Accept": "application/json",
         "Content-Type": "application/json"
       },
       body: JSON.stringify({
@@ -183,7 +192,10 @@ export default function App() {
 
   const logOut = () => {
     fetch('/api/session', {
-      method: 'DELETE'
+      method: 'DELETE',
+      headers: { 
+        "Accept": "application/json"
+      },
     })
     .then(async res => {
       const data = await res.json();
