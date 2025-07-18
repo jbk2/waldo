@@ -5,7 +5,7 @@ class Api::SessionsController < ApplicationController
     if user = User.authenticate_by(params.permit(:email_address, :password))
       start_new_session_for(user)
       render json: {
-        message: "Successfully logged in",
+        message: "Successfully signed in",
         user: user,
         authenticated: true,
       }
@@ -34,7 +34,7 @@ class Api::SessionsController < ApplicationController
     begin
       terminate_session
       render json: {
-        message: 'Successfully logged out'
+        message: 'Successfully signed out'
       }
     rescue => e
       render json: {
