@@ -1,29 +1,65 @@
+import '../setup.components.js';
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { render, screen } from '@testing-library/react';
-import { useOutletContext } from 'react-router-dom';
 import Game from '../../components/Game';
+import GameProvider from '../../contexts/GameContext';
+import UIProvider from '../../contexts/UIContext';
 
-// mock entire react-router-dom module
-vi.mock('react-router-dom', () => ({
-  useOutletContext: vi.fn()
-}));
-
-describe('Game component', ()=> {
-  const showAlert = vi.fn();
-  const setCharacters = vi.fn();
-  const characters = [
-      { name: 'Waldo', startX: 0.5, startY: 0.5, endX: 0.6, endY: 0.6, clicked: false },
-      { name: 'Odlaw', startX: 0.7, startY: 0.7, endX: 0.8, endY: 0.8, clicked: false },
-      { name: 'Wizard', startX: 0.9, startY: 0.9, endX: 1.0, endY: 1.0, clicked: false }
-  ];
-
+describe('Game component', () => {
   beforeEach(() => {
-    useOutletContext.mockReturnValue({ showAlert, characters, setCharacters })
+    vi.spyOn(Image.prototype, 'src', 'set').mockImplementation(() => {});
   });
 
-  it('has an image', () => {
-    render(<Game />);
-    expect(screen.getByRole('img')).toBeInTheDocument();
+  it('renders the game image', () => {
+    render(
+      <UIProvider>
+        <GameProvider>
+          <Game />
+        </GameProvider>
+      </UIProvider>
+    );
+    
+    const gameImage = screen.getByRole('img', { name: 'Waldo scene 1' });
+    expect(gameImage).toBeInTheDocument();
   });
-})
+
+  it('renders the game section container', () => {
+    render(
+      <UIProvider>
+        <GameProvider>
+          <Game />
+        </GameProvider>
+      </UIProvider>
+    );
+    
+    const gameSection = screen.getByTestId('game-section');
+    expect(gameSection).toBeInTheDocument();
+  });
+
+  it('shows start game dialog when game is not running', () => {
+    render(
+      <UIProvider>
+        <GameProvider>
+          <Game />
+        </GameProvider>
+      </UIProvider>
+    );
+    
+    // The StartGameDialog should be present when game is not running
+    expect(screen.getByText('PLAY A GAME ?')).toBeInTheDocument();
+  });
+
+  it('has clickable image when game is running', () => {
+    render(
+      <UIProvider>
+        <GameProvider>
+          <Game />
+        </GameProvider>
+      </UIProvider>
+    );
+    
+    const gameImage = screen.getByRole('img', { name: 'Waldo scene 1' });
+    expect(gameImage).toBeInTheDocument();
+  });
+});
 

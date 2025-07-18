@@ -1,33 +1,103 @@
+import '../setup.components.js';
 import { describe, it, expect, vi } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import Navbar from '../../components/Navbar';
+import { AuthContext } from '../../contexts/AuthContext';
+import GameProvider from '../../contexts/GameContext';
 
-describe('NavBar component', ()=> {
-  const characters = [
-    { name: 'Waldo', startX: 0.5, startY: 0.5, endX: 0.6, endY: 0.6 },
-    { name: 'Odlaw', startX: 0.7, startY: 0.7, endX: 0.8, endY: 0.8 },
-    { name: 'Wizard', startX: 0.9, startY: 0.9, endX: 1.0, endY: 1.0 },
-  ];
-  const logOut = vi.fn();
+// Mock react-router-dom
+const mockNavigate = vi.fn();
+vi.mock('react-router-dom', () => ({
+  useNavigate: () => mockNavigate
+}));
 
-  vi.mock('react-router-dom', () => ({
-    useNavigate: () => vi.fn()
-  }));
+describe('Navbar component', () => {
+  beforeEach(() => {
+    mockNavigate.mockClear();
+  });
 
   it('renders the CharacterStatus component', () => {
-    render(<Navbar characters={characters} loggedIn={false} logOut={logOut} />);
+    const mockAuthValue = {
+      signedIn: true,
+      signOut: vi.fn()
+    };
+
+    render(
+      <AuthContext.Provider value={mockAuthValue}>
+        <GameProvider>
+          <Navbar />
+        </GameProvider>
+      </AuthContext.Provider>
+    );
     expect(screen.getByTestId('character-status-col')).toBeInTheDocument();
   });
 
   it('has a typemark', () => {
-    render(<Navbar characters={characters} loggedIn={false} logOut={logOut} />);
+    const mockAuthValue = {
+      signedIn: true,
+      signOut: vi.fn()
+    };
+
+    render(
+      <AuthContext.Provider value={mockAuthValue}>
+        <GameProvider>
+          <Navbar />
+        </GameProvider>
+      </AuthContext.Provider>
+    );
     expect(screen.getByTestId('typemark-col')).toBeInTheDocument();
   });
-  
 
-  it('renders the ScoreBoard component', () => {
-    render(<Navbar characters={characters} loggedIn={false} logOut={logOut} />);
+  it('renders the ScoreBoard component when signed in', () => {
+    const mockAuthValue = {
+      signedIn: true,
+      signOut: vi.fn()
+    };
+
+    render(
+      <AuthContext.Provider value={mockAuthValue}>
+        <GameProvider>
+          <Navbar />
+        </GameProvider>
+      </AuthContext.Provider>
+    );
     expect(screen.getByTestId('scoreboard-col')).toBeInTheDocument();
   });
 
-})
+  it('does not render logout button when not signed in', () => {
+    const mockAuthValue = {
+      signedIn: false,
+      signOut: vi.fn()
+    };
+
+    render(
+      <AuthContext.Provider value={mockAuthValue}>
+        <GameProvider>
+          <Navbar />
+        </GameProvider>
+      </AuthContext.Provider>
+    );
+    expect(screen.getByTestId('scoreboard-col')).toBeInTheDocument();
+    // ScoreBoard should still be there but logout button should not be
+    expect(screen.queryByText('LogOut')).not.toBeInTheDocument();
+  });
+
+  it('calls navigate when typemark is clicked', () => {
+    const mockAuthValue = {
+      signedIn: true,
+      signOut: vi.fn()
+    };
+
+    render(
+      <AuthContext.Provider value={mockAuthValue}>
+        <GameProvider>
+          <Navbar />
+        </GameProvider>
+      </AuthContext.Provider>
+    );
+    
+    const typemark = screen.getByText("Where's Waldo?");
+    typemark.click();
+    expect(mockNavigate).toHaveBeenCalledWith('/');
+  });
+});
