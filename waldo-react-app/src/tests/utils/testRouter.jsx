@@ -6,11 +6,26 @@ import SignUp from "../../routes/auth/SignUp";
 import RequestResetPassword from "../../routes/auth/RequestResetPassword";
 import ResetPassword from "../../routes/auth/ResetPassword";
 import CompetitionBoard from "../../routes/CompetitionBoard";
+import UIProvider from "../../contexts/UIContext";
+import AuthProvider from "../../contexts/AuthContext";
+import GameProvider from "../../contexts/GameContext";
+
+function TestAppWrapper() {
+  return(
+    <UIProvider>
+      <AuthProvider>
+        <GameProvider>
+          <App />
+        </GameProvider>
+      </AuthProvider>
+    </UIProvider>
+  )
+}
 
 const routes = [
   {
     path: '/',
-    element: <App />,
+    element: <TestAppWrapper />,
     children: [
       { index: true, element: <HomePage /> },
       { path: '/sign-in', element: <SignIn />},

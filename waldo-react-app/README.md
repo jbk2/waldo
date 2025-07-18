@@ -47,23 +47,37 @@ ________________________________________________________________________________
 _________________________________________________________________________________________________
 
 ## Usage
+
+
+-----------------------
 ### Tests
-    - see /src/tests/utils/testDatabase.js & /src/tests/setup.js, and the Rails app's
-      /app/controllers/api/test_controller.rb, which have set up end points to create and clean
-      test fixtures from the rails testdb. Therefore a Rails server needs to be spun up with:
-      `RAILS_ENV=test bin/rails server -p 3001 --log-to-stdout` before integration tests can be successfully run.
-    - many integration tests make actual http requests to rails dev server,
-      so dev server must be running for tests to propery run.
-    - Run and read tests via package.json vitest script; `npm run test`
+#### Integration test envrironment
+  - note that integration tests need to call a real, running in test env mode, rails server's
+    test database. Therefore a Rails server needs to be spun up with:
+    `RAILS_ENV=test bin/rails server -p 3001 --log-to-stdout` before integration tests
+    can be successfully run.
+  - note /src/tests/setup.js which has a beforeAll call to ensureServerReady()
+      in /src/tests/utils/serverHealthCheck.js, which provides output on Rails test server status.
+  - the integration tests have the /src/tests/utils/testDatabase.js module defining fetch calls to
+    Rails server endpoints providing and managing fixture data. Rails has a TestController managing
+    those endpoints at /app/controllers/api/test_controller.rb.
 
+#### General
+  - See test scripts defined in package.json:
+    - `npm run test` runs foreman which, defined in ./Procfile.test, spins up a test Rails server
+      then runs ALL vitest tests.
+    - `npm run test:run` just runs vitest, enabling you to give only specific test files to run,
+      e.g. `npm run test:run -- src/tests/routes/auth/SignIn`
+-----------------------
 
-### To run the project locally:
+### To run the project in dev mode locally:
 - Clone the repository
 - Run `npm install` to install the dependencies
 - You must start the Rails server before running this one:
-  - from the waldo-rails-app run `bin/rails server`
+  - with terminal at the root of waldo-rails-app run `bin/rails server`
 - Then start react server; `npm run dev`
-- Open the browser and navigate to `http://localhost:5173/`
+  - with terminal at the root of waldo-react-app run `bin/rails server`
+- Open the browser and navigate to the react server at `http://localhost:5173/`
 
 ### To use the hosted app
 - visit `https://www.....com`

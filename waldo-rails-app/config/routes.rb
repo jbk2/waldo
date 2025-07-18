@@ -15,5 +15,13 @@ Rails.application.routes.draw do
     resource :session, only: [:create, :show, :destroy]
     resources :users, only: [:create]
     resources :passwords, param: :token, only: [:create, :update]
+    
+    # Test endpoints (only in test environment)
+    if Rails.env.test?
+      post 'test/load_user_fixtures'
+      post 'test/cleanup'
+      get 'test/user_fixtures'
+      get 'test/environment_check'
+    end
   end
 end

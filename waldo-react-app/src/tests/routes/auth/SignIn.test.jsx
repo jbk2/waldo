@@ -1,84 +1,92 @@
-import { describe, it, expect, vi, beforeEach } from "vitest";
-import { render, screen, waitFor, act, fireEvent } from '@testing-library/react';
+import { describe, it, expect, afterEach, beforeEach } from "vitest";
+import { render, screen, waitFor, cleanup } from '@testing-library/react';
+import userEvent from '@testing-library/user-event'
 import { RouterProvider } from "react-router-dom";
-import createTestRouter from "../../utils/testRouter";
+import createTestRouter from "../../utils/testRouter.jsx";
+import { testDatabase } from "../../utils/testDatabase.js";
 
-const mockFailedAuthFetchOnce = () => {
-  fetch.mockResolvedValueOnce({
-    ok: false,
-    json: async () => ({ error: "Not authenticated" })
+describe('Sign In integration', () => {
+  let userFixtures;
+  let user;
+  beforeEach(async () => {
+    await testDatabase.loadUserFixtures();
+    const fixtureData = await testDatabase.getUserFixtures();
+    userFixtures = fixtureData.users;
+    const testRouter = createTestRouter(['/sign-in']);
+    render(<RouterProvider router={testRouter} />)
+    user = userEvent.setup();
   });
-}
 
-const mockSuccessfulAuthFetchOnce = () => {
-  fetch.mockResolvedValueOnce({
-    ok: true,
-    json: async () => ({
-      message: "Successfully logged in",
-      user: {},
-      authenticated: true
+  afterEach(async () => {
+    cleanup();
+    await testDatabase.cleanup();
+  });
+
+  it('renders the sign in form', async () => {
+    await waitFor(() => {
+      expect(screen.getByRole('button', { name: /Sign In/i })).toBeInTheDocument();
+    });
+  });
+
+  it('successfully signs in with valid credentials', async () => {
+    await waitFor(() => {
+      expect(screen.getByRole('button', { name: /Sign In/i })).toBeInTheDocument();
     })
+    
+    const emailInput = screen.getByPlaceholderText('Email');
+    const passwordInput = screen.getByPlaceholderText('Password');
+    
+    // Use first fixture user with known password
+    if (!userFixtures || userFixtures.length === 0) {
+      throw new Error('No fixture users loaded. Check if fixtures are being loaded properly.');
+    }
+    await user.type(emailInput, userFixtures[0].email_address);
+    await user.type(passwordInput, 'Password12!'); // Same assword hardcoded in fixtures
+    
+    const submitButton = screen.getByRole('button', { name: /Sign In/i });
+    await user.click(submitButton);
+    
+    await waitFor(() => {
+      expect(screen.getByText('Successfully signed in')).toBeInTheDocument();
+    });
   });
-}
 
-vi.stubGlobal('fetch', vi.fn())  // to mock the auto auth fetch on load
+  it('shows error with invalid credentials', async () => {
+    await waitFor(() => {
+      expect(screen.getByRole('button', { name: /Sign In/i })).toBeInTheDocument();
+    })
+    
+    const emailInput = screen.getByPlaceholderText('Email');
+    const passwordInput = screen.getByPlaceholderText('Password');
+    
+    await user.type(emailInput, 'wrong@example.com');
+    await user.type(passwordInput, 'WrongPassword123!');
+    
+    const submitButton = screen.getByRole('button', { name: /Sign In/i });
+    await user.click(submitButton);
+    
+    await waitFor(() => {
+      expect(screen.getByText('Invalid email or password')).toBeInTheDocument();
+    });
+  });
 
-describe('SignIn route integration', () => {
-  it('renders sign-in page when visiting /sign-in directly', async () => {    
-    
-    vi.clearAllMocks();
-    mockFailedAuthFetchOnce()  
-    
-    const testRouter = createTestRouter();
-    render(
-      <RouterProvider router={testRouter} />
-    );
-    
-    // Wait for App.jsx useEffect auth check to complete
+  it('navigates to home page after successful sign in', async () => {
     await waitFor(() => {
-      expect(screen.queryByText('Loading...')).not.toBeInTheDocument();
-    });
-    // navigate to /sign-in
-    await act(async () => {
-      testRouter.navigate('/sign-in');
-    });
-    // Now check for SignIn content
+      expect(screen.getByRole('button', { name: /Sign In/i })).toBeInTheDocument();
+    })
+    
+    const emailInput = screen.getByPlaceholderText('Email');
+    const passwordInput = screen.getByPlaceholderText('Password');
+    
+    await user.type(emailInput, 'existing@test.com');
+    await user.type(passwordInput, 'Password123!');
+    
+    const submitButton = screen.getByRole('button', { name: /Sign In/i });
+    await user.click(submitButton);
+    
+    // Wait for navigation to home page
     await waitFor(() => {
-      expect(screen.getByText('Sign in to play')).toBeInTheDocument();
+      expect(screen.getByText('Where\'s Waldo?')).toBeInTheDocument();
     });
   });
 });
-
-describe("With valid credentials submitted to SignIn form", () => {
-  it("routes to '/' and renders Game component", async () => {
-    vi.clearAllMocks();
-    mockFailedAuthFetchOnce()
-    
-    const testRouter = createTestRouter(['/sign-in']);
-    
-    render(<RouterProvider router={testRouter} />);
-
-    // Wait for sign-in form to be rendered
-    await waitFor(() => {
-      expect(screen.getByText('Sign in to play')).toBeInTheDocument();
-    });
-
-    mockSuccessfulAuthFetchOnce();
-
-    // Fill out form fields
-    fireEvent.change(screen.getByPlaceholderText('Email'), {
-      target: { value: 'one@example.com' }
-    });
-    fireEvent.change(screen.getByPlaceholderText('Password'), {
-      target: { value: 'Password12!' }
-    });
-
-    // get & submit the form
-    const form = screen.getByRole('button', { name: /sign in/i }).closest('form');
-    fireEvent.submit(form);
-
-    await waitFor(() => {
-      expect(screen.getByTestId('game-section')).toBeInTheDocument();
-    });
-  })
-})
