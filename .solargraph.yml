@@ -1,0 +1,11 @@
+include:
+  - waldo-rails-app/**/*.rb
+exclude:
+  - waldo-react-app/**/*
+  - "**/*.js"
+  - "**/*.jsx"
+  - "**/*.ts"
+  - "**/*.tsx"
+  - "**/*.json"
+  - "**/*.yml"
+  - "**/*.yaml" 

@@ -1,0 +1,5 @@
+{
+  "solargraph.workspace": "./waldo-rails-app",
+  "solargraph.include": ["waldo-rails-app/**/*"],
+  "solargraph.exclude": ["waldo-react-app/**/*"]
+} 
