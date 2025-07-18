@@ -51,7 +51,20 @@ ________________________________________________________________________________
 
 -----------------------
 ### Tests
-#### Integration test envrironment
+Tests are split into two types; component & integration tests (test/routes/auth), the latter require
+Rails server thus run `setup.integration.js` which checks server is running.
+
+#### General use
+  - See test scripts defined in package.json:
+    - `npm test:components` - tests components only, i.e. no Rails server required.
+    - `npm test:integration` - tests integration tests only (/tests/routes/...), i.e. does require server. This script starts server, runs tests, and shuts server down.
+    - `npm run:all` runs foreman which, defined in ./Procfile.test, spins up a test Rails server
+      then runs ALL vitest tests.
+    To run specific test files 
+    - `npx vitest -- src/tests/routes/auth/SignIn` But if running an integration test which requires Rails
+      server you will need to start that server manually, with `RAILS_ENV=test bin/rails server -p 3001 --log-to-stdout`
+      
+#### Integration tests
   - note that integration tests need to call a real, running in test env mode, rails server's
     test database. Therefore a Rails server needs to be spun up with:
     `RAILS_ENV=test bin/rails server -p 3001 --log-to-stdout` before integration tests
@@ -62,12 +75,9 @@ ________________________________________________________________________________
     Rails server endpoints providing and managing fixture data. Rails has a TestController managing
     those endpoints at /app/controllers/api/test_controller.rb.
 
-#### General
-  - See test scripts defined in package.json:
-    - `npm run test` runs foreman which, defined in ./Procfile.test, spins up a test Rails server
-      then runs ALL vitest tests.
-    - `npm run test:run` just runs vitest, enabling you to give only specific test files to run,
-      e.g. `npm run test:run -- src/tests/routes/auth/SignIn`
+#### Component tests
+  - Do not require Rails server, and have a simple setup; `setup.component.js` run by vite.config.js
+
 -----------------------
 
 ### To run the project in dev mode locally:

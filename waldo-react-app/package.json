@@ -8,9 +8,11 @@
     "build": "vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "test": "foreman start -f Procfile.test",
-    "test:run": "vitest run",
-    "test:watch": "foreman start -f Procfile.test -c rails-test=0,react-tests=1"
+    "test:start-server": "cd ../waldo-rails-app && RAILS_ENV=test rails server -p 3001 --log-to-stdout & sleep 3",
+    "test:cleanup": "lsof -ti:3001 | xargs kill -9 2>/dev/null || true",
+    "test:component": "vitest run src/tests/components/",
+    "test:integration": "npm run test:start-server && vitest run src/tests/routes/ && npm run test:cleanup",
+    "test:all": "npm run test:component && npm run test:integration"
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.1.6",
@@ -31,7 +33,6 @@
     "eslint": "^9.25.0",
     "eslint-plugin-react-hooks": "^5.2.0",
     "eslint-plugin-react-refresh": "^0.4.19",
-    "foreman": "^3.0.1",
     "globals": "^16.0.0",
     "jsdom": "^26.1.0",
     "vite": "^6.3.5",
