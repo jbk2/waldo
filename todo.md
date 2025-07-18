@@ -1,6 +1,7 @@
 # Todo list
 
 ## All
+- need to add tests to stop requestresetpassword being visitable unless logged in
 - Game play:
   - further review end of game logic to be clearer between GameContext#stopGame, Game#useEffect & #handleImgClick
 - maybe create a UI functionality context?
@@ -13,6 +14,7 @@
 - integrate choosing from multiple game images
 - need to refactor and DRY out all auth fetching, into external module
 - write error route template
+- handle error for reset_password with invalid token
 - log out should clear characterStatus & erase game
 - tests
 
