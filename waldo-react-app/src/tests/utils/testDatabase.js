@@ -39,5 +39,19 @@ export const testDatabase = {
     
     if (!response.ok) { throw new Error('Failed to cleanup test data'); }
     return response.json();
+  },
+
+  async generatePasswordResetToken(emailAddress) {
+    const response = await fetch(`/api/test/generate_password_reset_token?email_address=${encodeURIComponent(emailAddress)}`, {
+      method: 'GET',
+      headers: {
+        'Accept': 'application/json',
+      }
+    });
+    
+    if (!response.ok) { 
+      throw new Error('Failed to generate password reset token'); 
+    }
+    return response.json();
   }
 }; 

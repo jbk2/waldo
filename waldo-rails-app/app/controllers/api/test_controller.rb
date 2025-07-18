@@ -92,6 +92,25 @@ class Api::TestController < ApplicationController
     }
   end
 
+
+  def generate_password_reset_token
+    email_address = params[:email_address]
+    user = User.find_by(email_address: email_address)
+
+    if user
+      token = user.password_reset_token
+      render json: { 
+        token: token,
+        email_address: email_address,
+        message: "Password reset token generated for testing"
+      }
+    else
+      render json: { 
+        error: "User not found with email: #{email_address}" 
+      }, status: :not_found
+    end
+  end
+
   private
   def ensure_test_environment
     unless Rails.env.test?

@@ -1,59 +1,41 @@
-import { describe, it, expect, vi } from "vitest";
-import { render, screen, waitFor } from '@testing-library/react'
+import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
+import { render, screen, waitFor, cleanup } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { RouterProvider } from "react-router-dom";
 import createTestRouter from "../../utils/testRouter.jsx";
+import { testDatabase } from "../../utils/testDatabase.js";
 
-describe('Reset Password', () => {
-  const testRouter = createTestRouter(['/reset-password']);
-  
-  it('/reset-password route loads the form', async () => {
+describe('Reset password functionality with a valid token', () => {
+  let user;
+
+  beforeEach(async () => {
+    await testDatabase.loadUserFixtures();
+    const fixtureData = await testDatabase.getUserFixtures();
+    const userFixtures = fixtureData.users;
+    const tokenData = await testDatabase.generatePasswordResetToken(userFixtures[0].email_address);
+    const validToken = tokenData.token;
+    const testRouter = createTestRouter([`/reset-password?token=${validToken}`]);
     render(<RouterProvider router={testRouter} />)
-    
+    user = userEvent.setup();
+  });
+
+  afterEach(async () => {
+    cleanup();
+    await testDatabase.cleanup();
+  });
+  
+// should not be able to reach this route unless you were signed in!!!!!!!!
+
+  it('/reset-password route loads the form', async () => {
     await waitFor(() => {
+      expect(screen.getByText(/Enter your new password/i)).toBeInTheDocument();
       expect(screen.getByRole('button', { name: /Reset Password/i })).toBeInTheDocument();
     })
   })
   
-  it('shows error when passwords do not match', async () => {
-    const user = userEvent.setup();
-    
-    // Mock unsuccessful fetch
-    const mockUnsuccessfulFetch = vi.fn().mockResolvedValue({
-      ok: false,
-      status: 422,
-      json: async () => ({
-        message: ["Passwords did not match"]
-      })
-    });
-    global.fetch = mockUnsuccessfulFetch;
-    
-    render(<RouterProvider router={testRouter} />)
-    
-    await waitFor(() => {
-      expect(screen.getByRole('button', { name: /Reset Password/i })).toBeInTheDocument();
-    })
-    
-    const passwordInput = screen.getByPlaceholderText('New password');
-    const passwordConfInput = screen.getByPlaceholderText('New password confirmation');
-    
-    await user.type(passwordInput, 'NewPassword123!');
-    await user.type(passwordConfInput, 'DifferentPassword123!');
-    
-    const submitButton = screen.getByRole('button', { name: /Reset Password/i });
-    await user.click(submitButton);
-    
-    await waitFor(() => {
-      expect(screen.getByText('Passwords did not match')).toBeInTheDocument();
-    });
-  });
-  
   it('shows client-side error when passwords do not match', async () => {
-    const user = userEvent.setup();
-    
-    render(<RouterProvider router={testRouter} />)
-    
     await waitFor(() => {
+      expect(screen.getByText(/Enter your new password/i)).toBeInTheDocument();
       expect(screen.getByRole('button', { name: /Reset password/i })).toBeInTheDocument();
     })
     
@@ -74,24 +56,11 @@ describe('Reset Password', () => {
   });
 
   it('shows success message when password is reset successfully', async () => {
-    const user = userEvent.setup();
-    
-    // Mock successful fetch
-    const mockSuccessfulFetch = vi.fn().mockResolvedValue({
-      ok: true,
-      status: 200,
-      json: async () => ({
-        message: "Password has been successfully reset"
-      })
-    });
-    global.fetch = mockSuccessfulFetch;
-    
-    render(<RouterProvider router={testRouter} />)
-    
     await waitFor(() => {
+      expect(screen.getByText(/Enter your new password/i)).toBeInTheDocument();
       expect(screen.getByRole('button', { name: /Reset Password/i })).toBeInTheDocument();
     })
-    
+
     const passwordInput = screen.getByPlaceholderText('New password');
     const passwordConfInput = screen.getByPlaceholderText('New password confirmation');
     
@@ -105,4 +74,35 @@ describe('Reset Password', () => {
       expect(screen.getByText('Password has been successfully reset')).toBeInTheDocument();
     });
   });
+});
+
+
+
+describe('Reset password functionality with an invalid token', () => {
+  it('shows error with invalid token', async () => {
+    const testRouter = createTestRouter([`/reset-password?token=invalidToken}`]);
+    render(<RouterProvider router={testRouter} />)
+    const user = userEvent.setup();
+    
+    await waitFor(() => {
+      expect(screen.getByText(/Enter your new password/i)).toBeInTheDocument();
+      expect(screen.getByRole('button', { name: /Reset Password/i })).toBeInTheDocument();
+    })
+    
+    const passwordInput = screen.getByPlaceholderText('New password');
+    const passwordConfInput = screen.getByPlaceholderText('New password confirmation');
+    
+    await user.type(passwordInput, 'NewPassword123!');
+    await user.type(passwordConfInput, 'NewPassword123!');
+    
+    const submitButton = screen.getByRole('button', { name: /Reset Password/i });
+    await user.click(submitButton);
+    
+    await waitFor(() => {
+      expect(screen.getByText('Unexpected Application Error!')).toBeInTheDocument();
+    });
+  });
+
+
+
 });

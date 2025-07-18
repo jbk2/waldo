@@ -1,4 +1,4 @@
-import { describe, it, expect, vi, beforeEach, afterEach, } from "vitest";
+import { describe, it, expect, beforeEach, afterEach, } from "vitest";
 import { render, screen, waitFor, cleanup } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { RouterProvider } from "react-router-dom";
@@ -20,14 +20,18 @@ describe('Request Password Reset', () => {
     await testDatabase.cleanup();
   });
   
+  // should not be able to reach this route unless you were signed in!!!!!!!!
+
   it('/request-reset-password route loads the form', async () => {
     await waitFor(() => {
+      expect(screen.getByText(/Enter your email to reset your password/i)).toBeInTheDocument();
       expect(screen.getByRole('button', { name: /Reset password/i })).toBeInTheDocument();
     })
   })
   
   it('shows error when email does not exist', async () => {
     await waitFor(() => {
+      expect(screen.getByText(/Enter your email to reset your password/i)).toBeInTheDocument();
       expect(screen.getByRole('button', { name: /Reset password/i })).toBeInTheDocument();
     })
     
@@ -48,6 +52,7 @@ describe('Request Password Reset', () => {
     userFixtures = fixtureData.users;
 
     await waitFor(() => {
+      expect(screen.getByText(/Enter your email to reset your password/i)).toBeInTheDocument();
       expect(screen.getByRole('button', { name: /Reset password/i })).toBeInTheDocument();
     })
     

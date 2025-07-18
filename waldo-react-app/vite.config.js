@@ -21,6 +21,12 @@ export default defineConfig({
       jsdom: {
         url: 'http://localhost:5173'
       }
+    },
+    pool: 'forks', // Forces sequential execution
+    poolOptions: {
+      forks: {
+        singleFork: true
+      }
     }
   },
 })

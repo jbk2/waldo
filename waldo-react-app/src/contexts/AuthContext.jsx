@@ -158,7 +158,7 @@ export default function AuthProvider({children}) {
   }
 
   function resetPassword(formData, token, navigate) {
-    fetch(`api/passwords/${token}`, {
+    fetch(`/api/passwords/${token}`, {
       method: "PATCH",
       headers: { 
         "Accept": "application/json",
