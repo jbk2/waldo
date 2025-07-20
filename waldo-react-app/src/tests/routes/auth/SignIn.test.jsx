@@ -3,8 +3,8 @@ import { describe, it, expect, afterEach, beforeEach } from "vitest";
 import { render, screen, waitFor, cleanup } from '@testing-library/react';
 import userEvent from '@testing-library/user-event'
 import { RouterProvider } from "react-router-dom";
-import createTestRouter from "../../utils/testRouter.jsx";
-import { testDatabase } from "../../utils/testDatabase.js";
+import createTestRouter from "../../testUtils/testRouter.jsx";
+import { testDatabase } from "../../testUtils/testDatabase.js";
 
 describe('Sign In integration', () => {
   let userFixtures;

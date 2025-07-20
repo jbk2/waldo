@@ -1,42 +1,30 @@
-import { createMemoryRouter } from "react-router-dom";
-import App from "../../App";
-import HomePage from "../../routes/HomePage";
-import SignIn from "../../routes/auth/SignIn";
-import SignUp from "../../routes/auth/SignUp";
-import RequestResetPassword from "../../routes/auth/RequestResetPassword";
-import ResetPassword from "../../routes/auth/ResetPassword";
-import CompetitionBoard from "../../routes/CompetitionBoard";
-import UIProvider from "../../contexts/UIContext";
-import AuthProvider from "../../contexts/AuthContext";
-import GameProvider from "../../contexts/GameContext";
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import { AuthContext } from '../../contexts/AuthContext';
+import { UIContext } from '../../contexts/UIContext';
+import { GameContext } from '../../contexts/GameContext';
+import App from '../../App';
 
-function TestAppWrapper() {
-  return(
-    <UIProvider>
-      <AuthProvider>
-        <GameProvider>
-          <App />
-        </GameProvider>
-      </AuthProvider>
-    </UIProvider>
-  )
-}
+export default function createTestRouter() {
+  const router = createBrowserRouter([
+    {
+      path: '/',
+      element: <App />,
+      children: [
+        { path: '/sign-in', element: <div data-testid="signin-page">Sign In</div> },
+        { path: '/sign-up', element: <div data-testid="signup-page">Sign Up</div> },
+        { path: '/request-reset-password', element: <div data-testid="request-reset-page">Request Reset</div> },
+        { path: '/reset-password', element: <div data-testid="reset-password-page">Reset Password</div> },
+      ]
+    }
+  ]);
 
-const routes = [
-  {
-    path: '/',
-    element: <TestAppWrapper />,
-    children: [
-      { index: true, element: <HomePage /> },
-      { path: '/sign-in', element: <SignIn />},
-      { path: '/sign-up', element: <SignUp />},
-      { path: '/request-reset-password', element: <RequestResetPassword />},
-      { path: '/reset-password', element: <ResetPassword />},
-      { path: '/competition-board', element: <CompetitionBoard /> },
-    ]
-  }
-];
-
-export default function createTestRouter(initialEntries = ['/']) {
-  return createMemoryRouter(routes, { initialEntries });
-}
+  return (
+    <UIContext>
+      <AuthContext>
+        <GameContext>
+          <RouterProvider router={router} />
+        </GameContext>
+      </AuthContext>
+    </UIContext>
+  );
+} 
