@@ -1,4 +1,4 @@
-import { createContext, useState, useContext } from "react";
+import { createContext, useState, useContext, useCallback } from "react";
 import { UIContext } from "./UIContext";
 
 const AuthContext = createContext();
@@ -10,7 +10,7 @@ export default function AuthProvider({children}) {
   const { showAlert } = useContext(UIContext);
 
   
-  function authenticate() {
+  const authenticate = useCallback(function authenticate() {
     fetch('/api/session', {
       credentials: 'include',
       headers: {
@@ -35,7 +35,7 @@ export default function AuthProvider({children}) {
       setAuthChecked(true);
       showAlert(`Auth fetch failed: ${error.message}`);
     })
-  }
+  }, [showAlert])
 
   function signUp(formData, navigate) {
     fetch("/api/users", {

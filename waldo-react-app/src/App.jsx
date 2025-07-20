@@ -12,7 +12,7 @@ export default function App() {
   // only on mount - call Rails api/session, with session_id cookie, to authenticate user
   useEffect(() => {
     authenticate();
-  }, [])
+  }, [authenticate])
 
   if (!authChecked) return <div className="grid place-items-center min-h-screen font-bold text-xl">Loading...</div>;
 
