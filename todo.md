@@ -1,7 +1,6 @@
 # Todo list
 
 ## All
-- need to add tests to stop requestresetpassword being visitable unless logged in
 - Game play:
   - further review end of game logic to be clearer between GameContext#stopGame, Game#useEffect & #handleImgClick
 - maybe create a UI functionality context?
