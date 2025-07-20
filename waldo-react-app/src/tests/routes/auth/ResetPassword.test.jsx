@@ -3,8 +3,8 @@ import { describe, it, expect, beforeEach, afterEach } from "vitest";
 import { render, screen, waitFor, cleanup } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { RouterProvider } from "react-router-dom";
-import createTestRouter from "../../utils/testRouter.jsx";
-import { testDatabase } from "../../utils/testDatabase.js";
+import createTestRouter from "../../testUtils/testRouter.jsx";
+import { testDatabase } from "../../testUtils/testDatabase.js";
 
 describe('Reset password functionality with a valid token', () => {
   let user;
