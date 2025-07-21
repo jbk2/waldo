@@ -37,6 +37,7 @@ const routes = [
   }
 ];
 
+// provides a test router with all required context for integration tests to use
 export default function createTestRouter(initialEntries = ['/']) {
   return createMemoryRouter(routes, { initialEntries });
 }

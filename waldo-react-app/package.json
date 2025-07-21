@@ -10,7 +10,7 @@
     "preview": "vite preview",
     "test:start-server": "cd ../waldo-rails-app && RAILS_ENV=test rails server -p 3001 --log-to-stdout & sleep 3",
     "test:cleanup": "lsof -ti:3001 | xargs kill -9 2>/dev/null || true",
-    "test:component": "vitest run src/tests/components/",
+    "test:components": "vitest run src/tests/components/",
     "test:integration": "npm run test:start-server && vitest run src/tests/routes/ && npm run test:cleanup",
     "test:all": "npm run test:component && npm run test:integration"
   },

@@ -7,9 +7,9 @@ import EndGameDialog from './EndGameDialog';
 import { UIContext } from '../contexts/UIContext';
 
 export default function Game() {
-  const imageRef = useRef();
+  const imgRef = useRef();
   const { showAlert, showConfetti, gameImgBlured, clickCoords, setClickCoords } = useContext(UIContext);
-  const { characters, setCharacters, stopGame, gameRunning, gamePlayed } = useContext(GameContext)
+  const { characters, setCharacters, completeGame, gameRunning, gamePlayed } = useContext(GameContext)
   
   function hasClickedOnACharacter(clickX, clickY, character) {
     return(
@@ -21,9 +21,9 @@ export default function Game() {
   function handleImageClick(e) {
     if(!gameRunning) return null;
 
-    const rect = imageRef.current.getBoundingClientRect();
-    const clickX = Math.round(((e.clientX - rect.x) / rect.width) * 1000) / 1000;
-    const clickY = Math.round(((e.clientY - rect.y) / rect.height) * 1000) / 1000;
+    const imgRect = imgRef.current.getBoundingClientRect();
+    const clickX = Math.round(((e.clientX - imgRect.x) / imgRect.width) * 1000) / 1000;
+    const clickY = Math.round(((e.clientY - imgRect.y) / imgRect.height) * 1000) / 1000;
     setClickCoords({ x: clickX, y: clickY });
     
     const foundCharacter = characters.find((character) => 
@@ -40,7 +40,7 @@ export default function Game() {
 
       if(allCharactersClicked) {
         showAlert(`🎉 Yay, you found ${capitalize(foundCharacter.name)}, and all characters 🎉`);
-        stopGame();
+        completeGame();
         showConfetti();
       } else {
         showAlert(`🎉 Yay, you found ${capitalize(foundCharacter.name)} 🎉`);
@@ -55,7 +55,7 @@ export default function Game() {
     <div data-testid="game-section" className="w-full flex justify-center pt-16">
       <div className="relative w-[80vw] max-w-[1400px]">
         <img
-          ref={imageRef}
+          ref={imgRef}
           src={waldoScene1}
           id="waldo-scene-1"
           onClick={handleImageClick}

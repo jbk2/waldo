@@ -3,11 +3,25 @@ import { useNavigate } from 'react-router-dom';
 import ScoreBoard from './ScoreBoard';
 import CharacterStatus from './CharacterStatus';
 import { AuthContext } from '../contexts/AuthContext';
+import { GameContext } from '../contexts/GameContext';
+// import Game from './Game';
 
 
 export default function Navbar() {
   const navigate = useNavigate();
   const { signedIn, signOut } = useContext(AuthContext);
+  const { resetGame } = useContext(GameContext);
+
+  function handleSignIn() {
+    resetGame();
+    navigate('sign-in');
+  }
+  
+  function handleSignOut() {
+    signOut();
+    resetGame();
+    navigate('/');
+  }
 
   return(
     <>
@@ -21,19 +35,24 @@ export default function Navbar() {
           <h1
             className="font-playrite text-6xl text-center my-8 hover:cursor-pointer"
             onClick={() => navigate('/')}
-            >Where's Waldo?</h1>
+            >Where's Waldo?
+          </h1>
         </div>
         
         <div data-testid='scoreboard-col' className='flex ml-24 items-center'>
-          {signedIn
-            && (
-              <>
-                <ScoreBoard />
-                <button type="button" onClick={() => signOut()} className='btn w-fit ml-2'>
-                  LogOut
-                </button>
-              </>
-            )
+          <ScoreBoard />
+          {signedIn ?
+            <>
+              <button type="button" onClick={handleSignOut} className='btn w-20 ml-2'>
+                SignOut
+              </button>
+            </>
+            :
+            <>
+              <button type="button" onClick={handleSignIn} className='btn w-20 ml-2'>
+                SignIn
+              </button>
+            </>
           }
         </div>
       <hr className='col-span-3'/>

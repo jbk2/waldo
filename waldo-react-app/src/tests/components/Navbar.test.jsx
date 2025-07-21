@@ -88,7 +88,8 @@ describe('Navbar component', () => {
     );
     expect(screen.getByTestId('scoreboard-col')).toBeInTheDocument();
     // ScoreBoard should still be there but logout button should not be
-    expect(screen.queryByText('LogOut')).not.toBeInTheDocument();
+    expect(screen.queryByText('SignOut')).not.toBeInTheDocument();
+    expect(screen.queryByText('SignIn')).toBeInTheDocument();
   });
 
   it('calls navigate when typemark is clicked', () => {

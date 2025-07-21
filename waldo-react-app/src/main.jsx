@@ -37,5 +37,5 @@ createRoot(document.getElementById('root')).render(
         </GameProvider>
       </AuthProvider>
     </UIProvider>
-  </StrictMode>,
+  </StrictMode>
 )

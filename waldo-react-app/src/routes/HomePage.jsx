@@ -4,15 +4,15 @@ import { Navigate } from 'react-router-dom';
 import { AuthContext } from '../contexts/AuthContext';
 
 export default function HomePage() {
-  const { signedIn } = useContext(AuthContext);
+  // const { signedIn } = useContext(AuthContext);
 
-  if(signedIn) {
+  // if(signedIn) {
     return(
       <Game />
     );
-  } else {
-    return(
-      <Navigate to='/sign-in' replace />
-    )
-  }
+  // } else {
+  //   return(
+  //     <Navigate to='/sign-in' replace />
+  //   )
+  // }
 }

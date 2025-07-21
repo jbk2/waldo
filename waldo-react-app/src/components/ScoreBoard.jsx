@@ -1,5 +1,5 @@
 import { GameContext } from '../contexts/GameContext';
-import { useContext, useState } from "react";
+import { useContext } from "react";
 
 export default function ScoreBoard() {
   const { gameElapsedTime, gameRunning, gamePlayed } = useContext(GameContext)
@@ -10,7 +10,8 @@ export default function ScoreBoard() {
       Elapsed time:&nbsp;
       <div className='flex w-14 items-baseline justify-start'>
         <span className={`text-md font-mono font-medium tabular-nums lining-nums
-          ${ gamePlayed && !gameRunning ? 'underline decoration-wavy decoration-1 decoration-green-600 underline-offset-3' : ''}`}>{seconds}
+          ${ gamePlayed && !gameRunning ? 'underline decoration-wavy decoration-1 \
+          decoration-green-600 underline-offset-3' : ''}`}>{seconds}
         </span>
         <span className='text-xs font-variation-settings-wght-600 pl-[1px]'>s</span>
       </div>
