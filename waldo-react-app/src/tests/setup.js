@@ -1,7 +1,7 @@
 import { expect, afterEach, beforeAll, afterAll } from 'vitest';
 import { cleanup } from '@testing-library/react';
 import * as matchers from "@testing-library/jest-dom/matchers";
-import { serverHealthCheck } from './utils/serverHealthCheck.js';
+import { railsServerHealthCheck } from './utils/railsServerHealthCheck.js';
 
 expect.extend(matchers);
 
@@ -11,7 +11,7 @@ const originalFetch = window.fetch;
 beforeAll(async () => {
   // Health check before running tests
   try {
-    await serverHealthCheck.ensureServerReady();
+    await railsServerHealthCheck.ensureServerReady();
   } catch (error) {
     console.error('🚨 Rails server health check failed!');
     console.error('Make sure Rails server is running with: RAILS_ENV=test bin/rails server -p 3001');

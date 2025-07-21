@@ -4,7 +4,7 @@ import { render, screen, waitFor, cleanup } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { RouterProvider } from "react-router-dom";
 import createTestRouter from "../../testUtils/testRouter.jsx";
-import { testDatabase } from "../../testUtils/testDatabase.js";
+import { testDatabase } from "../../testUtils/railsTestDatabaseAPI.js";
 
 describe('Reset password functionality with a valid token', () => {
   let user;

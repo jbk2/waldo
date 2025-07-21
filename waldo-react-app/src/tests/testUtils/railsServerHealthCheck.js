@@ -88,7 +88,7 @@ async function cleanupTestDB() {
   return { success: true, message: 'Cleanup OK' };
 }
 
-export const serverHealthCheck = {
+export const railsServerHealthCheck = {
   /**
    * Check if Rails server is running and in test mode
    * @returns {Promise<{success: boolean, message: string, details?: any}>}
