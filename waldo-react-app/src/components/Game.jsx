@@ -8,10 +8,9 @@ import { UIContext } from '../contexts/UIContext';
 
 export default function Game() {
   const imageRef = useRef();
-  const { showAlert, showConfetti } = useContext(UIContext);
+  const { showAlert, showConfetti, gameImgBlured } = useContext(UIContext);
   const { characters, setCharacters, stopGame, gameRunning, gamePlayed } = useContext(GameContext)
   const [ clickLocation, setClickLocation ] = useState(null);
-  const [blurImg, setBlurImg] = useState(true)
   
   function hasClickedOnACharacter(clickX, clickY, character) {
     return(
@@ -53,14 +52,6 @@ export default function Game() {
       showAlert('No character found here. 👎');    
     };
   };
-
-  function removeImgBlur() {
-    setBlurImg(false)
-  }
-  
-  function addImgBlur() {
-    setBlurImg(true)
-  }
   
   return(
     <div data-testid="game-section" className="w-full flex justify-center pt-16">
@@ -70,7 +61,7 @@ export default function Game() {
           src={waldoScene1}
           id="waldo-scene-1"
           onClick={handleImageClick}
-          className={`w-full border-2 rounded ${blurImg && 'blur-xs opacity-80'}
+          className={`w-full border-2 rounded ${gameImgBlured && 'blur-xs opacity-80'}
             ${gameRunning && 'hover:cursor-pointer'}`}
           alt="Waldo scene 1"
         />
@@ -102,7 +93,7 @@ export default function Game() {
             )
           }
         })}
-        { !gameRunning && !gamePlayed && <StartGameDialog removeImgBlur={removeImgBlur} /> }
+        { !gameRunning && !gamePlayed && <StartGameDialog /> }
         { !gameRunning && gamePlayed && <EndGameDialog /> }
 
       </div>

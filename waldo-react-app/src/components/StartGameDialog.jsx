@@ -1,14 +1,16 @@
 import { GameContext } from "../contexts/GameContext"
+import { UIContext } from "../contexts/UIContext"
 import { useContext, useRef } from "react"
 
 
-export default function StartGameDialog({removeImgBlur}) {
+export default function StartGameDialog() {
   const { startGame } = useContext(GameContext)
+  const { setGameImgBlured } = useContext(UIContext)
   const dialogRef = useRef()
   
   const handleStartGameClick = () => {
     startGame();
-    removeImgBlur();
+    setGameImgBlured(false);
     if(dialogRef.current) dialogRef.current.close();
   };
 
