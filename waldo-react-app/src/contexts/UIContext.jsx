@@ -6,6 +6,7 @@ const UIContext = createContext();
 export default function UIProvider({children}) {
   const [ alert, setAlert ] = useState(null);
   const [ gameImgBlured, setGameImgBlured ] = useState(true)
+  const [ clickCoords, setClickCoords ] = useState(null);
   const alertTimeout = useRef(null);
   const confettiRef = useRef(null);
 
@@ -38,6 +39,8 @@ export default function UIProvider({children}) {
   const value = {
     gameImgBlured,
     setGameImgBlured,
+    clickCoords,
+    setClickCoords,
     alert,
     setAlert,
     showAlert,

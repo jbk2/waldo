@@ -12,7 +12,6 @@ export default function EndGameDialog() {
   const handleStartGameClick = () => {
     navigate('/');
     startGame();
-    // removeImgBlur();
     if(endGameDialogRef.current) endGameDialogRef.current.close();
   };
 

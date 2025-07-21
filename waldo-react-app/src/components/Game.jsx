@@ -1,6 +1,6 @@
 import { capitalize } from '../utils/stringUtils';
 import waldoScene1 from '../assets/images/waldo-scene1.jpg';
-import { useState, useRef, useContext } from 'react';
+import { useRef, useContext } from 'react';
 import { GameContext } from '../contexts/GameContext';
 import StartGameDialog from './StartGameDialog';
 import EndGameDialog from './EndGameDialog';
@@ -8,9 +8,8 @@ import { UIContext } from '../contexts/UIContext';
 
 export default function Game() {
   const imageRef = useRef();
-  const { showAlert, showConfetti, gameImgBlured } = useContext(UIContext);
+  const { showAlert, showConfetti, gameImgBlured, clickCoords, setClickCoords } = useContext(UIContext);
   const { characters, setCharacters, stopGame, gameRunning, gamePlayed } = useContext(GameContext)
-  const [ clickLocation, setClickLocation ] = useState(null);
   
   function hasClickedOnACharacter(clickX, clickY, character) {
     return(
@@ -25,8 +24,7 @@ export default function Game() {
     const rect = imageRef.current.getBoundingClientRect();
     const clickX = Math.round(((e.clientX - rect.x) / rect.width) * 1000) / 1000;
     const clickY = Math.round(((e.clientY - rect.y) / rect.height) * 1000) / 1000;
-    
-    setClickLocation({ x: clickX, y: clickY });
+    setClickCoords({ x: clickX, y: clickY });
     
     const foundCharacter = characters.find((character) => 
       hasClickedOnACharacter(clickX, clickY, character)
@@ -65,17 +63,16 @@ export default function Game() {
             ${gameRunning && 'hover:cursor-pointer'}`}
           alt="Waldo scene 1"
         />
-        {/* sets click boundary marker */}
-        {clickLocation && (
-          <div
+        {clickCoords &&
+        <div
           className="absolute border-4 border-blue-800 w-6 h-8 pointer-events-none"
           style={{
-            left: `${clickLocation.x * 100}%`,
-            top: `${clickLocation.y * 100}%`,
+            left: `${clickCoords.x * 100}%`,
+            top: `${clickCoords.y * 100}%`,
             transform: 'translate(-50%, -50%)',
           }}>
-          </div>
-        )}
+        </div>
+      }
         {/* sets character boundary marker if character clicked */}
         { characters.map((char) => {
           if(char.clicked) {

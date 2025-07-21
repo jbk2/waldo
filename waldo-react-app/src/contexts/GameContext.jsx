@@ -1,4 +1,5 @@
-import { createContext, useEffect, useState, useRef } from "react";
+import { createContext, useState, useRef, useContext } from "react";
+import { UIContext } from "./UIContext";
 import { initialCharacters } from '../data/characters'
 
 const GameContext = createContext();
@@ -9,6 +10,7 @@ export default function GameProvider({children}) {
   const [ gameRunning, setGameRunning ] = useState(false)
   const [ gamePlayed, setGamePlayed ] = useState(false)
   const [ gameCompletedLength, setGameCompletedLength] = useState(null)
+  const { setClickCoords } = useContext(UIContext);
   const intervalRef = useRef(null);
   const gameStartTimeRef = useRef(0);
   
@@ -41,6 +43,7 @@ export default function GameProvider({children}) {
   
   function startGame() {
     setCharacters(initialCharacters);
+    setClickCoords(null);
     setGameRunning(true);
     startGameTimer();
   }
