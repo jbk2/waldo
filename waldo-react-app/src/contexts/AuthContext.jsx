@@ -72,7 +72,7 @@ export default function AuthProvider({children}) {
     });
   }
   
-  function signIn(formData, navigate) {
+  function signIn(formData, navigate, navState) {
     fetch("/api/session", {
       method: "POST",
       credentials: "include",
@@ -90,7 +90,11 @@ export default function AuthProvider({children}) {
       if (res.ok) {
         setSignedIn(true)
         showAlert(data.message);
-        navigate('/');
+        if(navState.routeToCompetitionBoard) {
+          navigate('/competition-board', { state: { pastGameTime: navState.pastGameTime} })
+        } else {
+          navigate('/');
+        }
       } else {
         showAlert(
           data.message ||
