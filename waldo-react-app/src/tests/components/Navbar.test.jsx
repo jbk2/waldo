@@ -1,9 +1,10 @@
 import '../setup.components.js';
-import { describe, it, expect, vi } from 'vitest';
+import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import Navbar from '../../components/Navbar';
 import { AuthContext } from '../../contexts/AuthContext';
 import GameProvider from '../../contexts/GameContext';
+import UIProvider from '../../contexts/UIContext.jsx';
 
 // Mock react-router-dom
 const mockNavigate = vi.fn();
@@ -23,11 +24,13 @@ describe('Navbar component', () => {
     };
 
     render(
-      <AuthContext.Provider value={mockAuthValue}>
-        <GameProvider>
-          <Navbar />
-        </GameProvider>
-      </AuthContext.Provider>
+      <UIProvider>
+        <AuthContext.Provider value={mockAuthValue}>
+          <GameProvider>
+            <Navbar />
+          </GameProvider>
+        </AuthContext.Provider>
+      </UIProvider>
     );
     expect(screen.getByTestId('character-status-col')).toBeInTheDocument();
   });
@@ -39,11 +42,13 @@ describe('Navbar component', () => {
     };
 
     render(
-      <AuthContext.Provider value={mockAuthValue}>
-        <GameProvider>
-          <Navbar />
-        </GameProvider>
-      </AuthContext.Provider>
+      <UIProvider>
+        <AuthContext.Provider value={mockAuthValue}>
+          <GameProvider>
+            <Navbar />
+          </GameProvider>
+        </AuthContext.Provider>
+      </UIProvider>
     );
     expect(screen.getByTestId('typemark-col')).toBeInTheDocument();
   });
@@ -55,11 +60,13 @@ describe('Navbar component', () => {
     };
 
     render(
-      <AuthContext.Provider value={mockAuthValue}>
-        <GameProvider>
-          <Navbar />
-        </GameProvider>
-      </AuthContext.Provider>
+      <UIProvider>
+        <AuthContext.Provider value={mockAuthValue}>
+          <GameProvider>
+            <Navbar />
+          </GameProvider>
+        </AuthContext.Provider>
+      </UIProvider>
     );
     expect(screen.getByTestId('scoreboard-col')).toBeInTheDocument();
   });
@@ -71,11 +78,13 @@ describe('Navbar component', () => {
     };
 
     render(
-      <AuthContext.Provider value={mockAuthValue}>
-        <GameProvider>
-          <Navbar />
-        </GameProvider>
-      </AuthContext.Provider>
+      <UIProvider>
+        <AuthContext.Provider value={mockAuthValue}>
+          <GameProvider>
+            <Navbar />
+          </GameProvider>
+        </AuthContext.Provider>
+      </UIProvider>
     );
     expect(screen.getByTestId('scoreboard-col')).toBeInTheDocument();
     // ScoreBoard should still be there but logout button should not be
@@ -89,11 +98,13 @@ describe('Navbar component', () => {
     };
 
     render(
-      <AuthContext.Provider value={mockAuthValue}>
-        <GameProvider>
-          <Navbar />
-        </GameProvider>
-      </AuthContext.Provider>
+      <UIProvider>
+        <AuthContext.Provider value={mockAuthValue}>
+          <GameProvider>
+            <Navbar />
+          </GameProvider>
+        </AuthContext.Provider>
+      </UIProvider>
     );
     
     const typemark = screen.getByText("Where's Waldo?");

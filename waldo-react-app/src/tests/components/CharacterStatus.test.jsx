@@ -3,13 +3,16 @@ import { describe, it, expect } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import CharacterStatus from '../../components/CharacterStatus';
 import GameProvider from '../../contexts/GameContext';
+import UIProvider from '../../contexts/UIContext.jsx';
 
 describe('CharacterStatus component', () => {
   it('contains images for each character', () => {
     render(
-      <GameProvider>
-        <CharacterStatus />
-      </GameProvider>
+      <UIProvider>
+        <GameProvider>
+          <CharacterStatus />
+        </GameProvider>
+      </UIProvider>
     );
     
     const images = screen.getAllByRole('img');
@@ -18,9 +21,11 @@ describe('CharacterStatus component', () => {
   
   it('contains status for each character', () => {
     render(
-      <GameProvider>
-        <CharacterStatus />
-      </GameProvider>
+      <UIProvider>
+        <GameProvider>
+          <CharacterStatus />
+        </GameProvider>
+      </UIProvider>
     );
     
     const charStatuses = screen.getAllByRole('status');
@@ -29,9 +34,11 @@ describe('CharacterStatus component', () => {
 
   it('shows "Not Found" status for all characters initially', () => {
     render(
-      <GameProvider>
-        <CharacterStatus />
-      </GameProvider>
+      <UIProvider>
+        <GameProvider>
+          <CharacterStatus />
+        </GameProvider>
+      </UIProvider>
     );
     
     // All characters should show "Not Found" initially
@@ -41,9 +48,11 @@ describe('CharacterStatus component', () => {
 
   it('displays character names as alt text for images', () => {
     render(
-      <GameProvider>
-        <CharacterStatus />
-      </GameProvider>
+      <UIProvider>
+        <GameProvider>
+          <CharacterStatus />
+        </GameProvider>
+      </UIProvider>
     );
     
     const waldoImage = screen.getByAltText('waldo');
