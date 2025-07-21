@@ -50,7 +50,7 @@ gem "stimulus-rails"
 gem "turbo-rails"
 
 # To enable CORS, i.e. react front end on different origin to call rails app
-gem 'rack-cors'
+gem "rack-cors"
 
 
 
@@ -67,12 +67,12 @@ group :development, :test do
   # Omakase Ruby styling [https://github.com/rails/rubocop-rails-omakase/]
   gem "rubocop-rails-omakase", require: false
 
-  gem 'rspec-rails'
+  gem "rspec-rails"
 end
 
 group :development do
 end
 
 group :test do
-  gem 'capybara'
+  gem "capybara"
 end

@@ -47,7 +47,7 @@ RSpec.describe "Api::Passwords", type: :request do
 
         expect(response).to have_http_status(:ok)
         json = JSON.parse(response.body)
-        expect(json['message']).to eq("Successfully logged in")
+        expect(json['message']).to eq("Successfully signed in")
         expect(json['user']['email_address']).to eq(user.email_address)
       end
     end
