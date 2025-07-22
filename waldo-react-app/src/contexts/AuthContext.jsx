@@ -37,7 +37,7 @@ export default function AuthProvider({children}) {
     })
   }, [showAlert])
 
-  function signUp(formData, navigate) {
+  function signUp(formData, navigate, navState) {
     fetch("/api/users", {
       method: "POST",
       headers: {
@@ -55,7 +55,13 @@ export default function AuthProvider({children}) {
     .then(async (res) => {
       const data = await res.json();
       if (res.ok) {
-        navigate('/sign-in');
+        if(navState) {
+          const navStateAndUser = { ...navState, user: data.user }
+          console.log('HERES NAVSTATE WITH USER>>', navStateAndUser);
+          navigate('/sign-in', { state: navStateAndUser });
+        } else {
+          navigate('/sign-in');
+        };
         showAlert(data.message);
       } else {
         showAlert(
@@ -88,13 +94,13 @@ export default function AuthProvider({children}) {
     .then(async (res) => {
       const data = await res.json();
       if (res.ok) {
-        setSignedIn(true)
-        showAlert(data.message);
+        setSignedIn(true);
         if(navState) {
           navigate(navState.nextRoute, { state: { pastGameTime: navState.pastGameTime} })
         } else {
           navigate('/');
-        }
+        };
+        showAlert(data.message);
       } else {
         showAlert(
           data.message ||

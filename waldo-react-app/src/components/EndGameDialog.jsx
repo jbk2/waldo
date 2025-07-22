@@ -15,18 +15,15 @@ export default function EndGameDialog() {
         pastGameTime: gameCompletedLength
       }
     });
-    console.log('from EndDialog, gameCompletedTime >>', gameCompletedLength);
   }
 
   function handleSignUp() {
     resetGame();
     navigate('sign-up', { state:
-      { pastGame: true,
-        routeToCompetitionBoard: true,
+      { nextRoute: '/competition-board',
         pastGameTime: gameCompletedLength
       }
     });
-    console.log('from EndDialog, gameCompletedTime >>', gameCompletedLength);
   }
 
   function handleStartGameClick() {

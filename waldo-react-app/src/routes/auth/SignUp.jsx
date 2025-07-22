@@ -1,4 +1,4 @@
-import { useOutletContext, useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { useContext } from "react";
 import AuthLayout from "./AuthLayout";
 import { AuthContext } from "../../contexts/AuthContext";
@@ -6,11 +6,17 @@ import { AuthContext } from "../../contexts/AuthContext";
 export default function SignUp() {
   const { signUp } = useContext(AuthContext);
   const navigate = useNavigate();
+  const { state } = useLocation();
 
   const handleSignUp = (e) => {
     e.preventDefault();
     const formData = new FormData(e.target);
-    signUp(formData, navigate);
+    
+    if(state) {
+      signUp(formData, navigate, state);
+    } else {
+      signUp(formData, navigate);
+    };
   }
 
   return(

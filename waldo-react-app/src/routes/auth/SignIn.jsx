@@ -11,11 +11,14 @@ export default function SignIn() {
   const handleSignIn = (e) => {
     e.preventDefault();
     const formData = new FormData(e.target);
+    const formEmail = formData.get('email_address');
+    const gameOwnerEmail = state?.user?.email_address;
     
-    if(state) {
-      console.log(state)
+    // is user state matches the formData email
+    if(state && !state.user || state && state.user && formEmail === gameOwnerEmail) {
       signIn(formData, navigate, state);
     } else {
+      // should reset gameCompletedLength?
       signIn(formData, navigate);
     };
   };
