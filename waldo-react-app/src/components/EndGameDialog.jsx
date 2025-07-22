@@ -11,8 +11,7 @@ export default function EndGameDialog() {
   function handleSignIn() {
     resetGame();
     navigate('sign-in', { state:
-      { pastGame: true,
-        routeToCompetitionBoard: true,
+      { nextRoute: '/competition-board',
         pastGameTime: gameCompletedLength
       }
     });

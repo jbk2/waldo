@@ -54,6 +54,7 @@ export default function GameProvider({children}) {
     setGameElapsedTime(0);
     setClickCoords(null);
     setGamePlayed(false);
+    setCharacters(initialCharacters);
     console.log('game reset, gameElapsedTime >>', gameElapsedTime, 'milliseconds');
     console.log('game reset, gameCompletedTime >>', gameCompletedLength, 'milliseconds');
   }

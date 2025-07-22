@@ -90,8 +90,8 @@ export default function AuthProvider({children}) {
       if (res.ok) {
         setSignedIn(true)
         showAlert(data.message);
-        if(navState.routeToCompetitionBoard) {
-          navigate('/competition-board', { state: { pastGameTime: navState.pastGameTime} })
+        if(navState) {
+          navigate(navState.nextRoute, { state: { pastGameTime: navState.pastGameTime} })
         } else {
           navigate('/');
         }

@@ -9,12 +9,16 @@ export default function SignIn() {
   const { state } = useLocation();
 
   const handleSignIn = (e) => {
-    console.log(state)
-    const navState = state;
     e.preventDefault();
-    const formData = new FormData(e.target)
-    signIn(formData, navigate, navState);
-  }
+    const formData = new FormData(e.target);
+    
+    if(state) {
+      console.log(state)
+      signIn(formData, navigate, state);
+    } else {
+      signIn(formData, navigate);
+    };
+  };
 
   return(
     <AuthLayout title="Welcome to Waldo" subtitle="Sign in to play">
