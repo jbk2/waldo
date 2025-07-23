@@ -10,7 +10,8 @@ import { ImagesContext } from '../contexts/ImagesContext';
 export default function Game() {
   const imgRef = useRef();
   const { showAlert, showConfetti, gameImgBlured, clickCoords, setClickCoords } = useContext(UIContext);
-  const { gameImage, characters, setCharacters, completeGame, gameRunning, gamePlayed, imageLoading, imageLoaded } = useContext(GameContext)
+  const { gameImage, characters, setCharacters, completeGame, gameRunning, gamePlayed, imageLoading,
+    setImageLoading, setImageLoaded, startGameAfterLoad } = useContext(GameContext)
 
   // console.log('Game render - gameRunning:', gameRunning, 'gamePlayed:', gamePlayed);
 
@@ -21,12 +22,13 @@ export default function Game() {
     )
   }
 
-  function saveClickOnCharacter() {
 
-  }
 
-  function updateGameStatus() {
-
+  function handleImageLoad() {
+    console.log('Image loaded successfully');
+    setImageLoaded(true);
+    setImageLoading(false); // Stop loading spinner when image loads
+    startGameAfterLoad();
   }
 
   function handleImageClick(e) {
@@ -70,19 +72,28 @@ export default function Game() {
   return(
     <div data-testid="game-section" className="w-full flex justify-center pt-16">
       <div className="relative w-[80vw] max-w-[1400px]">
-        {!imageLoaded && 
+        {/* Show placeholder when no game image */}
+        {!gameImage || gameImage.url === waldoScene1 ? (
           <img
-            // ref={imgRef}
             src={waldoScene1}
-            id="placeholderImage"
-            // onClick={handleImageClick}
-            className={`w-full border-2 rounded ${gameImgBlured && 'blur-xs opacity-80'}
-              ${gameRunning && 'hover:cursor-pointer'}`}
+            className={`w-full border-2 rounded ${gameImgBlured && 'blur-xs opacity-80'}`}
             alt="placeholderImage"
           />
-        }
+        ) : (
+          /* Show the actual game image */
+          <img
+            ref={imgRef}
+            src={gameImage.url}
+            onLoad={handleImageLoad}
+            onClick={handleImageClick}
+            className={`w-full border-2 rounded ${gameImgBlured && 'blur-xs opacity-80'}
+              ${gameRunning && 'hover:cursor-pointer'}`}
+            alt="Waldo scene"
+          />
+        )}
         
-        {imageLoading && !imageLoaded && (
+        {/* Show loading overlay when loading */}
+        {imageLoading && (
           <div className="absolute inset-0 flex items-center justify-center bg-gray-100 bg-opacity-90 z-10">
             <div className="text-center">
               <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500 mx-auto mb-4"></div>
@@ -91,21 +102,8 @@ export default function Game() {
             </div>
           </div>
         )}
-
-        {imageLoaded && !imageLoading && (
-          
-        )}
         
-        <img
-          ref={imgRef}
-          src={gameImage.url}
-          // id="waldo-scene-1"
-          onClick={handleImageClick}
-          className={`w-full border-2 rounded ${gameImgBlured && 'blur-xs opacity-80'}
-            ${gameRunning && 'hover:cursor-pointer'}`}
-          alt="Waldo scene 1"
-        />
-        {clickCoords &&
+        {clickCoords && gameImage && gameImage.url !== waldoScene1 && (
           <div
             className="absolute border-4 border-blue-800 w-6 h-8 pointer-events-none"
             style={{
@@ -114,9 +112,10 @@ export default function Game() {
               transform: 'translate(-50%, -50%)',
             }}>
           </div>
-        }
+        )}
+
         {/* sets character boundary marker if character clicked */}
-        { characters.map((char) => {
+        {gameImage && gameImage.url !== waldoScene1 && characters.map((char) => {
           if(char.clicked) {
             return(
               <div

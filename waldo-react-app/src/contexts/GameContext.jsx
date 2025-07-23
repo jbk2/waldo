@@ -63,11 +63,18 @@ export default function GameProvider({children}) {
     setImageLoaded(false);
 
     try {  
-      const gameImage = await ImageLoader.getImageByTitle(chosenGameTitle)
-      console.log('from start game, game image is>>', gameImage);
+      const newImage = await ImageLoader.getImageByTitle(chosenGameTitle)
+      console.log('from start game, new image is>>', newImage);
 
-      setGameImage(gameImage);
-      const charPosns = gameImage.characters.map((char) => ({
+      if (!newImage || !newImage.characters) {
+        throw new Error('Invalid game image data - missing characters');
+      }
+
+      setGameImage(newImage);
+      // Keep imageLoading = true until the image actually loads
+      // setImageLoading(false) will be called in handleImageLoad
+      
+      const charPosns = newImage.characters.map((char) => ({
           characterId: char.id,
           characterName: char.name,
           startX: char.start_x,
@@ -78,13 +85,16 @@ export default function GameProvider({children}) {
       setCharactersAndPositions(charPosns);
       setClickCoords(null);
 
-      setGameRunning(true);
-      startGameTimer();
     } catch (error) {
       setImageLoading(false);
       console.error('Failed to start game:', error);
-      // Handle error (show alert, etc.)
+      // Don't set gameImage to fallback - let the error be handled
     }
+  }
+  
+  function startGameAfterLoad() {
+    setGameRunning(true);
+    startGameTimer();
   }
   
   function resetGame() {
@@ -120,7 +130,10 @@ export default function GameProvider({children}) {
     gamePlayed,
     setGameTitle,
     imageLoading,
-    imageLoaded
+    imageLoaded,
+    setImageLoading,
+    setImageLoaded,
+    startGameAfterLoad
   }
 
   return (
