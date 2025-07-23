@@ -1,12 +1,20 @@
 # Todo list
+- create new images
+  - build better way to create image characters from clicks?
+- build out image choise in newGameDialogue
+- build out load image with the chosen new game
+- build out gameContext loadGame
+- build out scores context save game
 
 ## All
 - Game play:
-  - further review end of game logic to be clearer between GameContext#stopGame, Game#useEffect & #handleImgClick
-- maybe create a UI functionality context?
 - build out saving users's times, ranking users times
+
 - build out competition board
 - build out concept of playing different images, getting images from API
+  - GameContext.loadImage() in react app
+  - Rails endpoint to provide image
+
 - allow non auth'd users to play a game, only prompt sign in or
   account creatiion upon completion of first game.
 - integrate calling react >> Rails API for the images

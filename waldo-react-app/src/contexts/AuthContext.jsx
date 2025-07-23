@@ -8,7 +8,6 @@ export default function AuthProvider({children}) {
   const [ user, setUser ] = useState(null);
   const [ authChecked, setAuthChecked ] = useState(false);
   const { showAlert } = useContext(UIContext);
-
   
   const authenticate = useCallback(function authenticate() {
     fetch('/api/session', {

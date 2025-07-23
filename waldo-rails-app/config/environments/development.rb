@@ -53,8 +53,11 @@ Rails.application.configure do
   # Append comments with runtime information tags to SQL queries in logs.
   config.active_record.query_log_tags_enabled = true
 
-  # Highlight code that enqueued background job in logs.
+  # Highlight code that enqueued background job in logs.Image.last.title = "ali-baba-and-the-forty-thieves"
   config.active_job.verbose_enqueue_logs = true
+
+  # Set queue adapter to inline so jobs happen straight away
+  config.active_job.queue_adapter = :inline
 
   # Raises error for missing translations.
   # config.i18n.raise_on_missing_translations = true

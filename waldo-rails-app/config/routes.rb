@@ -15,6 +15,9 @@ Rails.application.routes.draw do
     resource :session, only: [:create, :show, :destroy]
     resources :users, only: [:create]
     resources :passwords, param: :token, only: [:create, :update]
+    resources :images, only: [:index] do
+      get 'by_title/:image_title', on: :collection, action: :by_title
+    end
     
     # Test endpoints (only in test environment)
     if Rails.env.test?
