@@ -23,6 +23,10 @@ export default function Navbar() {
     navigate('/');
   }
 
+  function handleHomeClick() {
+    window.location.reload();
+  }
+
   return(
     <>
       <header className='grid grid-cols-[1fr_auto_1fr] items-center w-full
@@ -34,7 +38,7 @@ export default function Navbar() {
         <div data-testid="typemark-col">
           <h1
             className="font-playrite text-6xl text-center my-8 hover:cursor-pointer"
-            onClick={() => navigate('/')}
+            onClick={handleHomeClick}
             >Where's Waldo?
           </h1>
         </div>
