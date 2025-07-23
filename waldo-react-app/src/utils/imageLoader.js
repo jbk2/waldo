@@ -34,9 +34,6 @@ class ImageLoader {
         }
       })
       
-      console.log('Response status:', response.status);
-      console.log('Response ok:', response.ok);
-      
       if(!response.ok) { 
         console.error('Response not ok:', response.status, response.statusText);
         throw new Error(`by_title ${imageTitle} API call not ok: ${response.status}`)
@@ -44,7 +41,6 @@ class ImageLoader {
       
       const data = await response.json();
       console.log('Raw API response:', data);
-      console.log('data.image:', data.image);
       
       return data.image;
     } catch (error) {

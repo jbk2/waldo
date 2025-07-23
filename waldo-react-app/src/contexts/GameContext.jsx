@@ -1,10 +1,10 @@
-import { createContext, useState, useRef, useContext, useCallback } from "react";
+import { createContext, useState, useRef, useContext, useCallback, useEffect } from "react";
 import { UIContext } from "./UIContext";
 import { initialCharacters } from '../data/characters'
 import { AuthContext } from "./AuthContext";
 import { ScoresContext } from "./ScoresContext";
 import { ImagesContext } from "./ImagesContext";
-import waldoScene1 from '../assets/images/waldo-scene1.jpg';
+import placeholderImg from '../assets/images/waldo-scene1.jpg';
 import ImageLoader from "../utils/imageLoader";
 
 const GameContext = createContext();
@@ -12,11 +12,10 @@ const GameContext = createContext();
 export default function GameProvider({children}) {
 
   const [ gameTitle, setGameTitle] = useState('cake-factory')
-  const [ gameImage, setGameImage] = useState({ url: waldoScene1 })
+  const [ gameImage, setGameImage] = useState(null)
   const [ imageLoading, setImageLoading] = useState(false)
   const [ imageLoaded, setImageLoaded] = useState(false)
-  const [ characters, setCharacters ] = useState(initialCharacters);
-  const [ charactersAndPositions, setCharactersAndPositions ] = useState(null);
+  const [ characters, setCharacters ] = useState(null);
   const [ gameElapsedTime, setGameElapsedTime ] = useState(0);
   const [ gameRunning, setGameRunning ] = useState(false)
   const [ gamePlayed, setGamePlayed ] = useState(false)
@@ -28,6 +27,9 @@ export default function GameProvider({children}) {
   const intervalRef = useRef(null);
   const gameStartTimeRef = useRef(0);
  
+  useEffect(() => {
+    console.log('chars and positions>>>', characters)
+  }, [characters]) 
 
   function startGameTimer() {
     console.log('startGameTimer called');
@@ -56,43 +58,40 @@ export default function GameProvider({children}) {
     }
   }
   
-
-  async function startGame(chosenGameTitle) {
+  async function prepareGame(chosenGameTitle) {
     console.log('startGame called'); 
     setImageLoading(true);
     setImageLoaded(false);
 
     try {  
       const newImage = await ImageLoader.getImageByTitle(chosenGameTitle)
-      console.log('from start game, new image is>>', newImage);
 
       if (!newImage || !newImage.characters) {
-        throw new Error('Invalid game image data - missing characters');
+        throw new Error('Invalid game image data - missing image and or characters');
       }
 
       setGameImage(newImage);
-      // Keep imageLoading = true until the image actually loads
-      // setImageLoading(false) will be called in handleImageLoad
       
-      const charPosns = newImage.characters.map((char) => ({
-          characterId: char.id,
-          characterName: char.name,
+      const characterPositions = newImage.characters.map((char) => ({
+          id: char.id,
+          name: char.name,
+          clicked: false,
           startX: char.start_x,
           endX: char.end_x,
           startY: char.start_y,
           endY: char.end_y,
       }))
-      setCharactersAndPositions(charPosns);
+      setCharacters(characterPositions);
       setClickCoords(null);
 
     } catch (error) {
+      // Don't set gameImage to fallback - let the error be handled
       setImageLoading(false);
       console.error('Failed to start game:', error);
-      // Don't set gameImage to fallback - let the error be handled
     }
   }
   
-  function startGameAfterLoad() {
+  function startGame() {
     setGameRunning(true);
     startGameTimer();
   }
@@ -103,7 +102,7 @@ export default function GameProvider({children}) {
     setGameElapsedTime(0);
     setClickCoords(null);
     setGamePlayed(false);
-    setCharacters(initialCharacters);
+    // setCharacters(initialCharacters);
     console.log('game reset, gameElapsedTime >>', gameElapsedTime, 'milliseconds');
     console.log('game reset, gameCompletedTime >>', gameCompletedLength, 'milliseconds');
   }
@@ -124,6 +123,7 @@ export default function GameProvider({children}) {
     gameElapsedTime,
     gameCompletedLength,
     gameRunning,
+    prepareGame,
     startGame,
     resetGame,
     completeGame,
@@ -133,7 +133,6 @@ export default function GameProvider({children}) {
     imageLoaded,
     setImageLoading,
     setImageLoaded,
-    startGameAfterLoad
   }
 
   return (

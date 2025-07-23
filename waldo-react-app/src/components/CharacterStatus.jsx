@@ -3,7 +3,6 @@ import { useContext } from 'react';
 import waldo from '../assets/images/waldo-head.png';
 import wenda from '../assets/images/wenda-head.png';
 import odlaw from '../assets/images/odlaw-head.png';
-import { capitalize } from '../utils/stringUtils';
 import { GameContext } from "../contexts/GameContext"
 
 export default function CharacterStatus() {
@@ -13,10 +12,19 @@ export default function CharacterStatus() {
     wenda: wenda,
     odlaw: odlaw
   }
+  const characterOrder = ['waldo', 'wenda', 'odlaw'];
+  const charactersToRender = characters || [
+    { id: 'waldo', name: 'waldo', clicked: false },
+    { id: 'wenda', name: 'wenda', clicked: false },
+    { id: 'odlaw', name: 'odlaw', clicked: false }
+  ];
+  const sortedCharacters = charactersToRender.sort((a, b) => 
+    characterOrder.indexOf(a.name) - characterOrder.indexOf(b.name)
+  );
 
   return(
     <>
-      {characters.map((char) => {
+      {sortedCharacters.map((char) => {
         return(
           <div key={char.name} id={`${char.name}-status`}
             className={`flex flex-col gap-1 items-center w-20

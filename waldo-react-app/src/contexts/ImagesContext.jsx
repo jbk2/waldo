@@ -22,20 +22,20 @@ export default function ImagesProvider({children}) {
   //   }));
   // }
   
-  useEffect(() => {
-    const loadImages = async () => {
-      const data = await ImageLoader.loadImages();
-      console.log("from images context here's load images data >>", data);
-      const images = data.images;
+  // useEffect(() => {
+  //   const loadImages = async () => {
+  //     const data = await ImageLoader.loadImages();
+  //     console.log("from images context here's load images data >>", data);
+  //     const images = data.images;
 
-      setImages(data.images);
-    }
-    loadImages();
-  }, []);
+  //     setImages(data.images);
+  //   }
+  //   loadImages();
+  // }, []);
 
-  if(!images) {
-    return null;
-  }
+  // if(!images) {
+  //   return null;
+  // }
 
   const value = {
     images
