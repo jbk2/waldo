@@ -17,10 +17,10 @@ class Api::ImagesController < ApplicationController
         image: {
           id: image.id,
           title: image.title,
-          url: image.image.url,
-          characters: image.characters.as_json
+          url: image.image.url
         },
-        message: "successful return of image by #{image_title}"
+        characters: image.characters.as_json(only: [ :id, :image_id, :name, :start_x, :end_x, :start_y, :end_y ]),
+        message: "successful Rails app JSON return of image#by_title; #{image_title}"
       }
     else
       render json: {

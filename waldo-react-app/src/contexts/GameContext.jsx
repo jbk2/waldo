@@ -1,17 +1,13 @@
 import { createContext, useState, useRef, useContext, useCallback, useEffect } from "react";
 import { UIContext } from "./UIContext";
-import { initialCharacters } from '../data/characters'
 import { AuthContext } from "./AuthContext";
 import { ScoresContext } from "./ScoresContext";
 import { ImagesContext } from "./ImagesContext";
-import placeholderImg from '../assets/images/waldo-scene1.jpg';
 import ImageLoader from "../utils/imageLoader";
 
 const GameContext = createContext();
 
 export default function GameProvider({children}) {
-
-  const [ gameTitle, setGameTitle] = useState('cake-factory')
   const [ gameImage, setGameImage] = useState(null)
   const [ imageLoading, setImageLoading] = useState(false)
   const [ imageLoaded, setImageLoaded] = useState(false)
@@ -57,35 +53,36 @@ export default function GameProvider({children}) {
       intervalRef.current = null;
     }
   }
+
+  function resetCharacterClicks() {
+    setCharacters(characters =>
+      characters.map(char => ({
+        ...char,
+        clicked: false
+      }))
+    )
+  }
   
   async function prepareGame(chosenGameTitle) {
-    console.log('startGame called'); 
     setImageLoading(true);
     setImageLoaded(false);
 
     try {  
-      const newImage = await ImageLoader.getImageByTitle(chosenGameTitle)
+      const newImageAndChars = await ImageLoader.getImageByTitle(chosenGameTitle)
+      const { image: newImage, characters: newChars} = newImageAndChars;
 
-      if (!newImage || !newImage.characters) {
+      if (!newImage || !newChars) {
         throw new Error('Invalid game image data - missing image and or characters');
       }
 
       setGameImage(newImage);
-      
-      const characterPositions = newImage.characters.map((char) => ({
-          id: char.id,
-          name: char.name,
-          clicked: false,
-          startX: char.start_x,
-          endX: char.end_x,
-          startY: char.start_y,
-          endY: char.end_y,
-      }))
-      setCharacters(characterPositions);
-      setClickCoords(null);
+      setCharacters(newChars.map(char => ({
+        ...char,
+        clicked: false
+      })));
 
+      setClickCoords(null);
     } catch (error) {
-      // Don't set gameImage to fallback - let the error be handled
       setImageLoading(false);
       console.error('Failed to start game:', error);
     }
@@ -102,7 +99,7 @@ export default function GameProvider({children}) {
     setGameElapsedTime(0);
     setClickCoords(null);
     setGamePlayed(false);
-    // setCharacters(initialCharacters);
+    resetCharacterClicks();
     console.log('game reset, gameElapsedTime >>', gameElapsedTime, 'milliseconds');
     console.log('game reset, gameCompletedTime >>', gameCompletedLength, 'milliseconds');
   }
@@ -128,7 +125,6 @@ export default function GameProvider({children}) {
     resetGame,
     completeGame,
     gamePlayed,
-    setGameTitle,
     imageLoading,
     imageLoaded,
     setImageLoading,

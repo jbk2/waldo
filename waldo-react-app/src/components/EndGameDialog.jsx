@@ -27,6 +27,7 @@ export default function EndGameDialog() {
   }
 
   function handleStartGameClick() {
+    resetGame();
     navigate('/');
     startGame();
     if(endGameDialogRef.current) endGameDialogRef.current.close();

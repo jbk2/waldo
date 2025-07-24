@@ -42,7 +42,7 @@ class ImageLoader {
       const data = await response.json();
       console.log('Raw API response:', data);
       
-      return data.image;
+      return data;
     } catch (error) {
       console.error('Error in getImageByTitle:', error);
       throw error;
