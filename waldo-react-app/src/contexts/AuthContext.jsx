@@ -94,6 +94,7 @@ export default function AuthProvider({children}) {
       const data = await res.json();
       if (res.ok) {
         setSignedIn(true);
+        setUser(data.user);
         if(navState) {
           navigate(navState.nextRoute, { state: { pastGameTime: navState.pastGameTime} })
         } else {

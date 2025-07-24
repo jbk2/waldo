@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { GameContext } from "../contexts/GameContext";
 
 export default function EndGameDialog() {
-  const { gameCompletedLength, prepareGame, startGame, resetGame } = useContext(GameContext);
+  const { gameCompletedLength, prepareGame, resetGame } = useContext(GameContext);
   const gameCompletedLengthSeconds = (gameCompletedLength / 1000).toFixed(2)
   const endGameDialogRef = useRef();
   const navigate = useNavigate();

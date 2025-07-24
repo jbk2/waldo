@@ -19,7 +19,6 @@ export default function GameProvider({children}) {
   const { setClickCoords } = useContext(UIContext);
   const { signedIn, user } = useContext(AuthContext);
   const { saveGame } = useContext(ScoresContext);
-  // const { images } = useContext(ImagesContext)
   const intervalRef = useRef(null);
   const gameStartTimeRef = useRef(0);
  

@@ -1,11 +1,13 @@
 import { useContext } from "react";
 import { AuthContext } from "../../contexts/AuthContext";
+import { GameContext } from "../../contexts/GameContext";
 import AuthLayout from "./AuthLayout";
 import { useNavigate, useLocation } from "react-router-dom";
 
 export default function SignIn() {
   const navigate = useNavigate();
   const { signIn } = useContext(AuthContext);
+  const { setGameCompletedLength } = useContext(GameContext);
   const { state } = useLocation();
 
   const handleSignIn = (e) => {
@@ -14,11 +16,13 @@ export default function SignIn() {
     const formEmail = formData.get('email_address');
     const gameOwnerEmail = state?.user?.email_address;
     
-    // is user state matches the formData email
-    if(state && !state.user || state && state.user && formEmail === gameOwnerEmail) {
+    // Handle sign-in flow for users with preserved game state:
+      // - New signup signin: Verify new user & logging in emails match to pass nextRoute & pastGameTime state on
+      // - Existing user signin: Allow sign-in and pass nextRoute and pastGameTime in state on
+    if (state && !state.user || state && state.user && formEmail === gameOwnerEmail) {
       signIn(formData, navigate, state);
     } else {
-      // should reset gameCompletedLength?
+      setGameCompletedLength(null);
       signIn(formData, navigate);
     };
   };
