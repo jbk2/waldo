@@ -48,6 +48,8 @@ export default function Game() {
           ? { ...character, clicked: true }
           : character
       );
+      setCharacters(updatedCharacters);
+      
       const allCharactersClicked = updatedCharacters.every((character) => character.clicked === true);
 
       if(allCharactersClicked) {
@@ -57,7 +59,6 @@ export default function Game() {
       } else {
         showAlert(`🎉 Yay, you found ${capitalize(foundCharacter.name)} 🎉`);
       }
-      setCharacters(updatedCharacters);
     } else {
       showAlert('No character found here. 👎');    
     };
@@ -112,7 +113,7 @@ export default function Game() {
             return(
               <div
                 key={char.id}
-                className="absolute border-4 border-green-600 pointer-events-none p-2"
+                className="absolute border-4 p-2 border-green-600 pointer-events-none"
                 style={{
                   left: `${char.start_x * 100}%`,
                   top: `${char.start_y * 100}%`,

@@ -53,38 +53,34 @@ export default function GameProvider({children}) {
       intervalRef.current = null;
     }
   }
-
-  function resetCharacterClicks() {
-    setCharacters(characters =>
-      characters.map(char => ({
-        ...char,
-        clicked: false
-      }))
-    )
-  }
   
+
   async function prepareGame(chosenGameTitle) {
-    setImageLoading(true);
-    setImageLoaded(false);
-
-    try {  
-      const newImageAndChars = await ImageLoader.getImageByTitle(chosenGameTitle)
-      const { image: newImage, characters: newChars} = newImageAndChars;
-
-      if (!newImage || !newChars) {
-        throw new Error('Invalid game image data - missing image and or characters');
+    if(imageLoaded && gameImage.title === chosenGameTitle) {
+      startGame()
+    } else {
+      setImageLoading(true);
+      setImageLoaded(false);
+      
+      try {  
+        const newImageAndChars = await ImageLoader.getImageByTitle(chosenGameTitle)
+        const { image: newImage, characters: newChars} = newImageAndChars;
+        
+        if (!newImage || !newChars) {
+          throw new Error('Invalid game image data - missing image and or characters');
+        }
+        
+        setGameImage(newImage);
+        setCharacters(newChars.map(char => ({
+          ...char,
+          clicked: false
+        })));
+        
+        setClickCoords(null);
+      } catch (error) {
+        setImageLoading(false);
+        console.error('Failed to start game:', error);
       }
-
-      setGameImage(newImage);
-      setCharacters(newChars.map(char => ({
-        ...char,
-        clicked: false
-      })));
-
-      setClickCoords(null);
-    } catch (error) {
-      setImageLoading(false);
-      console.error('Failed to start game:', error);
     }
   }
   
@@ -93,6 +89,16 @@ export default function GameProvider({children}) {
     startGameTimer();
   }
   
+  function resetCharacterClicks() {
+    if (!characters) return null
+    setCharacters(characters =>
+      characters.map(char => ({
+        ...char,
+        clicked: false
+      }))
+    )
+  }
+
   function resetGame() {
     setGameRunning(false);
     stopGameTimer();
@@ -100,8 +106,6 @@ export default function GameProvider({children}) {
     setClickCoords(null);
     setGamePlayed(false);
     resetCharacterClicks();
-    console.log('game reset, gameElapsedTime >>', gameElapsedTime, 'milliseconds');
-    console.log('game reset, gameCompletedTime >>', gameCompletedLength, 'milliseconds');
   }
   
   const completeGame = useCallback(() => {

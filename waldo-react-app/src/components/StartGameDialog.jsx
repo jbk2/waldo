@@ -8,7 +8,7 @@ export default function StartGameDialog() {
   const { setGameImgBlured } = useContext(UIContext)
   const dialogRef = useRef()
   
-  const handleStartGameClick = (chosenGameTitle) => {
+  const handlePlayGameClick = (chosenGameTitle) => {
     prepareGame(chosenGameTitle);
     if(dialogRef.current) dialogRef.current.close();
   };
@@ -22,12 +22,12 @@ export default function StartGameDialog() {
       <div className="flex flex-col">
         <h1 className="w-full font-variation-settings-wght-700 m-10 mb-9">Which game would you like to play?</h1>
         <div className="flex justify-center">
-          <button onClick={() => handleStartGameClick('cake-factory')} className="h-fit w-34 mx-2 p-3 px-4 rounded-lg hover:cursor-pointer
+          <button onClick={() => handlePlayGameClick('cake-factory')} className="h-fit w-34 mx-2 p-3 px-4 rounded-lg hover:cursor-pointer
             border-2 border-indigo-300 hover:border-indigo-400 bg-cyan-400 hover:bg-cyan-500
             font-variation-settings-wght-600 font-raleway text-sm tracking-wide">
             Cake Factory
           </button>
-          <button onClick={() => handleStartGameClick('ali-baba')} className="h-fit w-34 mx-2 p-3 px-4 rounded-lg hover:cursor-pointer
+          <button onClick={() => handlePlayGameClick('ali-baba')} className="h-fit w-34 mx-2 p-3 px-4 rounded-lg hover:cursor-pointer
             border-2 border-indigo-300 hover:border-indigo-400 bg-cyan-400 hover:bg-cyan-500
             font-variation-settings-wght-600 font-raleway text-sm tracking-wide">
             Ali-Baba

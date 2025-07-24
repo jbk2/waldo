@@ -24,7 +24,9 @@ export default function Navbar() {
   }
 
   function handleHomeClick() {
-    window.location.reload();
+    // window.location.reload();
+    resetGame();
+    navigate('/');
   }
 
   return(
