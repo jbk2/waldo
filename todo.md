@@ -1,10 +1,11 @@
 # Todo list
+
+- build out scores context save game
+  - Rails model for Game belongs_to User and Image
+- deal with the constant re-render of navbar timer element every 10ms
+- build out >x2 image choice
 - create new images
   - build better way to create image characters from clicks?
-- build out image choise in newGameDialogue
-- build out load image with the chosen new game
-- build out gameContext loadGame
-- build out scores context save game
 
 ## All
 - Game play:
