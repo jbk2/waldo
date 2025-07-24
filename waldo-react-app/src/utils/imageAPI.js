@@ -1,4 +1,4 @@
-class ImageLoader {
+class ImageAPI {
   
   static async loadImages() {
     const response = await fetch('/api/images', {
@@ -24,7 +24,7 @@ class ImageLoader {
   }
 
   static async getImageByTitle(imageTitle) {
-    console.log('ImageLoader.getImageByTitle called with:', imageTitle);
+    console.log('ImageAPI.getImageByTitle called with:', imageTitle);
     
     try {
       const response = await fetch(`/api/images/by_title/${imageTitle}`, {
@@ -51,4 +51,4 @@ class ImageLoader {
 
 }
 
-export default ImageLoader;
+export default ImageAPI;

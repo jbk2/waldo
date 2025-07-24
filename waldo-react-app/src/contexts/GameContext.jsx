@@ -2,8 +2,7 @@ import { createContext, useState, useRef, useContext, useCallback, useEffect } f
 import { UIContext } from "./UIContext";
 import { AuthContext } from "./AuthContext";
 import { ScoresContext } from "./ScoresContext";
-import { ImagesContext } from "./ImagesContext";
-import ImageLoader from "../utils/imageLoader";
+import ImageAPI from "../utils/imageAPI";
 
 const GameContext = createContext();
 
@@ -62,7 +61,7 @@ export default function GameProvider({children}) {
       setImageLoaded(false);
       
       try {  
-        const newImageAndChars = await ImageLoader.getImageByTitle(chosenGameTitle)
+        const newImageAndChars = await ImageAPI.getImageByTitle(chosenGameTitle)
         const { image: newImage, characters: newChars} = newImageAndChars;
         
         if (!newImage || !newChars) {

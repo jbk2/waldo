@@ -5,7 +5,6 @@ import { GameContext } from '../contexts/GameContext';
 import StartGameDialog from './StartGameDialog';
 import EndGameDialog from './EndGameDialog';
 import { UIContext } from '../contexts/UIContext';
-import { ImagesContext } from '../contexts/ImagesContext';
 
 export default function Game() {
   const imgRef = useRef();
