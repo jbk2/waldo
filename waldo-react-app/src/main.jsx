@@ -12,7 +12,6 @@ import UIProvider from './contexts/UIContext'
 import AuthProvider from './contexts/AuthContext'
 import GameProvider from './contexts/GameContext'
 import ScoresProvider from './contexts/ScoresContext'
-import ImagesProvider from './contexts/ImagesContext'
 
 const router = createBrowserRouter([
   {
@@ -33,14 +32,12 @@ createRoot(document.getElementById('root')).render(
   <StrictMode>
     <UIProvider>
       <AuthProvider>
-        <ImagesProvider>
-          <ScoresProvider>
-            <GameProvider>
-              <RouterProvider router={router}>
-              </RouterProvider>
-            </GameProvider>
-          </ScoresProvider>
-        </ImagesProvider>
+        <ScoresProvider>
+          <GameProvider>
+            <RouterProvider router={router}>
+            </RouterProvider>
+          </GameProvider>
+        </ScoresProvider>
       </AuthProvider>
     </UIProvider>
   </StrictMode>
