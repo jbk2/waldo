@@ -7,9 +7,7 @@ export default function ScoresProvider({children}) {
   const { showAlert } = useContext(UIContext);
   const { allScores, setAllScores } = useState(null);
 
-  function saveGame(img_id, user, time) {
-
-  }
+  
 
   function getImgScores(img_id) {
     fetch('/api/image-scores/img_id', {
@@ -32,7 +30,6 @@ export default function ScoresProvider({children}) {
   }
 
   const value = {
-    saveGame,
     getImgScores,
     allScores
   }

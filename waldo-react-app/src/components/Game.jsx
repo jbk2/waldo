@@ -29,7 +29,7 @@ export default function Game() {
     startGame();
   }
 
-  function handleImageClick(e) {
+  async function handleImageClick(e) {
     if(!gameRunning) return null;
 
     const imgRect = imgRef.current.getBoundingClientRect();
@@ -53,7 +53,8 @@ export default function Game() {
 
       if(allCharactersClicked) {
         showAlert(`🎉 Yay, you found ${capitalize(foundCharacter.name)}, and all characters 🎉`);
-        completeGame();
+        const saved = await completeGame();
+        showAlert(saved.data.message);
         showConfetti();
       } else {
         showAlert(`🎉 Yay, you found ${capitalize(foundCharacter.name)} 🎉`);

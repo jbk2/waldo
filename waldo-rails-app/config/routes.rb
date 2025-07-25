@@ -18,7 +18,8 @@ Rails.application.routes.draw do
     resources :images, only: [:index] do
       get 'by_title/:image_title', on: :collection, action: :by_title
     end
-    
+    resources :games, only: [:create]
+
     # Test endpoints (only in test environment)
     if Rails.env.test?
       post 'test/load_user_fixtures'

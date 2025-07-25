@@ -3,6 +3,7 @@ import { UIContext } from "./UIContext";
 import { AuthContext } from "./AuthContext";
 import { ScoresContext } from "./ScoresContext";
 import ImageAPI from "../utils/imageAPI";
+import GameAPI from "../utils/gameAPI";
 
 const GameContext = createContext();
 
@@ -17,7 +18,6 @@ export default function GameProvider({children}) {
   const [ gameCompletedLength, setGameCompletedLength] = useState(null)
   const { setClickCoords } = useContext(UIContext);
   const { signedIn, user } = useContext(AuthContext);
-  const { saveGame } = useContext(ScoresContext);
   const intervalRef = useRef(null);
   const gameStartTimeRef = useRef(0);
  
@@ -51,7 +51,6 @@ export default function GameProvider({children}) {
       intervalRef.current = null;
     }
   }
-  
 
   async function prepareGame(chosenGameTitle) {
     if(imageLoaded && gameImage.title === chosenGameTitle) {
@@ -106,14 +105,17 @@ export default function GameProvider({children}) {
     resetCharacterClicks();
   }
   
-  const completeGame = useCallback(() => {
+  const completeGame = useCallback(async () => {
     setGameRunning(false);
     stopGameTimer();
     setGamePlayed(true);
     if(signedIn) {
-      saveGame(image_id, user, gameCompletedLength)
+      return await GameAPI.saveGame(gameImage.id, gameCompletedLength);
+    } else {
+      return { ok: true, data: { message: "user not logged in so not saved"} };
     }
-  }, [saveGame, signedIn, user, gameCompletedLength]);
+  }, [signedIn, gameImage?.id, gameCompletedLength]);
+
 
   const value = {
     gameImage,
@@ -126,11 +128,12 @@ export default function GameProvider({children}) {
     startGame,
     resetGame,
     completeGame,
+    setGameCompletedLength,
     gamePlayed,
     imageLoading,
     imageLoaded,
     setImageLoading,
-    setImageLoaded,
+    setImageLoaded
   }
 
   return (

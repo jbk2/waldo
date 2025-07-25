@@ -1,4 +1,4 @@
-class ImageAPI {
+export default class ImageAPI {
   
   static async loadImages() {
     const response = await fetch('/api/images', {
@@ -48,7 +48,4 @@ class ImageAPI {
       throw error;
     }
   }
-
 }
-
-export default ImageAPI;
