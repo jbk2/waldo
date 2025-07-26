@@ -15,6 +15,7 @@ export default function GameProvider({children}) {
   const [ gameElapsedTime, setGameElapsedTime ] = useState(0);
   const [ gameRunning, setGameRunning ] = useState(false)
   const [ gamePlayed, setGamePlayed ] = useState(false)
+  const [ games, setGames ] = useState(null)
   const [ gameCompletedLength, setGameCompletedLength] = useState(null)
   const { setClickCoords } = useContext(UIContext);
   const { signedIn, user } = useContext(AuthContext);
@@ -23,7 +24,22 @@ export default function GameProvider({children}) {
  
   useEffect(() => {
     console.log('chars and positions>>>', characters)
-  }, [characters]) 
+  }, [characters]);
+
+  useEffect(() => {
+    async function loadUsersGames() {
+      if(signedIn) {
+        const response = await GameAPI.getCurrentUsersGames();
+        if(response.ok) {
+          setGames(response.data.games);
+        } else {
+          console.error(response.data.message)
+        }
+      }
+    }
+    
+    loadUsersGames()
+  }, [signedIn])
 
   function startGameTimer() {
     console.log('startGameTimer called');
@@ -110,7 +126,17 @@ export default function GameProvider({children}) {
     stopGameTimer();
     setGamePlayed(true);
     if(signedIn) {
-      return await GameAPI.saveGame(gameImage.id, gameCompletedLength);
+      const saveResponse = await GameAPI.saveGame(gameImage.id, gameCompletedLength);
+      if (saveResponse.ok) {
+        const loadGamesResponse = await GameAPI.getCurrentUsersGames();
+        if(loadGamesResponse.ok) {
+          setGames(loadGamesResponse.data.games);
+        } else {
+          console.error(loadGamesResponse.data.message)
+        }
+      }
+      return saveResponse
+
     } else {
       return { ok: true, data: { message: "user not logged in so not saved"} };
     }
@@ -133,7 +159,8 @@ export default function GameProvider({children}) {
     imageLoading,
     imageLoaded,
     setImageLoading,
-    setImageLoaded
+    setImageLoaded,
+    games
   }
 
   return (

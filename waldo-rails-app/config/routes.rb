@@ -18,9 +18,11 @@ Rails.application.routes.draw do
     resources :images, only: [:index] do
       get 'by_title/:image_title', on: :collection, action: :by_title
     end
-    resources :games, only: [:create]
+    resources :games, only: [:create, :index]
 
-    # Test endpoints (only in test environment)
+    # Test endpoints (only in test environment) - to support the react app's:
+    #   src/tests/testUtils/railsServerHealthCheck.js
+    #   src/tests/testUtils/railsTestDatabaseAPI.js
     if Rails.env.test?
       post 'test/load_user_fixtures'
       post 'test/cleanup'

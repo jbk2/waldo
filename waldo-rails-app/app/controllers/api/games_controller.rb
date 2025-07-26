@@ -11,7 +11,7 @@ class Api::GamesController < ApplicationController
     }
   end
 
-  def create()
+  def create
     game = Game.new(game_params)
     game.user = Current.session.user
     if game.save
@@ -21,7 +21,23 @@ class Api::GamesController < ApplicationController
       }
     else
       render json: {
-        message: @game.errors.full_messages.join(", ")
+        message: game.errors.full_messages.join(", "),
+        errors: game.errors
+      }, status: :unprocessable_entity
+    end
+  end
+
+  def index
+    games = Game.where(user_id: Current.session.user).includes(:image)
+
+    if games
+      render json: {
+        message: "Successfully found games",
+        games: games.as_json(include: { image: { only: [ :id, :title ] } })
+      }
+    else
+      render json: {
+        message: "No games found"
       }, status: :unprocessable_entity
     end
   end
