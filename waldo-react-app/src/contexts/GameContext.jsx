@@ -15,6 +15,7 @@ export default function GameProvider({children}) {
   const [ gameElapsedTime, setGameElapsedTime ] = useState(0);
   const [ gameRunning, setGameRunning ] = useState(false)
   const [ gamePlayed, setGamePlayed ] = useState(false)
+  const [ games, setGames ] = useState(null)
   const [ userGames, setUserGames ] = useState(null)
   const [ gameCompletedLength, setGameCompletedLength] = useState(null)
   const { setClickCoords } = useContext(UIContext);
@@ -37,11 +38,26 @@ export default function GameProvider({children}) {
         }
       }
     }
-    
+
     if (signedIn && user) {
       loadUserGames(user.id)
     }
+    
   }, [signedIn, user])
+
+  useEffect(() => {
+    async function loadGames() {
+      const response = await GameAPI.getGames();
+      if(response.ok) {
+        setGames(response.data.games)
+        console.log('heres response.data.games form the GameContext useEffect loadGames call', response.data.games)
+      } else {
+        console.error(response.data.message)
+      }
+    }
+    
+    loadGames()
+  }, [])
 
   function startGameTimer() {
     console.log('startGameTimer called');
@@ -162,7 +178,8 @@ export default function GameProvider({children}) {
     imageLoaded,
     setImageLoading,
     setImageLoaded,
-    userGames
+    userGames,
+    games
   }
 
   return (

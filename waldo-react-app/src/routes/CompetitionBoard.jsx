@@ -8,7 +8,7 @@ import GamesBoard from "../components/GamesBoard";
 export default function CompetitionBoard() {
   const { state } = useLocation()
   const pastGameTime = state?.pastGameTime;
-  const { userGames } = useContext(GameContext);
+  const { games, userGames } = useContext(GameContext);
   
   const usersGamesByImage = userGames ? (userGames.reduce((acc, game) => {
     const imageID = game.image.id
@@ -37,7 +37,7 @@ export default function CompetitionBoard() {
       ) : (
           <h1>You haven't played any games yet - Link here to go play</h1>
       )}
-      <GamesBoard userGames={userGames} pastGameTime={pastGameTime} />
+      <GamesBoard pastGameTime={pastGameTime} games={games} />
     </>
   )
 }

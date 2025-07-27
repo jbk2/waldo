@@ -1,4 +1,4 @@
-export default function GamesBoard({games, pastGameTime}) {
+export default function GamesBoard({pastGameTime, games}) {
 
 console.log('games from GamesBoard are', games);
   return(
