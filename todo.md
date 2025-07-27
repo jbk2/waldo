@@ -1,8 +1,8 @@
 # Todo list
 
-- build out scores context save game
-  - Rails model for Game belongs_to User and Image
+- build out compeition-board view
 - deal with the constant re-render of navbar timer element every 10ms
+- move AuthContext fetches out to authAPI.js util class
 - build out >x2 image choice
 - create new images
   - build better way to create image characters from clicks?
@@ -30,4 +30,10 @@
 - tidy image creation view - perhaps
 
 ## Tests to write:
-- react app - competition board
+React app
+- competition board component
+- save games, load games
+- contexts; 
+
+
+Rails app - test testLoadImages action 
