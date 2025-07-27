@@ -1,11 +1,13 @@
 # Todo list
 
-- build out compeition-board view
+- build out compeition-board, UserGameBoard & GameBoard views
 - deal with the constant re-render of navbar timer element every 10ms
 - move AuthContext fetches out to authAPI.js util class
 - build out >x2 image choice
 - create new images
   - build better way to create image characters from clicks?
+- Move all Games logic out of GameContext into GamesContext, keep state and logic pertaining to
+  individual game being run in GameContext
 
 ## All
 - Game play:
@@ -34,6 +36,5 @@ React app
 - competition board component
 - save games, load games
 - contexts; 
-
 
 Rails app - test testLoadImages action 
