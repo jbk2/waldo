@@ -15,10 +15,12 @@ Rails.application.routes.draw do
     resource :session, only: [:create, :show, :destroy]
     resources :users, only: [:create]
     resources :passwords, param: :token, only: [:create, :update]
-    resources :images, only: [:index] do
+    resources :images do
       get 'by_title/:image_title', on: :collection, action: :by_title
+      get 'index_by_user'
     end
     resources :games, only: [:create, :index]
+    get 'user/:user_id/games', to: 'games#index_by_user'
 
     # Test endpoints (only in test environment) - to support the react app's:
     #   src/tests/testUtils/railsServerHealthCheck.js

@@ -27,9 +27,9 @@ export default class GameAPI {
     }
   };
   
-  static async getCurrentUsersGames() {
+  static async getUserGames(userId) {
     try {
-      const response = await fetch('api/games', {
+      const response = await fetch(`api/user/${userId}/games`, {
         headers: {
           "Accept": "application/json"
         }

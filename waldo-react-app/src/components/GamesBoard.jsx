@@ -1,0 +1,40 @@
+export default function GamesBoard({games, pastGameTime}) {
+
+console.log('games from GamesBoard are', games);
+  return(
+    <>
+      <div>
+        <h1>Competition Board</h1>
+        <p>Your last game ranked: __past game time was
+          { pastGameTime ? pastGameTime : ' no past game time found'}
+        </p>
+      </div>
+      <div id="users-scores">
+        <table>
+          <caption>Top scores - image #n</caption>
+          <thead>
+            <tr>
+              <td>Rank</td>
+              <td>Username</td>
+              <td>Time</td>
+            </tr>
+          </thead>
+          <tbody>
+            {/* { for } */}
+            <tr>
+              <th></th>
+              <td></td>
+              <td></td>
+            </tr>
+          </tbody>
+        </table>
+        {/* per image */}
+        {/* best 3 times x  */}
+      </div>
+      <div id="competition-scores">
+        {/* top 15 scores */}
+        {/* your position amongst them */}
+      </div>
+    </>
+  )
+}

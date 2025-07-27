@@ -28,12 +28,30 @@ class Api::GamesController < ApplicationController
   end
 
   def index
-    games = Game.where(user_id: Current.session.user).includes(:image)
+    games = Game.all.includes(:image).order(created_at: :desc).limit(100)
+    render json: {
+      message: "Successfully returning all games",
+      games: games
+    }
+  end
 
-    if games
+  def index_by_user
+    api_user = User.find(params[:user_id])
+    current_user = Current.session.user
+
+    if api_user != current_user
+      render json: {
+        message: "front end user ID does not match session user ID"
+      }, status: :unprocessable_entity
+      return
+    end
+
+    users_games = Game.where(user_id: Current.session.user).includes(:image)
+
+    if users_games.any?
       render json: {
         message: "Successfully found games",
-        games: games.as_json(include: { image: { only: [ :id, :title ] } })
+        games: users_games.as_json(include: { image: { only: [ :id, :title ] } })
       }
     else
       render json: {
@@ -41,6 +59,7 @@ class Api::GamesController < ApplicationController
       }, status: :unprocessable_entity
     end
   end
+
 
   private
   def game_params
