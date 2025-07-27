@@ -11,7 +11,7 @@
     "test:start-server": "cd ../waldo-rails-app && RAILS_ENV=test rails server -p 3001 --log-to-stdout & sleep 3",
     "test:cleanup": "lsof -ti:3001 | xargs kill -9 2>/dev/null || true",
     "test:components": "vitest run src/tests/components/",
-    "test:integration": "npm run test:start-server && vitest run src/tests/routes/ && npm run test:cleanup",
+    "test:integration": "trap 'npm run test:cleanup' EXIT && npm run test:start-server && vitest run src/tests/integration/",
     "test:all": "npm run test:components && npm run test:integration"
   },
   "dependencies": {

@@ -1,10 +1,10 @@
-import '../../setup.integration.js';
+import '../../../setup.integration.js';
 import { describe, it, expect, afterEach, beforeEach } from "vitest";
 import { render, screen, waitFor, cleanup } from '@testing-library/react';
 import userEvent from '@testing-library/user-event'
 import { RouterProvider } from "react-router-dom";
-import createTestRouter from "../../testUtils/testRouter.jsx";
-import { testDatabase } from "../../testUtils/railsTestDatabaseAPI.js";
+import createTestRouter from "../../../testUtils/testRouter.jsx";
+import { testDatabase } from "../../../testUtils/railsTestDatabaseAPI.js";
 
 describe('Sign Up integration', () => {
   let user;
