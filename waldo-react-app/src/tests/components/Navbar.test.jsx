@@ -9,7 +9,10 @@ import UIProvider from '../../contexts/UIContext.jsx';
 // Mock react-router-dom
 const mockNavigate = vi.fn();
 vi.mock('react-router-dom', () => ({
-  useNavigate: () => mockNavigate
+  useNavigate: () => mockNavigate,
+  Link: ({ children, to, ...props }) => {
+    return <a href={to} {...props}>{children}</a>
+  }
 }));
 
 describe('Navbar component', () => {
@@ -69,6 +72,24 @@ describe('Navbar component', () => {
       </UIProvider>
     );
     expect(screen.getByTestId('gametimer-col')).toBeInTheDocument();
+  });
+
+  it('renders the Competition Board Link when signed in', () => {
+    const mockAuthValue = {
+      signedIn: true,
+      signOut: vi.fn()
+    };
+
+    render(
+      <UIProvider>
+        <AuthContext.Provider value={mockAuthValue}>
+          <GameProvider>
+            <Navbar />
+          </GameProvider>
+        </AuthContext.Provider>
+      </UIProvider>
+    );
+    expect(screen.getByRole('link', { name: 'Competition Board' })).toBeInTheDocument();
   });
 
   it('does not render logout button when not signed in', () => {
