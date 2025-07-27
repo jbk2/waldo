@@ -52,5 +52,20 @@ export const testDatabase = {
       throw new Error('Failed to generate password reset token'); 
     }
     return response.json();
+  },
+
+  async loadTestImages() {
+    const response = await fetch('/api/test/load_test_images', {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      }
+    });
+    
+    if (!response.ok) { 
+      throw new Error('Failed to load test images'); 
+    }
+    return response.json();
   }
 }; 

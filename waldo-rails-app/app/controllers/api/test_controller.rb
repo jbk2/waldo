@@ -20,7 +20,7 @@ class Api::TestController < ApplicationController
     ActiveRecord::Base.transaction do
       begin
         puts "\e[42;1mStarting fixture loading in transaction\e[0m"
-        
+
         if defined?(ActiveRecord::FixtureSet)
           ActiveRecord::FixtureSet.reset_cache
           puts "\e[42;1mCleared fixture cache\e[0m"
@@ -109,6 +109,47 @@ class Api::TestController < ApplicationController
         error: "User not found with email: #{email_address}" 
       }, status: :not_found
     end
+  end
+
+  def load_test_images
+    Rails.logger.info "\e[42;1mLoading test images...\e[0m"
+    
+    # Create a test image with the attachment
+    image = Image.new(title: 'cake-factory')
+    image.image.attach(
+      io: File.open(Rails.root.join("spec/fixtures/test_image1.webp")),
+      filename: "test_image1.webp",
+      content_type: "image/webp"
+    )
+    image.save!
+    
+    # Create test characters
+    image.characters.create!(
+      name: 'waldo',
+      start_x: 0.1,
+      start_y: 0.2,
+      end_x: 0.2,
+      end_y: 0.3
+    )
+    
+    image.characters.create!(
+      name: 'wenda',
+      start_x: 0.3,
+      start_y: 0.4,
+      end_x: 0.4,
+      end_y: 0.5
+    )
+    
+    image.characters.create!(
+      name: 'odlaw',
+      start_x: 0.5,
+      start_y: 0.6,
+      end_x: 0.6,
+      end_y: 0.7
+    )
+    
+    Rails.logger.info "\e[42;1mTest images loaded successfully\e[0m"
+    render json: { message: "Test images loaded successfully" }
   end
 
   private

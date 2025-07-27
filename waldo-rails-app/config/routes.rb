@@ -29,6 +29,7 @@ Rails.application.routes.draw do
       get 'test/user_fixtures'
       get 'test/environment_check'
       get 'test/generate_password_reset_token'
+      post 'test/load_test_images'
     end
   end
 end
