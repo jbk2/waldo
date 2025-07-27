@@ -1,7 +1,7 @@
 import { GameContext } from '../contexts/GameContext';
 import { useContext } from "react";
 
-export default function ScoreBoard() {
+export default function GameTimer() {
   const { gameElapsedTime, gameRunning, gamePlayed } = useContext(GameContext)
   const seconds = (gameElapsedTime / 1000).toFixed(2)
 

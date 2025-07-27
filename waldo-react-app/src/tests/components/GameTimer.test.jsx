@@ -1,10 +1,10 @@
 import '../setup.components.js';
 import { describe, it, expect } from 'vitest';
 import { render, screen } from '@testing-library/react';
-import ScoreBoard from '../../components/ScoreBoard';
-import { GameContext } from '../../contexts/GameContext';
+import GameTimer from '../../components/GameTimer';
+import { GameContext } from '../../contexts/GameContext.jsx';
 
-describe('ScoreBoard component', () => {
+describe('GameTimer component', () => {
   it('contains a time reading text', () => {
     const mockGameValue = {
       gameElapsedTime: 0,
@@ -19,7 +19,7 @@ describe('ScoreBoard component', () => {
 
     render(
       <GameContext.Provider value={mockGameValue}>
-        <ScoreBoard />
+        <GameTimer />
       </GameContext.Provider>
     );
     expect(screen.getByText(/Elapsed time/)).toBeInTheDocument();
@@ -39,7 +39,7 @@ describe('ScoreBoard component', () => {
 
     render(
       <GameContext.Provider value={mockGameValue}>
-        <ScoreBoard />
+        <GameTimer />
       </GameContext.Provider>
     );
     expect(screen.getByText(/s$/)).toBeInTheDocument(); // Check for "s" suffix
@@ -59,7 +59,7 @@ describe('ScoreBoard component', () => {
 
     render(
       <GameContext.Provider value={mockGameValue}>
-        <ScoreBoard />
+        <GameTimer />
       </GameContext.Provider>
     );
     // Check for the time value and "s" separately since they're in different spans

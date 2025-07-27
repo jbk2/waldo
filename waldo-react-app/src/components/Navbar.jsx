@@ -1,6 +1,6 @@
 import { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
-import ScoreBoard from './ScoreBoard';
+import GameTimer from './GameTimer';
 import CharacterStatus from './CharacterStatus';
 import { AuthContext } from '../contexts/AuthContext';
 import { GameContext } from '../contexts/GameContext';
@@ -45,8 +45,8 @@ export default function Navbar() {
           </h1>
         </div>
         
-        <div data-testid='scoreboard-col' className='flex ml-24 items-center'>
-          <ScoreBoard />
+        <div data-testid='gametimer-col' className='flex ml-24 items-center'>
+          <GameTimer />
           {signedIn ?
             <>
               <button type="button" onClick={handleSignOut} className='btn w-20 ml-2'>

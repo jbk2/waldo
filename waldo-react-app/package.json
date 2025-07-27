@@ -12,7 +12,7 @@
     "test:cleanup": "lsof -ti:3001 | xargs kill -9 2>/dev/null || true",
     "test:components": "vitest run src/tests/components/",
     "test:integration": "npm run test:start-server && vitest run src/tests/routes/ && npm run test:cleanup",
-    "test:all": "npm run test:component && npm run test:integration"
+    "test:all": "npm run test:components && npm run test:integration"
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.1.6",

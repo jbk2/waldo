@@ -76,6 +76,7 @@ export default function Game() {
             onClick={handleImageClick}
             className={`w-full border-2 rounded ${gameImgBlured && 'blur-xs opacity-80'}
               ${gameRunning && 'hover:cursor-pointer'}`}
+            name={gameImage.title}
           />
         ) : (
           <img

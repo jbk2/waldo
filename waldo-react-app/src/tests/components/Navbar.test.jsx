@@ -53,7 +53,7 @@ describe('Navbar component', () => {
     expect(screen.getByTestId('typemark-col')).toBeInTheDocument();
   });
 
-  it('renders the ScoreBoard component when signed in', () => {
+  it('renders the GameTimer component when signed in', () => {
     const mockAuthValue = {
       signedIn: true,
       signOut: vi.fn()
@@ -68,7 +68,7 @@ describe('Navbar component', () => {
         </AuthContext.Provider>
       </UIProvider>
     );
-    expect(screen.getByTestId('scoreboard-col')).toBeInTheDocument();
+    expect(screen.getByTestId('gametimer-col')).toBeInTheDocument();
   });
 
   it('does not render logout button when not signed in', () => {
@@ -86,8 +86,8 @@ describe('Navbar component', () => {
         </AuthContext.Provider>
       </UIProvider>
     );
-    expect(screen.getByTestId('scoreboard-col')).toBeInTheDocument();
-    // ScoreBoard should still be there but logout button should not be
+    expect(screen.getByTestId('gametimer-col')).toBeInTheDocument();
+    // GameTimer should still be there but logout button should not be
     expect(screen.queryByText('SignOut')).not.toBeInTheDocument();
     expect(screen.queryByText('SignIn')).toBeInTheDocument();
   });
