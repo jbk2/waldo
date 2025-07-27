@@ -6,7 +6,7 @@ export default function GameTimer() {
   const seconds = (gameElapsedTime / 1000).toFixed(2)
 
   return(
-    <div  id="game-timer" className="text-sm w-40 flex items-baseline justify-end">
+    <div  id="game-timer" className="text-sm w-40 flex items-baseline">
       Elapsed time:&nbsp;
       <div className='flex w-14 items-baseline justify-start'>
         <span className={`text-md font-mono font-medium tabular-nums lining-nums

@@ -1,5 +1,5 @@
 import { useContext } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import GameTimer from './GameTimer';
 import CharacterStatus from './CharacterStatus';
 import { AuthContext } from '../contexts/AuthContext';
@@ -37,29 +37,36 @@ export default function Navbar() {
           <CharacterStatus />
         </div>
         
-        <div data-testid="typemark-col">
+        <div data-testid="typemark-col" className='mb-2'>
           <h1
-            className="font-playrite text-6xl text-center my-8 hover:cursor-pointer"
+            className="font-playrite text-6xl text-center mt-8 hover:cursor-pointer"
             onClick={handleHomeClick}
             >Where's Waldo?
           </h1>
+          {signedIn && (
+            <div className='flex justify-end'>
+              <Link to='/competition-board' className='text-xs text-green-500 font-variation-settings-wght-600
+                underline decoration-indigo-400 underline-offset-3 decoration-wavy decoration-1
+                hover:scale-104 transition-transform origin-center transform-gpu'>
+                Competition Board
+              </Link>
+            </div>
+          )}
         </div>
-        
-        <div data-testid='gametimer-col' className='flex ml-24 items-center'>
-          <GameTimer />
-          {signedIn ?
-            <>
+        <div className='flex flex-col ml-24 gap-1 overflow-visible'>
+          <div data-testid='gametimer-col' className='flex items-center'>
+            <GameTimer />
+            {signedIn ?
               <button type="button" onClick={handleSignOut} className='btn w-20 ml-2'>
                 SignOut
               </button>
-            </>
-            :
-            <>
+              :
               <button type="button" onClick={handleSignIn} className='btn w-20 ml-2'>
                 SignIn
               </button>
-            </>
-          }
+            }
+          </div>
+          
         </div>
       <hr className='col-span-3'/>
       </header>

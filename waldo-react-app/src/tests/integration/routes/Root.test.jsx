@@ -22,7 +22,7 @@ describe("root '/' page integration test", () => {
     await testDatabase.cleanup();
   });
 
-  it('allows user to select a game and see the game image', async () => {
+  it('allows user to select and start a game', async () => {
     await testDatabase.loadTestImages();
     testRouter.navigate('/')
 
