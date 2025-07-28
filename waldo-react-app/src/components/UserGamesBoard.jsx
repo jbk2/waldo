@@ -20,22 +20,24 @@ export default function UserGamesBoard({userGames}) {
   const totalGamesCount = userGames.length;
 
   return(
-    <div>
+    <div className="flex flex-col items-center mt-6">
       <h1 className="text-xl font-variation-settings-wght-700">Games you've played:</h1>
-      <div className="stats shadow">
-        <div className="stat">
-          <div className="stat-title">Total Games Played</div>
-          <div>{totalGamesCount}</div>
-        </div>
-      </div>
-      {Object.values(usersGamesByImage).map((image) => (
-        <div key={image.imageID} className="stats shadow">
+      <div className="flex">
+        <div className="stats shadow">
           <div className="stat">
-            <div className="stat-title">{image.imageTitle}</div>
-            <div>{image.playCount} games played</div>
+            <div className="stat-title">Total Games Played</div>
+            <div>{totalGamesCount}</div>
           </div>
         </div>
-      ))} 
+        {Object.values(usersGamesByImage).map((image) => (
+          <div key={image.imageID} className="stats shadow">
+            <div className="stat">
+              <div className="stat-title">{image.imageTitle}</div>
+              <div>{image.playCount} games played</div>
+            </div>
+          </div>
+        ))} 
+      </div>
     </div>
   )
 }
