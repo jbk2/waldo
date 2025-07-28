@@ -8,15 +8,18 @@ import ResetPassword from "../../routes/auth/ResetPassword";
 import CompetitionBoard from "../../routes/CompetitionBoard";
 import UIProvider from "../../contexts/UIContext";
 import AuthProvider from "../../contexts/AuthContext";
+import GamesProvider from "../../contexts/GamesContext";
 import GameProvider from "../../contexts/GameContext";
 
 function TestAppWrapper() {
   return(
     <UIProvider>
       <AuthProvider>
-        <GameProvider>
-          <App />
-        </GameProvider>
+        <GamesProvider>
+          <GameProvider>
+            <App />
+          </GameProvider>
+        </GamesProvider>
       </AuthProvider>
     </UIProvider>
   )
