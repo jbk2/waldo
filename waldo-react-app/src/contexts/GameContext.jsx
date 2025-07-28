@@ -2,6 +2,7 @@ import { createContext, useState, useRef, useContext, useCallback, useEffect } f
 import { UIContext } from "./UIContext";
 import { AuthContext } from "./AuthContext";
 import { ScoresContext } from "./ScoresContext";
+import { GamesContext } from "./GamesContext";
 import ImageAPI from "../utils/imageAPI";
 import GameAPI from "../utils/gameAPI";
 
@@ -15,49 +16,16 @@ export default function GameProvider({children}) {
   const [ gameElapsedTime, setGameElapsedTime ] = useState(0);
   const [ gameRunning, setGameRunning ] = useState(false)
   const [ gamePlayed, setGamePlayed ] = useState(false)
-  const [ games, setGames ] = useState(null)
-  const [ userGames, setUserGames ] = useState(null)
-  const [ gameCompletedLength, setGameCompletedLength] = useState(null)
+  const [ gameCompletedLength, setGameCompletedLength] = useState(null) // for GameContext?
   const { setClickCoords } = useContext(UIContext);
-  const { signedIn, user } = useContext(AuthContext);
+  const { signedIn } = useContext(AuthContext);
+  const { loadGames, loadUserGames } = useContext(GamesContext);
   const intervalRef = useRef(null);
   const gameStartTimeRef = useRef(0);
  
   useEffect(() => {
     console.log('chars and positions>>>', characters)
   }, [characters]);
-
-  useEffect(() => {
-    async function loadUserGames(userId) {
-      if(signedIn && user) {
-        const response = await GameAPI.getUserGames(userId);
-        if(response.ok) {
-          setUserGames(response.data.games);
-        } else {
-          console.error(response.data.message)
-        }
-      }
-    }
-
-    if (signedIn && user) {
-      loadUserGames(user.id)
-    }
-    
-  }, [signedIn, user])
-
-  useEffect(() => {
-    async function loadGames() {
-      const response = await GameAPI.getGames();
-      if(response.ok) {
-        setGames(response.data.games)
-        console.log('heres response.data.games form the GameContext useEffect loadGames call', response.data.games)
-      } else {
-        console.error(response.data.message)
-      }
-    }
-    
-    loadGames()
-  }, [])
 
   function startGameTimer() {
     console.log('startGameTimer called');
@@ -149,19 +117,15 @@ export default function GameProvider({children}) {
     if(signedIn) {
       const saveResponse = await GameAPI.saveGame(gameImage.id, gameLength);
       if (saveResponse.ok) {
-        const loadGamesResponse = await GameAPI.getCurrentUsersGames();
-        if(loadGamesResponse.ok) {
-          setUserGames(loadGamesResponse.data.games);
-        } else {
-          console.error(loadGamesResponse.data.message)
-        }
+        loadGames();
+        loadUserGames();
       }
       return saveResponse
 
     } else {
       return { ok: true, data: { message: "user not logged in so not saved"} };
     }
-  }, [signedIn, gameImage?.id]);
+  }, [signedIn, gameImage?.id, loadGames, loadUserGames]);
 
 
   const value = {
@@ -180,9 +144,7 @@ export default function GameProvider({children}) {
     imageLoading,
     imageLoaded,
     setImageLoading,
-    setImageLoaded,
-    userGames,
-    games
+    setImageLoaded
   }
 
   return (

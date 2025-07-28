@@ -3,6 +3,7 @@ export default function GamesBoard({pastGameTime, games}) {
 console.log('games from GamesBoard are', games);
   return(
     <>
+      <h1>Games coun tis {games.length} </h1>
       <div>
         <h1>Competition Board</h1>
         <p>Your last game ranked: __past game time was

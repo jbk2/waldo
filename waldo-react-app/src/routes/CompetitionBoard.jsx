@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import { useLocation } from "react-router-dom"
-import { GameContext } from "../contexts/GameContext";
+import { GamesContext } from "../contexts/GamesContext";
 import UserGamesBoard from "../components/UserGamesBoard";
 import GamesBoard from "../components/GamesBoard";
 
@@ -8,7 +8,7 @@ import GamesBoard from "../components/GamesBoard";
 export default function CompetitionBoard() {
   const { state } = useLocation()
   const pastGameTime = state?.pastGameTime;
-  const { games, userGames } = useContext(GameContext);
+  const { games, userGames } = useContext(GamesContext);
 
   console.log('games is here', userGames)
 

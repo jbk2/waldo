@@ -11,6 +11,7 @@ import CompetitionBoard from '/src/routes/CompetitionBoard'
 import UIProvider from './contexts/UIContext'
 import AuthProvider from './contexts/AuthContext'
 import GameProvider from './contexts/GameContext'
+import GamesProvider from './contexts/GamesContext'
 import ScoresProvider from './contexts/ScoresContext'
 
 const router = createBrowserRouter([
@@ -33,10 +34,12 @@ createRoot(document.getElementById('root')).render(
     <UIProvider>
       <AuthProvider>
         <ScoresProvider>
-          <GameProvider>
-            <RouterProvider router={router}>
-            </RouterProvider>
-          </GameProvider>
+          <GamesProvider>
+            <GameProvider>
+              <RouterProvider router={router}>
+              </RouterProvider>
+            </GameProvider>
+          </GamesProvider>
         </ScoresProvider>
       </AuthProvider>
     </UIProvider>
