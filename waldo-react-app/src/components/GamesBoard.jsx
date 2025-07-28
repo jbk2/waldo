@@ -10,7 +10,8 @@ console.log('games from GamesBoard are', games);
           { pastGameTime ? pastGameTime : ' no past game time found'}
         </p>
       </div>
-      <div id="users-scores">
+
+      <div id="">
         <table>
           <caption>Top scores - image #n</caption>
           <thead>

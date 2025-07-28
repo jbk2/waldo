@@ -4,6 +4,7 @@ import { render, screen } from '@testing-library/react';
 import Navbar from '../../components/Navbar';
 import { AuthContext } from '../../contexts/AuthContext';
 import GameProvider from '../../contexts/GameContext';
+import GamesProvider from '../../contexts/GamesContext';
 import UIProvider from '../../contexts/UIContext.jsx';
 
 // Mock react-router-dom
@@ -29,9 +30,11 @@ describe('Navbar component', () => {
     render(
       <UIProvider>
         <AuthContext.Provider value={mockAuthValue}>
-          <GameProvider>
-            <Navbar />
-          </GameProvider>
+          <GamesProvider>
+            <GameProvider>
+              <Navbar />
+            </GameProvider>
+          </GamesProvider>
         </AuthContext.Provider>
       </UIProvider>
     );
@@ -47,9 +50,11 @@ describe('Navbar component', () => {
     render(
       <UIProvider>
         <AuthContext.Provider value={mockAuthValue}>
-          <GameProvider>
-            <Navbar />
-          </GameProvider>
+          <GamesProvider>
+            <GameProvider>
+              <Navbar />
+            </GameProvider>
+          </GamesProvider>
         </AuthContext.Provider>
       </UIProvider>
     );
@@ -65,9 +70,11 @@ describe('Navbar component', () => {
     render(
       <UIProvider>
         <AuthContext.Provider value={mockAuthValue}>
-          <GameProvider>
-            <Navbar />
-          </GameProvider>
+          <GamesProvider>
+            <GameProvider>
+              <Navbar />
+            </GameProvider>
+          </GamesProvider>
         </AuthContext.Provider>
       </UIProvider>
     );
@@ -83,9 +90,11 @@ describe('Navbar component', () => {
     render(
       <UIProvider>
         <AuthContext.Provider value={mockAuthValue}>
-          <GameProvider>
-            <Navbar />
-          </GameProvider>
+          <GamesProvider>
+            <GameProvider>
+              <Navbar />
+            </GameProvider>
+          </GamesProvider>
         </AuthContext.Provider>
       </UIProvider>
     );
@@ -101,9 +110,11 @@ describe('Navbar component', () => {
     render(
       <UIProvider>
         <AuthContext.Provider value={mockAuthValue}>
-          <GameProvider>
-            <Navbar />
-          </GameProvider>
+          <GamesProvider>
+            <GameProvider>
+              <Navbar />
+            </GameProvider>
+          </GamesProvider>
         </AuthContext.Provider>
       </UIProvider>
     );
@@ -122,9 +133,11 @@ describe('Navbar component', () => {
     render(
       <UIProvider>
         <AuthContext.Provider value={mockAuthValue}>
-          <GameProvider>
-            <Navbar />
-          </GameProvider>
+          <GamesProvider>
+            <GameProvider>
+              <Navbar />
+            </GameProvider>
+          </GamesProvider>
         </AuthContext.Provider>
       </UIProvider>
     );

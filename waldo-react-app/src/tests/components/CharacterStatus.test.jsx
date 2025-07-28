@@ -6,15 +6,18 @@ import GameProvider from '../../contexts/GameContext';
 import { GameContext } from '../../contexts/GameContext';
 import UIProvider from '../../contexts/UIContext.jsx';
 import AuthProvider from '../../contexts/AuthContext.jsx';
+import GamesProvider from '../../contexts/GamesContext.jsx';
 
 describe('CharacterStatus component', () => {
   it('contains images for each character', () => {
     render(
       <UIProvider>
         <AuthProvider>
-          <GameProvider>
-            <CharacterStatus />
-          </GameProvider>
+          <GamesProvider>
+            <GameProvider>
+              <CharacterStatus />
+            </GameProvider>
+          </GamesProvider>
         </AuthProvider>
       </UIProvider>
     );
@@ -27,9 +30,11 @@ describe('CharacterStatus component', () => {
     render(
       <UIProvider>
         <AuthProvider>
-          <GameProvider>
-            <CharacterStatus />
-          </GameProvider>
+          <GamesProvider>
+            <GameProvider>
+              <CharacterStatus />
+            </GameProvider>
+          </GamesProvider>
         </AuthProvider>
       </UIProvider>
     );
@@ -42,9 +47,11 @@ describe('CharacterStatus component', () => {
     render(
       <UIProvider>
         <AuthProvider>
-          <GameProvider>
-            <CharacterStatus />
-          </GameProvider>
+          <GamesProvider>
+            <GameProvider>
+              <CharacterStatus />
+            </GameProvider>
+          </GamesProvider>
         </AuthProvider>
       </UIProvider>
     );
@@ -58,9 +65,11 @@ describe('CharacterStatus component', () => {
     render(
       <UIProvider>
         <AuthProvider>
-          <GameProvider>
-            <CharacterStatus />
-          </GameProvider>
+          <GamesProvider>
+            <GameProvider>
+              <CharacterStatus />
+            </GameProvider>
+          </GamesProvider>
         </AuthProvider>
       </UIProvider>
     );
@@ -84,15 +93,17 @@ describe('CharacterStatus component', () => {
     render(
       <UIProvider>
         <AuthProvider>
-          <GameProvider>
-            <GameContext.Consumer>
-              {(contextValue => (
-                <GameContext.Provider value={{ ...contextValue, characters: mockCharacters }}>
-                  <CharacterStatus />
-                </GameContext.Provider>
-              ))}
-            </GameContext.Consumer>
-          </GameProvider>
+          <GamesProvider>
+            <GameProvider>
+              <GameContext.Consumer>
+                {(contextValue => (
+                  <GameContext.Provider value={{ ...contextValue, characters: mockCharacters }}>
+                    <CharacterStatus />
+                  </GameContext.Provider>
+                ))}
+              </GameContext.Consumer>
+            </GameProvider>
+          </GamesProvider>
         </AuthProvider>
       </UIProvider>
     );

@@ -4,6 +4,7 @@ import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import Game from '../../components/Game';
 import GameProvider from '../../contexts/GameContext';
+import GamesProvider from '../../contexts/GamesContext';
 import UIProvider from '../../contexts/UIContext';
 import AuthProvider from '../../contexts/AuthContext.jsx';
 
@@ -16,9 +17,11 @@ describe('Game component', () => {
     render(
       <UIProvider>
         <AuthProvider>
-          <GameProvider>
-            <Game />
-          </GameProvider>
+          <GamesProvider>
+            <GameProvider>
+              <Game />
+            </GameProvider>
+          </GamesProvider>
         </AuthProvider>
       </UIProvider>
     );
@@ -31,9 +34,11 @@ describe('Game component', () => {
     render(
       <UIProvider>
         <AuthProvider>
-          <GameProvider>
-            <Game />
-          </GameProvider>
+          <GamesProvider>
+            <GameProvider>
+              <Game />
+            </GameProvider>
+          </GamesProvider>
         </AuthProvider>
       </UIProvider>
     );
@@ -46,9 +51,11 @@ describe('Game component', () => {
     render(
       <UIProvider>
         <AuthProvider>
-          <GameProvider>
-            <Game />
-          </GameProvider>
+          <GamesProvider>
+            <GameProvider>
+              <Game />
+            </GameProvider>
+          </GamesProvider>
         </AuthProvider>
       </UIProvider>
     );
