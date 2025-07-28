@@ -1,6 +1,11 @@
 # Todo list
-
-- build out compeition-board, UserGameBoard & GameBoard views
+- when nav to comp-board, if game running && !gamePlayed, stopgame & reset game
+- in comp board - highlight 1) last user game (animate) & all user Games
+- implement username in auth & display in comp-board
+- implement email conf for auth & password change
+- comp board link in endGameDialog
+- numeralise 
+- add sorting on BoardTables
 - deal with the constant re-render of navbar timer element every 10ms
 - move AuthContext fetches out to authAPI.js util class
 - build out >x2 image choice
