@@ -8,9 +8,7 @@ import GamesBoard from "../components/GamesBoard";
 export default function CompetitionBoard() {
   const { state } = useLocation()
   const pastGameTime = state?.pastGameTime;
-  const { games, userGames } = useContext(GamesContext);
-
-  console.log('games is here', userGames)
+  const { games, userGames, imageTitles } = useContext(GamesContext);
 
   return(
     <>
@@ -19,7 +17,7 @@ export default function CompetitionBoard() {
       ) : (
           <h1>You haven't played any games yet - Link here to go play</h1>
       )}
-      <GamesBoard pastGameTime={pastGameTime} games={games} />
+      <GamesBoard pastGameTime={pastGameTime} games={games} imageTitles={imageTitles} />
     </>
   )
 }

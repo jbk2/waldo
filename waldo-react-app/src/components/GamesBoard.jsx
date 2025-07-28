@@ -1,6 +1,6 @@
 import GameTable from "./GameTable";
-export default function GamesBoard({pastGameTime, games}) {
-
+import ImageAPI from "../utils/imageAPI";
+export default function GamesBoard({pastGameTime, games, imageTitles}) {
 
   const imageArray = games.reduce((acc, game) => {
     const imageId = game.image_id;
@@ -17,23 +17,18 @@ export default function GamesBoard({pastGameTime, games}) {
     }
     return acc
   }, [])
-  
-  console.log('games from GamesBoard are', games);
-  console.log('imageArray from GamesBoard are', imageArray);
-  
+
   return(
     <div className="flex flex-col items-center mt-10">
-        <h1>Competition Board</h1>
-        <p>Your last game ranked: __past game time was
-          { pastGameTime ? pastGameTime : ' no past game time found'}
-        </p>
+      <h1>Competition Board</h1>
+      <p>Your last game ranked: __past game time was
+        { pastGameTime ? pastGameTime : ' no past game time found'}
+      </p>
 
-      <div className="flex flex-col gap-8">
-          {    
-            imageArray.map((img) => {
-              return(<GameTable image={img} />)
-            })
-          }
+      <div className="flex flex-col mt-4">
+        {    
+          <GameTable games={games} imageArray={imageArray} imageTitles={imageTitles} />
+        }
       </div>
     </div>
   )

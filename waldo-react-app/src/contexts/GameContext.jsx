@@ -22,10 +22,6 @@ export default function GameProvider({children}) {
   const { loadGames, loadUserGames } = useContext(GamesContext);
   const intervalRef = useRef(null);
   const gameStartTimeRef = useRef(0);
- 
-  useEffect(() => {
-    console.log('chars and positions>>>', characters)
-  }, [characters]);
 
   function startGameTimer() {
     console.log('startGameTimer called');

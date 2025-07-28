@@ -9,7 +9,7 @@ export default function GameTimer() {
     <div  id="game-timer" className="text-sm w-40 flex items-baseline">
       Elapsed time:&nbsp;
       <div className='flex w-14 items-baseline justify-start'>
-        <span className={`text-md font-mono font-medium tabular-nums lining-nums
+        <span className={`text-md font-mono font-medium
           ${ gamePlayed && !gameRunning ? 'underline decoration-wavy decoration-1 \
           decoration-green-600 underline-offset-3' : ''}`}>{seconds}
         </span>

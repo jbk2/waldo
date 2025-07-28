@@ -1,10 +1,12 @@
 import { useState, useEffect, useCallback, createContext, useContext } from "react";
 import GameAPI from "../utils/gameAPI";
 import { AuthContext } from "./AuthContext";
+import ImageAPI from "../utils/imageAPI";
 
 const GamesContext = createContext();
 
 export default function GamesProvider({children}) {
+  const [ imageTitles, setImageTitles ] = useState([]);
   const [ games, setGames ] = useState([]);
   const [ userGames, setUserGames ] = useState([]);
   const { user, signedIn } = useContext(AuthContext);
@@ -14,7 +16,6 @@ export default function GamesProvider({children}) {
     
     if(response.ok) {
       setGames(response.data.games)
-      console.log('heres response.data.games form the GameContext useEffect loadGames call', response.data.games)
       return response.data.games;
     } else {
       console.error(response.data.message)
@@ -31,14 +32,24 @@ export default function GamesProvider({children}) {
     } else {
       console.error(response.data.message);
     }
-  }, [user, signedIn])
+  }, [user, signedIn]);
   
+  async function loadImages() {
+    const imagesData = await ImageAPI.loadImages();
+    const images = imagesData.images;
+    const imgAndTitles = images.map((img) => {
+      return { image_id: img.id, title: img.title }
+    })
+    setImageTitles(imgAndTitles)
+  }
+
   const value = {
     games,
     loadGames,
     userGames,
-    loadUserGames
-  }
+    loadUserGames,
+    imageTitles
+  };
   
   useEffect(() => {
     loadGames();
@@ -51,6 +62,10 @@ export default function GamesProvider({children}) {
       setUserGames([]);
     }
   }, [user, signedIn, loadUserGames]);
+
+  useEffect(() => {
+    loadImages();
+  }, [])
   
   return(
     <GamesContext.Provider value={value}>

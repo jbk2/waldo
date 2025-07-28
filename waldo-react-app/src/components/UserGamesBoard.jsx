@@ -1,5 +1,4 @@
 export default function UserGamesBoard({userGames}) {
-  console.log('from UsersGames usersGame are>>', userGames)
   
   const usersGamesByImage = userGames ? (userGames.reduce((acc, game) => {
     const imageID = game.image.id
