@@ -78,12 +78,15 @@ export default function GameProvider({children}) {
   
   function stopGameTimer() {
     console.log('stopGameTimer called .....')
+    let gameLength = null;
+
     if(intervalRef.current) {
-      const gameLength = Date.now() - gameStartTimeRef.current;
+      gameLength = Date.now() - gameStartTimeRef.current;
       setGameCompletedLength(gameLength);
       clearInterval(intervalRef.current);
       intervalRef.current = null;
     }
+    return gameLength
   }
 
   async function prepareGame(chosenGameTitle) {
@@ -141,10 +144,10 @@ export default function GameProvider({children}) {
   
   const completeGame = useCallback(async () => {
     setGameRunning(false);
-    stopGameTimer();
+    const gameLength = stopGameTimer();
     setGamePlayed(true);
     if(signedIn) {
-      const saveResponse = await GameAPI.saveGame(gameImage.id, gameCompletedLength);
+      const saveResponse = await GameAPI.saveGame(gameImage.id, gameLength);
       if (saveResponse.ok) {
         const loadGamesResponse = await GameAPI.getCurrentUsersGames();
         if(loadGamesResponse.ok) {
@@ -158,7 +161,7 @@ export default function GameProvider({children}) {
     } else {
       return { ok: true, data: { message: "user not logged in so not saved"} };
     }
-  }, [signedIn, gameImage?.id, gameCompletedLength]);
+  }, [signedIn, gameImage?.id]);
 
 
   const value = {
