@@ -23,6 +23,13 @@ export default function SignUp() {
     <AuthLayout title="Welcome to Waldo" subtitle="Please sign up to play">
       <form onSubmit={handleSignUp} className="flex flex-col gap-4">
         <input
+          type="text"
+          placeholder="Username"
+          name="username"
+          className="input input-sm"
+          required
+        />
+        <input
           type="email"
           placeholder="Email"
           name="email_address"

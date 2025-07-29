@@ -73,6 +73,7 @@ class Api::TestController < ApplicationController
     users = User.all.map do |user|
       {
         id: user.id,
+        username: user.username,
         email_address: user.email_address,
       }
     end

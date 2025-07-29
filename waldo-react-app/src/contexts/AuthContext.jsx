@@ -19,7 +19,7 @@ export default function AuthProvider({children}) {
     .then(async res => {
       const data = await res.json();
       if(res.ok) {
-        console.log("user successfully authd");
+        console.log("user successfully authd, data user is >>>", data.user);
         setAuthChecked(true);
         setUser(data.user);
         setSignedIn(true);
@@ -45,6 +45,7 @@ export default function AuthProvider({children}) {
       },
       body: JSON.stringify({
         user: {
+          username: formData.get('username'),
           email_address: formData.get('email_address'),
           password: formData.get('password'),
           password_confirmation: formData.get('password_confirmation'),

@@ -11,4 +11,5 @@ class User < ApplicationRecord
       with: /\A(?=.*[A-Z])(?=.*\d)(?=.*[^a-zA-Z\d]).+\z/,
       message: "must have at least 8 characters, 1 capital letter, 1 digit, and 1 special character"
     }
+  validates :username, presence: true, length: { minimum: 2 }, uniqueness: true
 end

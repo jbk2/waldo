@@ -1,4 +1,4 @@
-import { useState, useEffect, useContext, use } from "react";
+import { useState, useEffect, useContext } from "react";
 import { useSearchParams, useNavigate } from "react-router-dom";
 import AuthLayout from "./AuthLayout";
 import { AuthContext } from "../../contexts/AuthContext";
@@ -38,7 +38,7 @@ export default function ResetPassword() {
 
   return(
     <AuthLayout title="Welcome to Waldo" subtitle="Enter your new password">
-      <form onSubmit={(e) => handleResetPassword(e, token)} className="flex flex-col gap-4">
+      <form onSubmit={handleResetPassword} className="flex flex-col gap-4">
         <input
           type="password"
           placeholder="New password"

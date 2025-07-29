@@ -53,7 +53,7 @@ export default function GameTable({games, imageArray, imageTitles}) {
                   return(
                     <tr className="font-mono font-light" key={game.id}>
                       <th>{i+1}</th>
-                      <td>{game.user_id}</td>
+                      <td>{game.username}</td>
                       <td>{(game.time / 1000).toFixed(2)}s</td>
                     </tr>
                   )
