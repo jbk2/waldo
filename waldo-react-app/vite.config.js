@@ -2,7 +2,8 @@ import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import tailwindcss from '@tailwindcss/vite'
 
-// https://vite.dev/config/
+// Base Vite config, extended for component and integration tests in namespaced config files:
+// vitest.config.components.js & vitest.config.integration.js
 export default defineConfig({
   server: {
     proxy: {
@@ -16,7 +17,6 @@ export default defineConfig({
   test: {
     globals: true,
     environment: 'jsdom',
-    setupFiles: './src/tests/setup.components.js', // Default for component tests
     environmentOptions: {
       jsdom: {
         url: 'http://localhost:5173'

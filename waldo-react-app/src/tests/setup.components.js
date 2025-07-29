@@ -4,7 +4,7 @@ import * as matchers from "@testing-library/jest-dom/matchers";
 
 expect.extend(matchers);
 
-// Mock fetch globally to prevent real API calls
+// Mock fetch globally to prevent real API calls for component tests
 beforeAll(() => {
   window.fetch = vi.fn().mockImplementation((url) => {
     console.log(`🔧 Mocking fetch for: ${url}`);

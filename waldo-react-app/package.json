@@ -10,9 +10,9 @@
     "preview": "vite preview",
     "test:start-server": "cd ../waldo-rails-app && RAILS_ENV=test rails server -p 3001 --log-to-stdout & sleep 3",
     "test:cleanup": "lsof -ti:3001 | xargs kill -9 2>/dev/null || true",
-    "test:components": "vitest run src/tests/components/",
-    "test:integration": "trap 'npm run test:cleanup' EXIT && npm run test:start-server && vitest run src/tests/integration/",
-    "test:integration:file": "trap 'npm run test:cleanup' EXIT && npm run test:start-server && vitest run",
+    "test:components": "vitest run --config vitest.config.components.js src/tests/components/",
+    "test:integration": "trap 'npm run test:cleanup' EXIT && npm run test:start-server && vitest run --config vitest.config.integration.js src/tests/integration/",
+    "test:integration:file": "trap 'npm run test:cleanup' EXIT && npm run test:start-server && vitest run --config vitest.config.integration.js",
     "test:all": "npm run test:components && npm run test:integration"
   },
   "dependencies": {
