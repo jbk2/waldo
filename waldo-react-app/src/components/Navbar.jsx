@@ -23,12 +23,6 @@ export default function Navbar() {
     navigate('/');
   }
 
-  function handleHomeClick() {
-    // window.location.reload();
-    resetGame();
-    navigate('/');
-  }
-
   return(
     <>
       <header className='grid grid-cols-[1fr_auto_1fr] items-center w-full
@@ -38,16 +32,15 @@ export default function Navbar() {
         </div>
         
         <div data-testid="typemark-col" className='mb-2'>
-          <h1
-            className="font-playrite text-6xl text-center mt-8 hover:cursor-pointer"
-            onClick={handleHomeClick}
-            >Where's Waldo?
-          </h1>
+          <Link to={'/'} onClick={resetGame} className='font-playrite text-6xl text-center mt-8
+            hover:cursor-pointer'>
+            Where's Waldo?
+          </Link>
           {signedIn && (
             <div className='flex justify-end'>
-              <Link to='/competition-board' className='text-xs text-green-500 font-variation-settings-wght-600
-                underline decoration-indigo-400 underline-offset-3 decoration-wavy decoration-1
-                hover:scale-104 transition-transform origin-center transform-gpu'>
+              <Link to='/competition-board' onClick={resetGame} className='text-xs text-green-500
+                font-variation-settings-wght-600 underline decoration-indigo-400 underline-offset-3
+                decoration-wavy decoration-1 hover:scale-104 transition-transform origin-center transform-gpu'>
                 Competition Board
               </Link>
             </div>
