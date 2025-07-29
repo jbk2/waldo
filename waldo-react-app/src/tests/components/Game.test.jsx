@@ -1,7 +1,6 @@
 import '../setup.components.js';
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { render, screen } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
 import Game from '../../components/Game';
 import GameProvider from '../../contexts/GameContext';
 import GamesProvider from '../../contexts/GamesContext';
@@ -62,26 +61,5 @@ describe('Game component', () => {
     
     expect(screen.getByText('Which game would you like to play?')).toBeInTheDocument();
   });
-
-  // it('has clickable image when game is running', async () => {
-  //   const user = userEvent.setup();
-
-  //   render(
-  //     <UIProvider>
-  //       <AuthProvider>
-  //         <GameProvider>
-  //           <Game />
-  //         </GameProvider>
-  //       </AuthProvider>
-  //     </UIProvider>
-  //   );
-    
-  //   const placeholderImage = await screen.findByRole('img', { name: /placeholderImage/ });
-  //   expect(placeholderImage).toBeInTheDocument();
-  //   const cakeFactoryBtn = await screen.findByRole('button', { name: 'Cake Factory' })
-  //   await user.click(cakeFactoryBtn);
-  //   const cakeImage = await screen.findByRole('img', { name: 'cake-factory' });
-  //   await user.click(cakeImage);
-  // });
 });
 

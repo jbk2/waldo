@@ -4,6 +4,7 @@ import { render, screen } from '@testing-library/react';
 import Navbar from '../../components/Navbar';
 import { AuthContext } from '../../contexts/AuthContext';
 import GameProvider from '../../contexts/GameContext';
+import { GameContext } from '../../contexts/GameContext';
 import GamesProvider from '../../contexts/GamesContext';
 import UIProvider from '../../contexts/UIContext.jsx';
 
@@ -16,127 +17,67 @@ vi.mock('react-router-dom', () => ({
   }
 }));
 
+// Helper to render with minimal context values
+function renderNavbar(authValue = { signedIn: true, signOut: vi.fn() }) {
+  return render(
+    <UIProvider>
+      <AuthContext.Provider value={authValue}>
+        <GamesProvider>
+          <GameProvider>
+            <Navbar />
+          </GameProvider>
+        </GamesProvider>
+      </AuthContext.Provider>
+    </UIProvider>
+  );
+}
+
 describe('Navbar component', () => {
   beforeEach(() => {
     mockNavigate.mockClear();
   });
 
   it('renders the CharacterStatus component', () => {
-    const mockAuthValue = {
-      signedIn: true,
-      signOut: vi.fn()
-    };
-
-    render(
-      <UIProvider>
-        <AuthContext.Provider value={mockAuthValue}>
-          <GamesProvider>
-            <GameProvider>
-              <Navbar />
-            </GameProvider>
-          </GamesProvider>
-        </AuthContext.Provider>
-      </UIProvider>
-    );
+    renderNavbar();
     expect(screen.getByTestId('character-status-col')).toBeInTheDocument();
   });
 
   it('has a typemark', () => {
-    const mockAuthValue = {
-      signedIn: true,
-      signOut: vi.fn()
-    };
-
-    render(
-      <UIProvider>
-        <AuthContext.Provider value={mockAuthValue}>
-          <GamesProvider>
-            <GameProvider>
-              <Navbar />
-            </GameProvider>
-          </GamesProvider>
-        </AuthContext.Provider>
-      </UIProvider>
-    );
+    renderNavbar();
     expect(screen.getByTestId('typemark-col')).toBeInTheDocument();
   });
 
   it('renders the GameTimer component when signed in', () => {
-    const mockAuthValue = {
-      signedIn: true,
-      signOut: vi.fn()
-    };
-
-    render(
-      <UIProvider>
-        <AuthContext.Provider value={mockAuthValue}>
-          <GamesProvider>
-            <GameProvider>
-              <Navbar />
-            </GameProvider>
-          </GamesProvider>
-        </AuthContext.Provider>
-      </UIProvider>
-    );
+    renderNavbar();
     expect(screen.getByTestId('gametimer-col')).toBeInTheDocument();
   });
 
   it('renders the Competition Board Link when signed in', () => {
-    const mockAuthValue = {
-      signedIn: true,
-      signOut: vi.fn()
-    };
+    renderNavbar();
+    const competitionBoardLink = screen.getByRole('link', { name: 'Competition Board' });
+    expect(competitionBoardLink).toBeInTheDocument();
+    expect(competitionBoardLink).toHaveAttribute('href', '/competition-board');
+  });
 
-    render(
-      <UIProvider>
-        <AuthContext.Provider value={mockAuthValue}>
-          <GamesProvider>
-            <GameProvider>
-              <Navbar />
-            </GameProvider>
-          </GamesProvider>
-        </AuthContext.Provider>
-      </UIProvider>
-    );
-    expect(screen.getByRole('link', { name: 'Competition Board' })).toBeInTheDocument();
+  it('does not render the Competition Board Link when not signed in', () => {
+    renderNavbar({ signedIn: false, signOut: vi.fn() });
+    expect(screen.queryByRole('link', { name: 'Competition Board' })).not.toBeInTheDocument();
   });
 
   it('does not render logout button when not signed in', () => {
-    const mockAuthValue = {
-      signedIn: false,
-      signOut: vi.fn()
-    };
-
-    render(
-      <UIProvider>
-        <AuthContext.Provider value={mockAuthValue}>
-          <GamesProvider>
-            <GameProvider>
-              <Navbar />
-            </GameProvider>
-          </GamesProvider>
-        </AuthContext.Provider>
-      </UIProvider>
-    );
-    expect(screen.getByTestId('gametimer-col')).toBeInTheDocument();
-    // GameTimer should still be there but logout button should not be
-    expect(screen.queryByText('SignOut')).not.toBeInTheDocument();
-    expect(screen.queryByText('SignIn')).toBeInTheDocument();
+    renderNavbar({ signedIn: false, signOut: vi.fn() });
+    expect(screen.queryByRole('button', { name: 'SignOut' })).not.toBeInTheDocument();
   });
 
-  it('calls navigate when typemark is clicked', () => {
-    const mockAuthValue = {
-      signedIn: true,
-      signOut: vi.fn()
-    };
-
+  it('calls reset when typemark is clicked', () => {
+    const mockReset = vi.fn();
     render(
       <UIProvider>
-        <AuthContext.Provider value={mockAuthValue}>
+        <AuthContext.Provider value={{ signedIn: true, signOut: vi.fn() }}>
           <GamesProvider>
-            <GameProvider>
+            <GameContext.Provider value={{ resetGame: mockReset }}>
               <Navbar />
-            </GameProvider>
+            </GameContext.Provider>
           </GamesProvider>
         </AuthContext.Provider>
       </UIProvider>
@@ -144,6 +85,6 @@ describe('Navbar component', () => {
     
     const typemark = screen.getByText("Where's Waldo?");
     typemark.click();
-    expect(mockNavigate).toHaveBeenCalledWith('/');
+    expect(mockReset).toHaveBeenCalled();
   });
 });

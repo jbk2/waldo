@@ -1,114 +1,91 @@
 import '../setup.components.js';
-import { describe, it, expect } from 'vitest';
+import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import CharacterStatus from '../../components/CharacterStatus';
+import { AuthContext } from '../../contexts/AuthContext';
 import GameProvider from '../../contexts/GameContext';
-import { GameContext } from '../../contexts/GameContext';
+import GamesProvider from '../../contexts/GamesContext';
 import UIProvider from '../../contexts/UIContext.jsx';
-import AuthProvider from '../../contexts/AuthContext.jsx';
-import GamesProvider from '../../contexts/GamesContext.jsx';
+import { GameContext } from '../../contexts/GameContext';
+
+// Helper to render with minimal context values
+function renderCharacterStatus(characters = null) {
+  const mockAuthValue = {
+    signedIn: true,
+    signOut: vi.fn()
+  };
+
+  const mockGameValue = {
+    characters: characters || [
+      { id: 'waldo', name: 'waldo', clicked: false },
+      { id: 'wenda', name: 'wenda', clicked: false },
+      { id: 'odlaw', name: 'odlaw', clicked: false }
+    ]
+  };
+
+  return render(
+    <UIProvider>
+      <AuthContext.Provider value={mockAuthValue}>
+        <GamesProvider>
+          <GameContext.Provider value={mockGameValue}>
+            <CharacterStatus />
+          </GameContext.Provider>
+        </GamesProvider>
+      </AuthContext.Provider>
+    </UIProvider>
+  );
+}
 
 describe('CharacterStatus component', () => {
-  it('contains images for each character', () => {
-    render(
-      <UIProvider>
-        <AuthProvider>
-          <GamesProvider>
-            <GameProvider>
-              <CharacterStatus />
-            </GameProvider>
-          </GamesProvider>
-        </AuthProvider>
-      </UIProvider>
-    );
-    
-    const images = screen.getAllByRole('img');
-    expect(images.length).toBe(3);
+  beforeEach(() => {
+    vi.spyOn(Image.prototype, 'src', 'set').mockImplementation(() => {});
   });
-  
-  it('contains status for each character', () => {
-    render(
-      <UIProvider>
-        <AuthProvider>
-          <GamesProvider>
-            <GameProvider>
-              <CharacterStatus />
-            </GameProvider>
-          </GamesProvider>
-        </AuthProvider>
-      </UIProvider>
-    );
+
+  it('contains images for each character', () => {
+    renderCharacterStatus();
     
-    const charStatuses = screen.getAllByRole('status');
-    expect(charStatuses.length).toBe(3);
+    expect(screen.getByAltText('waldo')).toBeInTheDocument();
+    expect(screen.getByAltText('wenda')).toBeInTheDocument();
+    expect(screen.getByAltText('odlaw')).toBeInTheDocument();
+  });
+
+  it('contains status for each character', () => {
+    renderCharacterStatus();
+    
+    const notFoundElements = screen.getAllByText('Not Found');
+    expect(notFoundElements).toHaveLength(3);
   });
 
   it('shows "Not Found" status for all characters initially', () => {
-    render(
-      <UIProvider>
-        <AuthProvider>
-          <GamesProvider>
-            <GameProvider>
-              <CharacterStatus />
-            </GameProvider>
-          </GamesProvider>
-        </AuthProvider>
-      </UIProvider>
-    );
+    renderCharacterStatus();
     
-    // All characters should show "Not Found" initially
-    const notFoundStatuses = screen.getAllByText('Not Found');
-    expect(notFoundStatuses.length).toBe(3);
+    const notFoundElements = screen.getAllByText('Not Found');
+    expect(notFoundElements).toHaveLength(3);
   });
 
   it('displays character names as alt text for images', () => {
-    render(
-      <UIProvider>
-        <AuthProvider>
-          <GamesProvider>
-            <GameProvider>
-              <CharacterStatus />
-            </GameProvider>
-          </GamesProvider>
-        </AuthProvider>
-      </UIProvider>
-    );
+    renderCharacterStatus();
     
-    const waldoImage = screen.getByAltText('waldo');
-    const wendaImage = screen.getByAltText('wenda');
-    const odlawImage = screen.getByAltText('odlaw');
-    
-    expect(waldoImage).toBeInTheDocument();
-    expect(wendaImage).toBeInTheDocument();
-    expect(odlawImage).toBeInTheDocument();
+    expect(screen.getByAltText('waldo')).toBeInTheDocument();
+    expect(screen.getByAltText('wenda')).toBeInTheDocument();
+    expect(screen.getByAltText('odlaw')).toBeInTheDocument();
   });
 
   it('displays found if character is clicked', () => {
-    const mockCharacters = [
-      { id: 1, name: 'waldo', clicked: true },
-      { id: 2, name: 'wenda', clicked: false },
-      { id: 3, name: 'odlaw', clicked: false }
-    ]
-
-    render(
-      <UIProvider>
-        <AuthProvider>
-          <GamesProvider>
-            <GameProvider>
-              <GameContext.Consumer>
-                {(contextValue => (
-                  <GameContext.Provider value={{ ...contextValue, characters: mockCharacters }}>
-                    <CharacterStatus />
-                  </GameContext.Provider>
-                ))}
-              </GameContext.Consumer>
-            </GameProvider>
-          </GamesProvider>
-        </AuthProvider>
-      </UIProvider>
-    );
-
-    const foundStatuses = screen.getAllByText(/Found ✅/);
-    expect(foundStatuses.length).toBe(1);
+    // Only provide what CharacterStatus actually needs
+    const charactersWithWaldoFound = [
+      { id: 'waldo', name: 'waldo', clicked: true },
+      { id: 'wenda', name: 'wenda', clicked: false },
+      { id: 'odlaw', name: 'odlaw', clicked: false }
+    ];
+    
+    renderCharacterStatus(charactersWithWaldoFound);
+    
+    // Check that waldo shows "Found ✅"
+    expect(screen.getByText('Found ✅')).toBeInTheDocument();
+    
+    // Check that other characters still show "Not Found"
+    const notFoundElements = screen.getAllByText('Not Found');
+    expect(notFoundElements).toHaveLength(2);
   });
 });
