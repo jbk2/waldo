@@ -9,9 +9,10 @@ import { UIContext } from '../contexts/UIContext';
 
 export default function Game() {
   const imgRef = useRef();
-  const { showAlert, showConfetti, gameImgBlured, setGameImgBlured, clickCoords, setClickCoords } = useContext(UIContext);
-  const { gameImage, characters, setCharacters, completeGame, gameRunning, gamePlayed, imageLoading,
-    setImageLoading, imageLoaded, setImageLoaded, startGame, userRequestedGame } = useContext(GameContext)
+  const { showAlert, showConfetti, gameImgBlured, setGameImgBlured, clickCoords,
+    setClickCoords } = useContext(UIContext);
+  const { gameImage, characters, setCharacters, completeGame, gameRunning, startGame,
+    gameState, GAME_STATES } = useContext(GameContext)
   const { signedIn } = useContext(AuthContext);
 
   function hasClickedOnACharacter(clickX, clickY, character) {
@@ -24,13 +25,11 @@ export default function Game() {
   function handleImageLoaded() {
     console.log('Image loaded into Game UI successfully');
     setGameImgBlured(false);
-    setImageLoading(false);
-    setImageLoaded(true);
-    if(userRequestedGame) { startGame() }; // actually required, as checks also done elsewhere?
+    if(gameState === GAME_STATES.LOADING) { startGame() }; // actually required?, as checks also done elsewhere?
   }
 
   async function handleImageClick(e) {
-    if(!gameRunning) return null;
+    if(gameState != 'playing') return null;
 
     const imgRect = imgRef.current.getBoundingClientRect();
     const clickX = Math.round(((e.clientX - imgRect.x) / imgRect.width) * 1000) / 1000;
@@ -86,7 +85,7 @@ export default function Game() {
           />
         )}
         {/* Show loading overlay when loading */}
-        {imageLoading && (
+        {gameState === GAME_STATES.LOADING && (
           <div className="absolute inset-8 rounded flex items-center justify-center -transform-y-20 bg-gray-100 bg-opacity-90 z-10">
             <div className="text-center absolute top-1/4">
               <div className="loading loading-spinner text-accent loading-xl mx-auto mb-4"></div>
@@ -96,7 +95,7 @@ export default function Game() {
           </div>
         )}
         {/* add click location visual border */}
-        {clickCoords && gameImage && gameImage.url !== placeholderImg && (
+        {gameState === GAME_STATES.PLAYING && clickCoords && gameImage && gameImage.url !== placeholderImg && (
           <div
             className="absolute border-4 border-blue-800 w-6 h-8 pointer-events-none"
             style={{
@@ -108,7 +107,7 @@ export default function Game() {
         )}
 
         {/* sets character boundary marker if character clicked */}
-        {gameImage && gameImage.url !== placeholderImg && characters && characters.map((char) => {
+        {gameState === 'playing' && gameImage && gameImage.url !== placeholderImg && characters && characters.map((char) => {
           if(char.clicked) {
             return(
               <div
@@ -124,8 +123,8 @@ export default function Game() {
             )
           }
         })}
-        { !gameRunning && !gamePlayed && !userRequestedGame && <StartGameDialog /> }
-        { !gameRunning && gamePlayed && <EndGameDialog /> }
+        { gameState === 'idle' && <StartGameDialog /> }
+        { gameState === 'completed' && <EndGameDialog /> }
       </div>
     </div>
   )

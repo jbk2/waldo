@@ -9,15 +9,18 @@ import GameAPI from "../utils/gameAPI";
 const GameContext = createContext();
 
 export default function GameProvider({children}) {
-  const [ userRequestedGame, setUserRequestedGame ] = useState(null)
-  const [ imageLoading, setImageLoading] = useState(false)
-  const [ imageLoaded, setImageLoaded] = useState(false)
+  const GAME_STATES = {
+    IDLE:       'idle',
+    LOADING:    'loading',
+    PLAYING:    'playing',
+    COMPLETED:  'completed'
+  };
+  const [ gameState, setGameState ] = useState(GAME_STATES.IDLE);
   const [ gameImage, setGameImage] = useState(null)
   const [ characters, setCharacters ] = useState(null);
-  const [ gameRunning, setGameRunning ] = useState(false)
   const [ gameElapsedTime, setGameElapsedTime ] = useState(0);
   const [ gamePlayed, setGamePlayed ] = useState(false)
-  const [ gameCompletedLength, setGameCompletedLength] = useState(null) // for GameContext?
+  const [ gameCompletedLength, setGameCompletedLength] = useState(null) // for GamesContext?
   const { setClickCoords } = useContext(UIContext);
   const { signedIn } = useContext(AuthContext);
   const { loadGames, loadUserGames } = useContext(GamesContext);
@@ -55,11 +58,11 @@ export default function GameProvider({children}) {
   }
 
   async function prepareGame(chosenGameTitle) {
-    if(imageLoaded && gameImage.title === chosenGameTitle) {
+    setGameState(GAME_STATES.LOADING);
+
+    if(gameImage && gameImage.title === chosenGameTitle) {
       startGame()
     } else {
-      setImageLoading(true);
-      setImageLoaded(false);
       
       try {  
         const newImageAndChars = await ImageAPI.getImageByTitle(chosenGameTitle)
@@ -77,15 +80,16 @@ export default function GameProvider({children}) {
         
         setClickCoords(null);
       } catch (error) {
-        setImageLoading(false);
+        setGameState(GAME_STATES.IDLE);
         console.error('Failed to prepare game:', error);
       }
     }
   }
   
   function startGame() {
-      setGameRunning(true);
-      startGameTimer();
+    setGameState(GAME_STATES.PLAYING);
+    // setGameRunning(true);
+    startGameTimer();
   }
   
   function resetCharacterClicks() {
@@ -99,12 +103,13 @@ export default function GameProvider({children}) {
   }
 
   function resetGame() {
-    setUserRequestedGame(null);
+    setGameState(GAME_STATES.IDLE);
+    // setUserRequestedGame(null);
     resetGameState();
   }
   
   function resetGameState() {
-    setGameRunning(false);
+    // setGameRunning(false);
     stopGameTimer();
     setGameElapsedTime(0);
     setClickCoords(null);
@@ -113,10 +118,12 @@ export default function GameProvider({children}) {
   }
   
   const completeGame = useCallback(async () => {
-    setUserRequestedGame(null)
-    setGameRunning(false);
+    setGameState(GAME_STATES.COMPLETED);
+    // setUserRequestedGame(null)
+    // setGameRunning(false);
     const gameLength = stopGameTimer();
     setGamePlayed(true);
+    
     if(signedIn) {
       const saveResponse = await GameAPI.saveGame(gameImage.id, gameLength);
       if (saveResponse.ok) {
@@ -132,14 +139,13 @@ export default function GameProvider({children}) {
 
 
   const value = {
+    gameState,
+    setGameState,
     gameImage,
     characters,
     setCharacters,
     gameElapsedTime,
     gameCompletedLength,
-    gameRunning,
-    userRequestedGame,
-    setUserRequestedGame,
     prepareGame,
     startGame,
     resetGame,
@@ -147,10 +153,7 @@ export default function GameProvider({children}) {
     completeGame,
     setGameCompletedLength,
     gamePlayed,
-    imageLoading,
-    imageLoaded,
-    setImageLoading,
-    setImageLoaded
+    GAME_STATES
   }
 
   return (

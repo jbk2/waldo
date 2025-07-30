@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { GameContext } from "../contexts/GameContext";
 
 export default function EndGameDialog() {
-  const { gameCompletedLength, prepareGame, resetGame, resetGameState, gameImage, userRequestedGame, setUserRequestedGame } = useContext(GameContext);
+  const { gameCompletedLength, prepareGame, resetGame, resetGameState, gameImage } = useContext(GameContext);
   const gameCompletedLengthSeconds = (gameCompletedLength / 1000).toFixed(2)
   const endGameDialogRef = useRef();
   const navigate = useNavigate();
@@ -33,7 +33,6 @@ export default function EndGameDialog() {
   }
 
   function handlePlayGameClick(chosenGameTitle) {
-    setUserRequestedGame(() => { return chosenGameTitle });
     resetGameState();
     if(endGameDialogRef.current) endGameDialogRef.current.close();
     prepareGame(chosenGameTitle);

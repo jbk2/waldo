@@ -4,11 +4,10 @@ import { useContext, useRef } from "react"
 
 
 export default function StartGameDialog() {
-  const { prepareGame, setUserRequestedGame } = useContext(GameContext)
+  const { prepareGame } = useContext(GameContext)
   const dialogRef = useRef()
   
   const handlePlayGameClick = (chosenGameTitle) => {
-    setUserRequestedGame(chosenGameTitle)
     prepareGame(chosenGameTitle);
     if(dialogRef.current) dialogRef.current.close();
   };
