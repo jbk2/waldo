@@ -1,8 +1,7 @@
 # Todo list
 
-- compboard game table
+- comp board game table
   - implement a scroll into vie wof users latest game, & refine it's animation
-  - only highlight latest game, not latest game of both selected game image title tabs
 - have startGame dialogue offer game options frmo all games data, not just hardcoded
 - put comp board navbar link there always, just show sign up message if not logged in
 - if signedIn don't show singin/signup text in end game dialogue
