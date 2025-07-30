@@ -1,7 +1,9 @@
-import { useState, useEffect } from "react"
-export default function GameTable({games, imageArray, imageTitles}) {
+import { useState, useEffect, useContext } from "react"
+import { AuthContext } from "../contexts/AuthContext"
 
+export default function GameTable({games, imageArray, imageTitles}) {
   const [ selectedTabImgId, setSelectedTabImgId ] = useState(null)
+  const { user } = useContext(AuthContext);
   
   useEffect(() => {
     if(imageArray && imageArray.length > 0) {
@@ -40,7 +42,7 @@ export default function GameTable({games, imageArray, imageTitles}) {
       <div className="max-w-140 min-w-100 rounded-box border border-gray-200 bg-base-100 overflow-y-auto">
         <div className="max-h-50 overflow-y-auto">
           <table className="table table-xs border-t-0">
-            <thead className="sticky top-0 bg-teal-50">
+            <thead className="sticky top-0 bg-sky-50">
               <tr>
                 <th>📈 Rank</th>
                 <th>👤 Username</th>
@@ -50,8 +52,12 @@ export default function GameTable({games, imageArray, imageTitles}) {
             <tbody>
               { 
                 selectedGames.map((game, i) => {
+                  const signedInUsersGame = game.user_id === user.id; 
                   return(
-                    <tr className="font-mono font-light" key={game.id}>
+                    <tr key={game.id} className={`font-mono font-light 
+                      ${signedInUsersGame ? 'bg-[#FFFAF9] font-variation-settings-wght-600 \
+                        underline decoration-indigo-400 underline-offset-3 decoration-wavy decoration-1'
+                      : '' }`}>
                       <th>{i+1}</th>
                       <td>{game.username}</td>
                       <td>{(game.time / 1000).toFixed(2)}s</td>

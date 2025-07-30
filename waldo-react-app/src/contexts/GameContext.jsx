@@ -50,7 +50,6 @@ export default function GameProvider({children}) {
 
     if(intervalRef.current) {
       gameLength = Date.now() - gameStartTimeRef.current;
-      setGameCompletedLength(gameLength);
       clearInterval(intervalRef.current);
       intervalRef.current = null;
     }
@@ -118,10 +117,9 @@ export default function GameProvider({children}) {
   }
   
   const completeGame = useCallback(async () => {
-    setGameState(GAME_STATES.COMPLETED);
-    // setUserRequestedGame(null)
-    // setGameRunning(false);
     const gameLength = stopGameTimer();
+    setGameState(GAME_STATES.COMPLETED);
+    setGameCompletedLength(gameLength);
     setGamePlayed(true);
     
     if(signedIn) {
