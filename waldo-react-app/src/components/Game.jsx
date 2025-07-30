@@ -2,6 +2,7 @@ import { capitalize } from '../utils/stringUtils';
 import placeholderImg from '../assets/images/waldo-scene1.jpg';
 import { useRef, useContext } from 'react';
 import { GameContext } from '../contexts/GameContext';
+import { AuthContext } from '../contexts/AuthContext';
 import StartGameDialog from './StartGameDialog';
 import EndGameDialog from './EndGameDialog';
 import { UIContext } from '../contexts/UIContext';
@@ -10,9 +11,8 @@ export default function Game() {
   const imgRef = useRef();
   const { showAlert, showConfetti, gameImgBlured, setGameImgBlured, clickCoords, setClickCoords } = useContext(UIContext);
   const { gameImage, characters, setCharacters, completeGame, gameRunning, gamePlayed, imageLoading,
-    setImageLoading, setImageLoaded, startGame } = useContext(GameContext)
-
-  // console.log('Game render - gameRunning:', gameRunning, 'gamePlayed:', gamePlayed);
+    setImageLoading, imageLoaded, setImageLoaded, startGame, userRequestedGame } = useContext(GameContext)
+  const { signedIn } = useContext(AuthContext);
 
   function hasClickedOnACharacter(clickX, clickY, character) {
     return(
@@ -24,9 +24,9 @@ export default function Game() {
   function handleImageLoaded() {
     console.log('Image loaded into Game UI successfully');
     setGameImgBlured(false);
+    setImageLoading(false);
     setImageLoaded(true);
-    setImageLoading(false); // Stop loading spinner when image loads
-    startGame();
+    if(userRequestedGame) { startGame() };
   }
 
   async function handleImageClick(e) {
@@ -54,7 +54,7 @@ export default function Game() {
       if(allCharactersClicked) {
         showAlert(`🎉 Yay, you found ${capitalize(foundCharacter.name)}, and all characters 🎉`);
         const saved = await completeGame();
-        showAlert(saved.data.message);
+        if(signedIn) { showAlert(saved.data.message); }
         showConfetti();
       } else {
         showAlert(`🎉 Yay, you found ${capitalize(foundCharacter.name)} 🎉`);
@@ -95,7 +95,6 @@ export default function Game() {
             </div>
           </div>
         )}
-        
         {/* add click location visual border */}
         {clickCoords && gameImage && gameImage.url !== placeholderImg && (
           <div
@@ -125,7 +124,7 @@ export default function Game() {
             )
           }
         })}
-        { !gameRunning && !gamePlayed && <StartGameDialog /> }
+        { !gameRunning && !gamePlayed && !userRequestedGame && <StartGameDialog /> }
         { !gameRunning && gamePlayed && <EndGameDialog /> }
       </div>
     </div>

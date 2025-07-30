@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { GameContext } from "../contexts/GameContext";
 
 export default function EndGameDialog() {
-  const { gameCompletedLength, prepareGame, resetGame } = useContext(GameContext);
+  const { gameCompletedLength, prepareGame, resetGame, resetGameState, gameImage, userRequestedGame, setUserRequestedGame } = useContext(GameContext);
   const gameCompletedLengthSeconds = (gameCompletedLength / 1000).toFixed(2)
   const endGameDialogRef = useRef();
   const navigate = useNavigate();
@@ -12,7 +12,10 @@ export default function EndGameDialog() {
     resetGame();
     navigate('sign-in', { state:
       { nextRoute: '/competition-board',
-        pastGameTime: gameCompletedLength
+        game: {
+          time: gameCompletedLength,
+          imageId: gameImage.id
+        }
       }
     });
   }
@@ -21,17 +24,20 @@ export default function EndGameDialog() {
     resetGame();
     navigate('sign-up', { state:
       { nextRoute: '/competition-board',
-        pastGameTime: gameCompletedLength
+        game: {
+          time: gameCompletedLength,
+          imageId: gameImage.id
+        }
       }
     });
   }
 
   function handlePlayGameClick(chosenGameTitle) {
-    resetGame();
-    // navigate('/');
-    // startGame();
-    prepareGame(chosenGameTitle);
+    setUserRequestedGame(() => { return chosenGameTitle });
+    resetGameState();
     if(endGameDialogRef.current) endGameDialogRef.current.close();
+    prepareGame(chosenGameTitle);
+    navigate('/');
   };
 
   return(
@@ -40,8 +46,8 @@ export default function EndGameDialog() {
       className="fixed top-2/5 left-1/2 -translate-x-1/2 w-98 h-76 opacity-95
         bg-white border-2 rounded-md justify-center items-center p-9">
       <p>
-        Well done, you found all the characters 👏.<br/>
-        And it took you
+        Well done, you found all the characters 🎉.<br/>
+        It took you
         <span>{gameCompletedLengthSeconds < 20 ? ' only - ' : ' - '}</span>
         <span className="text-md font-mono font-medium tabular-nums lining-nums underline
           decoration-wavy decoration-1 decoration-green-600 underline-offset-3 pr-[1px]">

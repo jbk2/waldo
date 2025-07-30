@@ -1,4 +1,4 @@
-import { createContext, useState, useRef, useContext, useCallback, useEffect } from "react";
+import { createContext, useState, useRef, useContext, useCallback } from "react";
 import { UIContext } from "./UIContext";
 import { AuthContext } from "./AuthContext";
 import { ScoresContext } from "./ScoresContext";
@@ -9,12 +9,13 @@ import GameAPI from "../utils/gameAPI";
 const GameContext = createContext();
 
 export default function GameProvider({children}) {
-  const [ gameImage, setGameImage] = useState(null)
+  const [ userRequestedGame, setUserRequestedGame ] = useState(null)
   const [ imageLoading, setImageLoading] = useState(false)
   const [ imageLoaded, setImageLoaded] = useState(false)
+  const [ gameImage, setGameImage] = useState(null)
   const [ characters, setCharacters ] = useState(null);
-  const [ gameElapsedTime, setGameElapsedTime ] = useState(0);
   const [ gameRunning, setGameRunning ] = useState(false)
+  const [ gameElapsedTime, setGameElapsedTime ] = useState(0);
   const [ gamePlayed, setGamePlayed ] = useState(false)
   const [ gameCompletedLength, setGameCompletedLength] = useState(null) // for GameContext?
   const { setClickCoords } = useContext(UIContext);
@@ -77,14 +78,14 @@ export default function GameProvider({children}) {
         setClickCoords(null);
       } catch (error) {
         setImageLoading(false);
-        console.error('Failed to start game:', error);
+        console.error('Failed to prepare game:', error);
       }
     }
   }
   
   function startGame() {
-    setGameRunning(true);
-    startGameTimer();
+      setGameRunning(true);
+      startGameTimer();
   }
   
   function resetCharacterClicks() {
@@ -98,6 +99,11 @@ export default function GameProvider({children}) {
   }
 
   function resetGame() {
+    setUserRequestedGame(null);
+    resetGameState();
+  }
+  
+  function resetGameState() {
     setGameRunning(false);
     stopGameTimer();
     setGameElapsedTime(0);
@@ -107,6 +113,7 @@ export default function GameProvider({children}) {
   }
   
   const completeGame = useCallback(async () => {
+    setUserRequestedGame(null)
     setGameRunning(false);
     const gameLength = stopGameTimer();
     setGamePlayed(true);
@@ -131,9 +138,12 @@ export default function GameProvider({children}) {
     gameElapsedTime,
     gameCompletedLength,
     gameRunning,
+    userRequestedGame,
+    setUserRequestedGame,
     prepareGame,
     startGame,
     resetGame,
+    resetGameState,
     completeGame,
     setGameCompletedLength,
     gamePlayed,

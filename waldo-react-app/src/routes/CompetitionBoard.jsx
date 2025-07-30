@@ -7,7 +7,7 @@ import GamesBoard from "../components/GamesBoard";
 
 export default function CompetitionBoard() {
   const { state } = useLocation()
-  const pastGameTime = state?.pastGameTime;
+  const pastGameTime = state?.game.time;
   const { games, userGames, imageTitles } = useContext(GamesContext);
 
   return(

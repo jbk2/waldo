@@ -14,17 +14,24 @@ export default function SignIn() {
     e.preventDefault();
     const formData = new FormData(e.target);
     const formEmail = formData.get('email_address');
-    const gameOwnerEmail = state?.user?.email_address;
+    const newUsersEmail = state?.user?.email_address;
+    const newUser = newUsersEmail ? true : false;
+    
+    function emailsMatch(email1, email2) {
+      return email1 === email2
+    }
     
     // Handle sign-in flow for users with preserved game state:
-      // - New signup signin: Verify new user & logging in emails match to pass nextRoute & pastGameTime state on
-      // - Existing user signin: Allow sign-in and pass nextRoute and pastGameTime in state on
-    if (state && !state.user || state && state.user && formEmail === gameOwnerEmail) {
-      signIn(formData, navigate, state);
+    // - New signup signin: Verify new user & log in emails match to pass on nextRoute & pastGameTime state
+    // - Existing user signin: Allow sign-in and pass nextRoute and pastGameTime in state on
+    if(state) {
+      if(!newUser || newUser && emailsMatch(formEmail, newUsersEmail)) {
+        signIn(formData, navigate, state);
+      }
     } else {
       setGameCompletedLength(null);
       signIn(formData, navigate);
-    };
+    }
   };
 
   return(

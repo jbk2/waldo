@@ -1,5 +1,6 @@
 import { createContext, useState, useContext, useCallback } from "react";
 import { UIContext } from "./UIContext";
+import GameAPI from "../utils/gameAPI";
 
 const AuthContext = createContext();
 
@@ -97,7 +98,8 @@ export default function AuthProvider({children}) {
         setSignedIn(true);
         setUser(data.user);
         if(navState) {
-          navigate(navState.nextRoute, { state: { pastGameTime: navState.pastGameTime} })
+          GameAPI.saveGame(navState.game.imageId, navState.game.time);
+          navigate(navState.nextRoute, { state: { game: { time: navState.game.time, imageId: navState.game.imageId } } });
         } else {
           navigate('/');
         };
