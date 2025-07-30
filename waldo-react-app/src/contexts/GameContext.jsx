@@ -126,12 +126,8 @@ export default function GameProvider({children}) {
       console.log('=== COMPLETEGAME CALLED ===');
       const saveResponse = await GameAPI.saveGame(gameImage.id, gameLength);
       if (saveResponse.ok) {
-        console.log('=== GAME SAVED SUCCESSFULLY ===');
-        console.log('Calling loadGames()...');
         await loadGames();
-        console.log('Calling loadUserGames()...');
         await loadUserGames();
-        console.log('=== COMPLETEGAME FINISHED ===');
       }
       return saveResponse
     } else {

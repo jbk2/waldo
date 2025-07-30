@@ -11,23 +11,17 @@ export default function GameTable({games, imageArray, imageTitles}) {
     }
   }, [imageArray])
   
-  const selectedGames = imageArray.find(img => img.image_id === selectedTabImgId)?.games || [];
-  console.log('selectedGameslected games are>>>>>>>>>', selectedGames)
-  
-  const signedInUsersSelectedTabGames = selectedGames.filter((game) => {
-    return game.user_id === user?.id
-  });
-
-  const signedInUsersSelectedTabLatestGame = signedInUsersSelectedTabGames.length > 0 
-  ? signedInUsersSelectedTabGames.sort((a, b) => new Date(b.created_at) - new Date(a.created_at))[0]
-  : null;
+  const selectedTabsGames = imageArray.find(img => img.image_id === selectedTabImgId)?.games || [];
+  const signedInUsersLastGame = games
+    .filter((game) => game.user_id === user?.id)
+    .sort((a, b) => new Date(b.created_at) - new Date(a.created_at))[0] || null;
 
   
   function handleTabClick(imageId) {
     setSelectedTabImgId(imageId)
   }
 
-  if (!imageTitles || !games || !imageArray || !selectedGames) {
+  if (!imageTitles || !games || !imageArray || !selectedTabsGames) {
     return <div>Loading</div>;
   }
 
@@ -61,9 +55,9 @@ export default function GameTable({games, imageArray, imageTitles}) {
             </thead>
             <tbody>
               { 
-                selectedGames.map((game, i) => {
+                selectedTabsGames.map((game, i) => {
                   const signedInUsersGame = game.user_id === user.id;
-                  const latestGame = game.id === signedInUsersSelectedTabLatestGame.id;
+                  const latestGame = game.id === signedInUsersLastGame.id;
                   return(
                     <tr
                       key={game.id}
