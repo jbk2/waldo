@@ -1,8 +1,9 @@
 # Todo list
 
 - have startGame dialogue offer game options frmo all games data, not just hardcoded
+- put comp board navbar link there always, just show sign up message if not logged in
 - if signedIn don't show singin/signup text in end game dialogue
-- in comp board - highlight 1) last user game (animate) & all user Games
+- in comp board - animate last user game
 - implement email conf for auth & password change
 - comp board link in endGameDialog
 - numeralise 
