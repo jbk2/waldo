@@ -1,7 +1,8 @@
 # Todo list
-- when nav to comp-board, if game running && !gamePlayed, stopgame & reset game
+
+- refactor game state logic by using a gameState state
+- if signedIn don't show singin/signup text in end game dialogue
 - in comp board - highlight 1) last user game (animate) & all user Games
-- implement username in auth & display in comp-board
 - implement email conf for auth & password change
 - comp board link in endGameDialog
 - numeralise 

@@ -26,7 +26,7 @@ export default function Game() {
     setGameImgBlured(false);
     setImageLoading(false);
     setImageLoaded(true);
-    if(userRequestedGame) { startGame() };
+    if(userRequestedGame) { startGame() }; // actually required, as checks also done elsewhere?
   }
 
   async function handleImageClick(e) {
