@@ -28,13 +28,13 @@ class Api::GamesController < ApplicationController
   end
 
   def index
-    games = Game.all.includes(:image).order(created_at: :desc).limit(100)
-    
+    games = Game.all.includes(:image, :user).order(created_at: :desc).limit(200)
+
     games_with_usernames = games.map do |game| 
-      username = User.find(game.user_id).username
+      username = game.user.username
       game.as_json.merge(username: username)
     end
-    
+
     render json: {
       message: "Successfully returning all games",
       games: games_with_usernames

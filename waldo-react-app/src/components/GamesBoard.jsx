@@ -20,17 +20,13 @@ export default function GamesBoard({pastGameTime, games, imageTitles}) {
 
   return(
     <div className="flex flex-col items-center mt-10">
-      <h1>Competition Board</h1>
+      <h1 className="font-variation-settings-wght-500">Competition Board</h1>
       { pastGameTime && (
-        <p>Your last game ranked: __past game time was
-          { pastGameTime ? pastGameTime : ' no past game time found'}
-        </p>
+        <p className="text-md">You completed your last game in {(pastGameTime / 1000).toFixed(2)}</p>
       )}
 
       <div className="flex flex-col mt-4">
-        {    
-          <GameTable games={games} imageArray={imageArray} imageTitles={imageTitles} />
-        }
+        { <GameTable games={games} imageArray={imageArray} imageTitles={imageTitles} /> }
       </div>
     </div>
   )

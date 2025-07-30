@@ -123,13 +123,17 @@ export default function GameProvider({children}) {
     setGamePlayed(true);
     
     if(signedIn) {
+      console.log('=== COMPLETEGAME CALLED ===');
       const saveResponse = await GameAPI.saveGame(gameImage.id, gameLength);
       if (saveResponse.ok) {
-        loadGames();
-        loadUserGames();
+        console.log('=== GAME SAVED SUCCESSFULLY ===');
+        console.log('Calling loadGames()...');
+        await loadGames();
+        console.log('Calling loadUserGames()...');
+        await loadUserGames();
+        console.log('=== COMPLETEGAME FINISHED ===');
       }
       return saveResponse
-
     } else {
       return { ok: true, data: { message: "user not logged in so not saved"} };
     }

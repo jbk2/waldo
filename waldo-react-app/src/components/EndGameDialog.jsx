@@ -1,9 +1,12 @@
 import { useContext, useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { GameContext } from "../contexts/GameContext";
+import { AuthContext } from "../contexts/AuthContext";
+
 
 export default function EndGameDialog() {
   const { gameCompletedLength, prepareGame, resetGame, resetGameState, gameImage } = useContext(GameContext);
+  const { signedIn } = useContext(AuthContext);
   const gameCompletedLengthSeconds = (gameCompletedLength / 1000).toFixed(2)
   const endGameDialogRef = useRef();
   const navigate = useNavigate();
@@ -53,13 +56,27 @@ export default function EndGameDialog() {
           { gameCompletedLengthSeconds }
         </span>
         s.
+        { signedIn && (
+          <>
+          &nbsp;See your score rank&nbsp;
+          <Link
+            to='/competition-board'
+            state={{ game: { time: gameCompletedLength }}}
+            className="hover:pointer-cursor link">here</Link>.
+          </>
+        )}
       </p>
-      <br />
-        <span onClick={handleSignIn} className="link font-variation-settings-wght-600">Sign in </span>
-        <span>or</span>
-        <span onClick={handleSignUp} className="link font-variation-settings-wght-600"> sign up </span>
-        <span>to rank your score and play other games</span>
-        <br />
+      { !signedIn && (
+        <>
+          <br />
+            <span onClick={handleSignIn} className="link font-variation-settings-wght-600">Sign in </span>
+            <span>or</span>
+            <span onClick={handleSignUp} className="link font-variation-settings-wght-600"> sign up </span>
+            <span>to rank your score and play other games</span>
+          <br />
+        </>
+      )}
+
       <p className="text-center font-variation-settings-wght-500 mt-8 mb-2">
         ⏬&nbsp;&nbsp;&nbsp;&nbsp;PLAY AGAIN&nbsp;&nbsp;&nbsp;&nbsp;⏬
       </p>

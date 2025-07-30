@@ -12,12 +12,14 @@ export default function GamesProvider({children}) {
   const { user, signedIn } = useContext(AuthContext);
 
   async function loadGames() {
+    console.log('=== LOADGAMES CALLED ===');
     const response = await GameAPI.getGames();
     
     if(response.ok) {
       setGames(response.data.games)
       return response.data.games;
     } else {
+      console.error('=== LOADGAMES FAILED ===');
       console.error(response.data.message)
     }
   };

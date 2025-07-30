@@ -11,7 +11,17 @@ export default function GameTable({games, imageArray, imageTitles}) {
     }
   }, [imageArray])
   
-  const selectedGames = imageArray.find(img => img.image_id === selectedTabImgId)?.games;
+  const selectedGames = imageArray.find(img => img.image_id === selectedTabImgId)?.games || [];
+  console.log('selectedGameslected games are>>>>>>>>>', selectedGames)
+  
+  const signedInUsersSelectedTabGames = selectedGames.filter((game) => {
+    return game.user_id === user?.id
+  });
+
+  const signedInUsersSelectedTabLatestGame = signedInUsersSelectedTabGames.length > 0 
+  ? signedInUsersSelectedTabGames.sort((a, b) => new Date(b.created_at) - new Date(a.created_at))[0]
+  : null;
+
   
   function handleTabClick(imageId) {
     setSelectedTabImgId(imageId)
@@ -52,12 +62,19 @@ export default function GameTable({games, imageArray, imageTitles}) {
             <tbody>
               { 
                 selectedGames.map((game, i) => {
-                  const signedInUsersGame = game.user_id === user.id; 
+                  const signedInUsersGame = game.user_id === user.id;
+                  const latestGame = game.id === signedInUsersSelectedTabLatestGame.id;
                   return(
-                    <tr key={game.id} className={`font-mono font-light 
-                      ${signedInUsersGame ? 'bg-[#FFFAF9] font-variation-settings-wght-600 \
-                        underline decoration-indigo-400 underline-offset-3 decoration-wavy decoration-1'
-                      : '' }`}>
+                    <tr
+                      key={game.id}
+                      className={`font-mono font-light 
+                      
+                        ${signedInUsersGame ? 'bg-[#FFFAF9] font-variation-settings-wght-600 \
+                          underline decoration-indigo-400 underline-offset-3 decoration-wavy decoration-1'
+                        : ''} 
+                        
+                        ${latestGame ? 'animate-bounce text-red-500' : ''}
+                      `}>
                       <th>{i+1}</th>
                       <td>{game.username}</td>
                       <td>{(game.time / 1000).toFixed(2)}s</td>
