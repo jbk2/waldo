@@ -1,29 +1,51 @@
-import { useState, useEffect, useContext } from "react"
+import { useState, useEffect, useContext, useRef } from "react"
 import { AuthContext } from "../contexts/AuthContext"
 
 export default function GameTable({games, imageArray, imageTitles}) {
   const [ selectedTabImgId, setSelectedTabImgId ] = useState(null)
   const { user } = useContext(AuthContext);
+  const lastGameRow = useRef();
   
   useEffect(() => {
     if(imageArray && imageArray.length > 0) {
       setSelectedTabImgId(imageArray[0].image_id)
     }
   }, [imageArray])
-  
+
   const selectedTabsGames = imageArray.find(img => img.image_id === selectedTabImgId)?.games || [];
   const signedInUsersLastGame = games
-    .filter((game) => game.user_id === user?.id)
-    .sort((a, b) => new Date(b.created_at) - new Date(a.created_at))[0] || null;
-
+  .filter((game) => game.user_id === user?.id)
+  .sort((a, b) => new Date(b.created_at) - new Date(a.created_at))[0] || null;
   
+  useEffect(() => {
+    if(lastGameRow.current) {
+      lastGameRow.current.scrollIntoView({
+        behaviour: 'smooth',
+        block: 'center'
+      })
+    }
+  }, [selectedTabsGames, signedInUsersLastGame])
+
   function handleTabClick(imageId) {
     setSelectedTabImgId(imageId)
+  }
+
+  function getRowClasses(isUsersGame, isUsersLastGame) {
+    const baseClasses = 'font-mono font-light';
+    const usersGame = isUsersGame ? 'bg-[#FFFAF9] font-variation-settings-wght-600 underline decoration-indigo-400 underline-offset-3 decoration-wavy decoration-1' : '';
+    const usersLastGame = isUsersLastGame ? 'animate-bounce text-red-500' : '';
+    
+    return `${baseClasses} ${usersGame} ${usersLastGame}`;
   }
 
   if (!imageTitles || !games || !imageArray || !selectedTabsGames) {
     return <div>Loading</div>;
   }
+
+  const setRef = (element) => {
+    console.log('Ref callback called with element:', element);
+    lastGameRow.current = element;
+  };
 
   return(
     <>
@@ -56,19 +78,14 @@ export default function GameTable({games, imageArray, imageTitles}) {
             <tbody>
               { 
                 selectedTabsGames.map((game, i) => {
-                  const signedInUsersGame = game.user_id === user.id;
-                  const latestGame = game.id === signedInUsersLastGame.id;
+                  const isUsersGame = game.user_id === user.id;
+                  const isUsersLastGame = game.id === signedInUsersLastGame.id;
                   return(
                     <tr
                       key={game.id}
-                      className={`font-mono font-light 
-                      
-                        ${signedInUsersGame ? 'bg-[#FFFAF9] font-variation-settings-wght-600 \
-                          underline decoration-indigo-400 underline-offset-3 decoration-wavy decoration-1'
-                        : ''} 
-                        
-                        ${latestGame ? 'animate-bounce text-red-500' : ''}
-                      `}>
+                      className={getRowClasses(isUsersGame, isUsersLastGame)}
+                      ref={isUsersLastGame ? setRef : null}
+                      >
                       <th>{i+1}</th>
                       <td>{game.username}</td>
                       <td>{(game.time / 1000).toFixed(2)}s</td>
