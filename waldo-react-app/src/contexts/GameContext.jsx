@@ -1,7 +1,6 @@
 import { createContext, useState, useRef, useContext, useCallback } from "react";
 import { UIContext } from "./UIContext";
 import { AuthContext } from "./AuthContext";
-import { ScoresContext } from "./ScoresContext";
 import { GamesContext } from "./GamesContext";
 import ImageAPI from "../utils/imageAPI";
 import GameAPI from "../utils/gameAPI";
