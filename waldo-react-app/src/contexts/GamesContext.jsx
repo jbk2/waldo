@@ -6,7 +6,7 @@ import ImageAPI from "../utils/imageAPI";
 const GamesContext = createContext();
 
 export default function GamesProvider({children}) {
-  const [ imageTitles, setImageTitles ] = useState([]);
+  const [ imageIdsAndTitles, setImageIdsAndTitles ] = useState([]);
   const [ games, setGames ] = useState([]);
   const [ userGames, setUserGames ] = useState([]);
   const { user, signedIn } = useContext(AuthContext);
@@ -39,10 +39,10 @@ export default function GamesProvider({children}) {
   async function loadImages() {
     const imagesData = await ImageAPI.loadImages();
     const images = imagesData.images;
-    const imgAndTitles = images.map((img) => {
+    const imgIdsAndTitles = images.map((img) => {
       return { image_id: img.id, title: img.title }
     })
-    setImageTitles(imgAndTitles)
+    setImageIdsAndTitles(imgIdsAndTitles)
   }
 
   const value = {
@@ -50,7 +50,7 @@ export default function GamesProvider({children}) {
     loadGames,
     userGames,
     loadUserGames,
-    imageTitles
+    imageIdsAndTitles
   };
   
   useEffect(() => {

@@ -1,21 +1,27 @@
-import { useState, useEffect, useContext, useRef } from "react"
+import { useState, useEffect, useContext, useRef, useMemo } from "react"
 import { AuthContext } from "../contexts/AuthContext"
 
-export default function GameTable({games, imageArray, imageTitles}) {
+export default function GameTable({games, imageArray, imageIdsAndTitles}) {
   const [ selectedTabImgId, setSelectedTabImgId ] = useState(null)
   const { user } = useContext(AuthContext);
   const lastGameRow = useRef();
+  const selectedTabGames = useMemo(() =>
+    imageArray.find(img => img.image_id === selectedTabImgId)?.games || [],
+    [imageArray, selectedTabImgId]
+  );
+  const usersLastGame = useMemo(() =>
+    games
+      .filter((game) => game.user_id === user?.id)
+      .sort((a, b) => new Date(b.created_at) - new Date(a.created_at))[0] || null,
+    [games, user?.id]
+  );
   
   useEffect(() => {
     if(imageArray && imageArray.length > 0) {
       setSelectedTabImgId(imageArray[0].image_id)
     }
-  }, [imageArray])
+  }, [imageArray]);
 
-  const selectedTabsGames = imageArray.find(img => img.image_id === selectedTabImgId)?.games || [];
-  const signedInUsersLastGame = games
-  .filter((game) => game.user_id === user?.id)
-  .sort((a, b) => new Date(b.created_at) - new Date(a.created_at))[0] || null;
   
   useEffect(() => {
     if(lastGameRow.current) {
@@ -24,33 +30,32 @@ export default function GameTable({games, imageArray, imageTitles}) {
         block: 'center'
       })
     }
-  }, [selectedTabsGames, signedInUsersLastGame])
+  }, [selectedTabGames, usersLastGame])
 
   function handleTabClick(imageId) {
     setSelectedTabImgId(imageId)
-  }
+  };
 
   function getRowClasses(isUsersGame, isUsersLastGame) {
     const baseClasses = 'font-mono font-light';
     const usersGame = isUsersGame ? 'bg-[#FFFAF9] font-variation-settings-wght-600 underline decoration-indigo-400 underline-offset-3 decoration-wavy decoration-1' : '';
-    const usersLastGame = isUsersLastGame ? 'animate-bounce text-red-500' : '';
+    const usersLastGame = isUsersLastGame ? 'text-red-500 animate-pulse' : '';
     
     return `${baseClasses} ${usersGame} ${usersLastGame}`;
-  }
-
-  if (!imageTitles || !games || !imageArray || !selectedTabsGames) {
-    return <div>Loading</div>;
-  }
+  };  
 
   const setRef = (element) => {
-    console.log('Ref callback called with element:', element);
     lastGameRow.current = element;
   };
+
+  if (!imageIdsAndTitles || !games || !imageArray || !selectedTabGames) {
+    return <div>Loading</div>;
+  }
 
   return(
     <>
       <div role="tablist" className="pl-4 tabs tabs-lift tabs-xs -mb-[1px]">
-        { imageTitles.map((image) => {
+        { imageIdsAndTitles.map((image) => {
           const isActive = selectedTabImgId === image.image_id;
           return(
             <a
@@ -77,9 +82,9 @@ export default function GameTable({games, imageArray, imageTitles}) {
             </thead>
             <tbody>
               { 
-                selectedTabsGames.map((game, i) => {
+                selectedTabGames.map((game, i) => {
                   const isUsersGame = game.user_id === user.id;
-                  const isUsersLastGame = game.id === signedInUsersLastGame.id;
+                  const isUsersLastGame = game.id === usersLastGame.id;
                   return(
                     <tr
                       key={game.id}
@@ -99,6 +104,6 @@ export default function GameTable({games, imageArray, imageTitles}) {
       </div>
     </>
   )
-}
+};
 
 

@@ -6,28 +6,25 @@
   font-family: "playrite";
   src: url("../fonts/PlayriteVariable.ttf") format("truetype");
   font-weight: 100 400;
-  font-style: normal;
+  font-style: swap; /* using swap instead of normal due to font loading speed warnings */
 }
 
 @font-face {
   font-family: "raleway";
   src: url("../fonts/RalewayVariable.ttf") format("truetype");
-  font-weight: 100 900;
-  font-style: normal;
-}
-@font-face {
-  font-family: "raleway-italic";
-  src: url("../fonts/RalewayItalicVariable.ttf") format("truetype");
-  font-weight: 100 900;
-  font-style: normal;
+  font-weight: 500 700;
+  font-style: swap; /* using swap instead of normal due to font loading speed warnings */
 }
 
+/* --------------------------------------------------------------- */
 :root {
   font-family: 'raleway';
   font-variation-settings: "wght" 400;
 }
 
 @layer utilities {
+  /* --------------------------------------------------------------- */
+  /* used by alert */
   @keyframes slide-bounce-in {
     0% {
       opacity: 0;
@@ -46,7 +43,78 @@
   .animate-slide-bounce-in {
     animation: slide-bounce-in 0.8s cubic-bezier(0.22, 1, 0.36, 1);
   }
-  .font-variation-settings-wght-100 {
+  
+  /* --------------------------------------------------------------- */
+  /* used by confetti */
+  @keyframes fall {
+    0% {
+      transform: translateY(5vh) rotate(0deg); /* Start above the viewport */
+    }
+    100% {
+      transform: translateY(250vh) rotate(900deg); /* End far below the viewport */
+    }
+  }
+
+  .confetti-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    pointer-events: none;
+    overflow: hidden;
+    z-index: 1000;
+  }
+
+  .confetti-piece {
+    position: absolute;
+    width: 8px;
+    height: 14px;
+    opacity: 0.8;
+    animation: fall 2.7s linear forwards, rotate 1s linear infinite; /* Adjusted duration for full fall */
+    transform-origin: center;
+    pointer-events: none;
+    animation-fill-mode: forwards;
+  }
+
+  .confetti-container .confetti-piece:nth-child(odd) {
+    background-color: #ff6347;
+  }
+
+  .confetti-container .confetti-piece:nth-child(even) {
+    background-color: #3cb371;
+  }
+
+  /* --------------------------------------------------------------- */
+  /* used by usersLastGame in GameTable */
+  @keyframes pulse-scale {
+    0% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(1.015);
+    }
+    100% {
+      transform: scale(1);
+    }
+  }
+  
+  .animate-pulse {
+    animation: pulse-scale 0.6s ease-in-out 2;
+  }
+  
+  /* --------------------------------------------------------------- */
+    /* Font utilities */
+  .font-variation-settings-wght-500 {
+    font-variation-settings: "wght" 500;
+  }
+  .font-variation-settings-wght-600 {
+    font-variation-settings: "wght" 600;
+  }
+  .font-variation-settings-wght-700 {
+    font-variation-settings: "wght" 700;
+  }
+  /* .font-variation-settings-wght-100 {
     font-variation-settings: "wght" 100;
   }
   .font-variation-settings-wght-200 {
@@ -57,60 +125,12 @@
   }
   .font-variation-settings-wght-400 {
     font-variation-settings: "wght" 400;
-  }
-  .font-variation-settings-wght-500 {
-    font-variation-settings: "wght" 500;
-  }
-  .font-variation-settings-wght-600 {
-    font-variation-settings: "wght" 600;
-  }
-  .font-variation-settings-wght-700 {
-    font-variation-settings: "wght" 700;
-  }
-  .font-variation-settings-wght-800 {
+  } */
+  /* .font-variation-settings-wght-800 {
     font-variation-settings: "wght" 800;
   }
   .font-variation-settings-wght-900 {
     font-variation-settings: "wght" 900;
-  }
-
+  } */
 }
 
-@keyframes fall {
-  0% {
-    transform: translateY(5vh) rotate(0deg); /* Start above the viewport */
-  }
-  100% {
-    transform: translateY(250vh) rotate(900deg); /* End far below the viewport */
-  }
-}
-
-.confetti-container {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  pointer-events: none;
-  overflow: hidden;
-  z-index: 1000;
-}
-
-.confetti-piece {
-  position: absolute;
-  width: 8px;
-  height: 14px;
-  opacity: 0.8;
-  animation: fall 2.7s linear forwards, rotate 1s linear infinite; /* Adjusted duration for full fall */
-  transform-origin: center;
-  pointer-events: none;
-  animation-fill-mode: forwards;
-}
-
-.confetti-container .confetti-piece:nth-child(odd) {
-  background-color: #ff6347;
-}
-
-.confetti-container .confetti-piece:nth-child(even) {
-  background-color: #3cb371;
-}
