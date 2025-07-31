@@ -36,7 +36,6 @@ export default function Navbar() {
             hover:cursor-pointer'>
             Where's Waldo?
           </Link>
-          {signedIn && (
             <div className='flex justify-end'>
               <Link to='/competition-board' onClick={resetGame} className='text-xs text-green-500
                 font-variation-settings-wght-600 underline decoration-indigo-400 underline-offset-3
@@ -44,7 +43,6 @@ export default function Navbar() {
                 Competition Board
               </Link>
             </div>
-          )}
         </div>
         <div className='flex flex-col ml-24 gap-1 overflow-visible'>
           <div data-testid='gametimer-col' className='flex items-center'>
