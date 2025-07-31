@@ -1,5 +1,8 @@
 # Todo list
 
+- fix click locations on new images
+- fix resolution/zoom of new images
+- look at memoisation of loadImages, && others, in GAmesContext
 - have startGame dialogue offer game options from all games data, not just hardcoded
 - competition table:
   - add column sorting on BoardTables
