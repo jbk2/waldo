@@ -44,7 +44,7 @@ export default function GamesProvider({children}) {
     })
     setImageIdsAndTitles(imgIdsAndTitles)
   }
-
+  
   const value = {
     games,
     loadGames,
@@ -64,7 +64,7 @@ export default function GamesProvider({children}) {
       setUserGames([]);
     }
   }, [user, signedIn, loadUserGames]);
-
+  
   useEffect(() => {
     loadImages();
   }, [])

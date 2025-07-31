@@ -71,7 +71,7 @@ export default function GameTable({games, imageArray, imageIdsAndTitles}) {
         }
       </div>
       <div className="max-w-140 min-w-100 rounded-box border border-gray-200 bg-base-100 overflow-y-auto">
-        <div className="max-h-50 overflow-y-auto">
+        <div className="max-h-100 overflow-y-auto">
           <table className="table table-xs border-t-0">
             <thead className="sticky top-0 bg-sky-50">
               <tr>

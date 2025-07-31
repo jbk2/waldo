@@ -19,7 +19,7 @@ export default function GamesBoard({pastGameTime, games, imageIdsAndTitles}) {
   }, [])
 
   return(
-    <div className="flex flex-col items-center mt-10">
+    <div className="flex flex-col items-center mt-8">
       <h1 className="font-variation-settings-wght-500">Competition Board</h1>
       { pastGameTime && (
         <p className="text-md">You completed your last game in {(pastGameTime / 1000).toFixed(2)}</p>
