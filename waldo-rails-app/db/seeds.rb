@@ -8,11 +8,12 @@
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
 
-
 def random_time_ms
   rand(20..400) * 1000
 end
 
+#  will not run unless there are 0 games
+#  creates x10 games per image per user, therefore needs to be some users!
 if Game.count == 0
   users = User.all
   images = Image.all

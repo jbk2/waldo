@@ -1,10 +1,8 @@
 # Todo list
 
-- competition table:
-  - better aniation for users last game
-  - put comp board navbar link there always, just show sign up message if not logged in
-  - add column sorting on BoardTables
 - have startGame dialogue offer game options from all games data, not just hardcoded
+- competition table:
+  - add column sorting on BoardTables
 - implement email conf for auth & password change
 - monotype digits check
 - deal with the constant re-rendering, everywhere
