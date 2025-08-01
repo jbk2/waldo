@@ -25,18 +25,18 @@ export default function Navbar() {
 
   return(
     <>
-      <header className='grid grid-cols-[1fr_auto_1fr] items-center w-full
-        fixed top-0 z-50 h-[8rem] bg-white'>
-        <div data-testid='character-status-col' className='flex gap-8 mt-3 justify-end mr-20'>
+      <header className='grid grid-cols-[1fr_auto_1fr] gap-4 p-3 items-center w-full
+        fixed top-0 z-50 h-fit xl:h-[8rem] bg-white border-b-1'>
+        <div data-testid='character-status-col' className='flex flex-col md:flex-row gap-2 mg:gap-4 xl:gap-8 mt-3 xl:justify-end xl:mr-20'>
           <CharacterStatus />
         </div>
         
-        <div data-testid="typemark-col" className='mb-2'>
+        <div data-testid="typemark-col" className='mb-2 text-center'>
           <Link to={'/'} onClick={resetGame} className='font-playrite text-6xl text-center mt-8
             hover:cursor-pointer'>
             Where's Waldo?
           </Link>
-            <div className='flex justify-end'>
+            <div className='flex justify-center xl:justify-end'>
               <Link to='/competition-board' onClick={resetGame} className='text-xs text-green-500
                 font-variation-settings-wght-600 underline decoration-indigo-400 underline-offset-3
                 decoration-wavy decoration-1 hover:scale-104 transition-transform origin-center transform-gpu'>
@@ -44,8 +44,8 @@ export default function Navbar() {
               </Link>
             </div>
         </div>
-        <div className='flex flex-col ml-24 gap-1 overflow-visible'>
-          <div data-testid='gametimer-col' className='flex items-center'>
+        <div className='flex flex-col lg:ml-10 xl:ml-24 gap-1 overflow-visible'>
+          <div data-testid='gametimer-col' className='flex flex-col md:flex-row md:items-center gap-4'>
             <GameTimer />
             {signedIn ?
               <button type="button" onClick={handleSignOut} className='btn w-20 ml-2'>
@@ -57,9 +57,8 @@ export default function Navbar() {
               </button>
             }
           </div>
-          
         </div>
-      <hr className='col-span-3'/>
+      {/* <hr className='col-span-3'/> */}
       </header>
     </>
   )

@@ -68,7 +68,7 @@ export default function GamesProvider({children}) {
   useEffect(() => {
     loadImages();
   }, [])
-  
+
   return(
     <GamesContext.Provider value={value}>
       {children}
