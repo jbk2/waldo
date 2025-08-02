@@ -1,6 +1,7 @@
-import { createContext, useState, useRef, useContext, useCallback } from "react";
+import { createContext, useState, useContext, useCallback, useMemo } from "react";
 import { UIContext } from "./UIContext";
 import { AuthContext } from "./AuthContext";
+import { TimerContext } from "./TimerContext";
 import { GamesContext } from "./GamesContext";
 import ImageAPI from "../utils/imageAPI";
 import GameAPI from "../utils/gameAPI";
@@ -14,47 +15,16 @@ export default function GameProvider({children}) {
     PLAYING:    'playing',
     COMPLETED:  'completed'
   };
-  const [ gameState, setGameState ] = useState(GAME_STATES.IDLE);
-  const [ gameImage, setGameImage] = useState(null)
-  const [ characters, setCharacters ] = useState(null);
-  const [ gameElapsedTime, setGameElapsedTime ] = useState(0);
-  const [ gamePlayed, setGamePlayed ] = useState(false)
-  const [ gameCompletedLength, setGameCompletedLength] = useState(null) // for GamesContext?
   const { setClickCoords } = useContext(UIContext);
   const { signedIn } = useContext(AuthContext);
   const { loadGames, loadUserGames } = useContext(GamesContext);
-  const intervalRef = useRef(null);
-  const gameStartTimeRef = useRef(0);
-
-  function startGameTimer() {
-    console.log('startGameTimer called');
+  const { startTimer, stopTimer } = useContext(TimerContext);
+  const [ gameState, setGameState ] = useState(GAME_STATES.IDLE);
+  const [ gameImage, setGameImage] = useState(null)
+  const [ characters, setCharacters ] = useState(null);
+  const [ gamePlayed, setGamePlayed ] = useState(false)
+  const [ gameCompletedLength, setGameCompletedLength] = useState(null)
   
-    // Clear any existing interval first
-    if(intervalRef.current) {
-      console.log('Clearing existing interval');
-      clearInterval(intervalRef.current);
-      intervalRef.current = null;
-    }
-  
-    setGameElapsedTime(0);
-    gameStartTimeRef.current = Date.now();
-    intervalRef.current = setInterval(() => {
-      setGameElapsedTime(Date.now() - gameStartTimeRef.current);
-    }, 10);  
-  }
-  
-  function stopGameTimer() {
-    console.log('stopGameTimer called .....')
-    let gameLength = null;
-
-    if(intervalRef.current) {
-      gameLength = Date.now() - gameStartTimeRef.current;
-      clearInterval(intervalRef.current);
-      intervalRef.current = null;
-    }
-    return gameLength
-  }
-
   async function prepareGame(chosenGameTitle) {
     setGameState(GAME_STATES.LOADING);
 
@@ -86,8 +56,7 @@ export default function GameProvider({children}) {
   
   function startGame() {
     setGameState(GAME_STATES.PLAYING);
-    // setGameRunning(true);
-    startGameTimer();
+    startTimer();
   }
   
   function resetCharacterClicks() {
@@ -102,21 +71,18 @@ export default function GameProvider({children}) {
 
   function resetGame() {
     setGameState(GAME_STATES.IDLE);
-    // setUserRequestedGame(null);
     resetGameState();
   }
   
   function resetGameState() {
-    // setGameRunning(false);
-    stopGameTimer();
-    setGameElapsedTime(0);
+    stopTimer();
     setClickCoords(null);
     setGamePlayed(false);
     resetCharacterClicks();
   }
   
   const completeGame = useCallback(async () => {
-    const gameLength = stopGameTimer();
+    const gameLength = stopTimer();
     setGameState(GAME_STATES.COMPLETED);
     setGameCompletedLength(gameLength);
     setGamePlayed(true);
@@ -134,14 +100,12 @@ export default function GameProvider({children}) {
     }
   }, [signedIn, gameImage?.id, loadGames, loadUserGames]);
 
-
   const value = {
     gameState,
     setGameState,
     gameImage,
     characters,
     setCharacters,
-    gameElapsedTime,
     gameCompletedLength,
     prepareGame,
     startGame,
@@ -150,9 +114,11 @@ export default function GameProvider({children}) {
     completeGame,
     setGameCompletedLength,
     gamePlayed,
-    GAME_STATES
-  }
-
+    GAME_STATES,
+    startTimer,
+    stopTimer
+  };
+  
   return (
     <GameContext.Provider value={value}>
       {children}

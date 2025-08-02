@@ -12,6 +12,7 @@ import UIProvider from './contexts/UIContext'
 import AuthProvider from './contexts/AuthContext'
 import GameProvider from './contexts/GameContext'
 import GamesProvider from './contexts/GamesContext'
+import TimerProvider from './contexts/TimerContext'
 
 const router = createBrowserRouter([
   {
@@ -32,12 +33,14 @@ createRoot(document.getElementById('root')).render(
   <StrictMode>
     <UIProvider>
       <AuthProvider>
+        <TimerProvider>
           <GamesProvider>
             <GameProvider>
               <RouterProvider router={router}>
               </RouterProvider>
             </GameProvider>
           </GamesProvider>
+        </TimerProvider>
       </AuthProvider>
     </UIProvider>
   </StrictMode>

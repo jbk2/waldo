@@ -64,8 +64,8 @@ export default function Game() {
   };
   
   return(
-    <div data-testid="game-section" className="w-full flex justify-center pt-16">
-      <div className="relative w-[80vw] max-w-[1400px]">
+    <div data-testid="game-section" className="w-full flex justify-center mt-12">
+      <div className="relative min-w-[1450px] max-w-[2000px] m-4">
         {/* Show placeholder when no game image */}
         {gameImage ? (
           <img
