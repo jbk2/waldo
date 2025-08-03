@@ -1,8 +1,7 @@
 # Todo list
 
-- fix click locations on new images
-- fix resolution/zoom of new images
-- look at memoisation of loadImages, && others, in GAmesContext
+- final refactor of Timer code
+- look at memoisation of loadImages, && others, in GamesContext
 - have startGame dialogue offer game options from all games data, not just hardcoded
 - competition table:
   - add column sorting on BoardTables
@@ -15,6 +14,7 @@
 
 ## All
 - handle error for reset_password with invalid token
+- responsive design for small screens
 
 ## Rails App
 - tidy image creation view - perhaps
