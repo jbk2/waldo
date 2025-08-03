@@ -8,6 +8,7 @@ import EndGameDialog from './EndGameDialog';
 import { UIContext } from '../contexts/UIContext';
 
 export default function Game() {
+  console.log('Game rendered now >>', Date.now);
   const imgRef = useRef();
   const { showAlert, showConfetti, gameImgBlured, setGameImgBlured, clickCoords,
     setClickCoords } = useContext(UIContext);
