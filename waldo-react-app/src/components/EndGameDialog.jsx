@@ -40,7 +40,7 @@ export default function EndGameDialog() {
   return(
     <dialog ref={dialogRef} id="endGameDialog"
       open
-      className="fixed top-2/5 left-1/2 -translate-x-1/2 w-98 h-fir opacity-95
+      className="fixed top-1/3 left-1/2 -translate-x-1/2 w-98 h-fit opacity-95
         bg-white border-2 rounded-md justify-center items-center p-9">
           {/* ixed top-2/5 left-1/2 -translate-x-1/2 w-90 h-fit justify-center items-center
           bg-white border-2 rounded-md opacity-95 pb-8 */}

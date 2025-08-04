@@ -29,8 +29,21 @@ export default function Game() {
     if(gameState === GAME_STATES.LOADING) { startGame() }; // actually required?, as checks also done elsewhere?
   }
 
+  function updateCharacters(foundCharacter) {
+    const updatedCharacters = characters.map((character) => {
+      if(character.name === foundCharacter.name) {
+        return { ...character, clicked: true }
+      } else {
+        return character;
+      }
+    });
+
+    setCharacters(updatedCharacters);
+    return updatedCharacters;
+  };
+  
   async function handleImageClick(e) {
-    if(gameState != 'playing') return null;
+    if(gameState != 'playing') return;
 
     const imgRect = imgRef.current.getBoundingClientRect();
     const clickX = Math.round(((e.clientX - imgRect.x) / imgRect.width) * 1000) / 1000;
@@ -40,28 +53,27 @@ export default function Game() {
     const foundCharacter = characters.find((character) => 
       hasClickedOnACharacter(clickX, clickY, character)
     )
-
-    if(foundCharacter) {
-      const updatedCharacters = characters.map((character) =>
-        character.name === foundCharacter.name
-          ? { ...character, clicked: true }
-          : character
-      );
-      setCharacters(updatedCharacters);
-      
-      const allCharactersClicked = updatedCharacters.every((character) => character.clicked === true);
-
-      if(allCharactersClicked) {
-        showAlert(`🎉 Yay, you found ${capitalize(foundCharacter.name)}, and all characters 🎉`);
-        const saved = await completeGame();
-        if(signedIn) { showAlert(saved.data.message); }
-        showConfetti();
-      } else {
-        showAlert(`🎉 Yay, you found ${capitalize(foundCharacter.name)} 🎉`);
-      }
-    } else {
-      showAlert('No character found here. 👎');    
+    
+    if(!foundCharacter) {
+      showAlert('No character found here. 👎');   
+      return; 
     };
+
+    if(foundCharacter.clicked) {
+      showAlert(`You already found this character`);
+      return;
+    } 
+    
+    const updatedCharacters = updateCharacters(foundCharacter);
+    const gameComplete = updatedCharacters.every((character) => character.clicked === true);
+
+    showAlert(`🎉 Yay, you found ${capitalize(foundCharacter.name)}${gameComplete ? ', and all characters' : ''}  🎉`);
+    
+    if(gameComplete) {
+      const savedGame = await completeGame();
+      if(signedIn) { showAlert(savedGame.data.message); }
+      showConfetti();
+    }
   };
   
   return(
@@ -129,5 +141,4 @@ export default function Game() {
       </div>
     </div>
   )
-}
-
+};
