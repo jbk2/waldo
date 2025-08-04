@@ -12,6 +12,7 @@
 - move AuthContext fetches out to authAPI.js util class
 - create new images
   - build better way to create image characters from clicks?
+- extract game play option buttons out to separate component to be used in both dialogues
 
 ## All
 - handle error for reset_password with invalid token
