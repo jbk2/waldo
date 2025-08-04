@@ -1,4 +1,4 @@
-import { createContext, useState, useContext, useCallback, useMemo } from "react";
+import { createContext, useState, useContext, useCallback } from "react";
 import { UIContext } from "./UIContext";
 import { AuthContext } from "./AuthContext";
 import { TimerContext } from "./TimerContext";
@@ -98,7 +98,7 @@ export default function GameProvider({children}) {
     } else {
       return { ok: true, data: { message: "user not logged in so not saved"} };
     }
-  }, [signedIn, gameImage?.id, loadGames, loadUserGames]);
+  }, [signedIn, gameImage?.id, loadGames, loadUserGames, stopTimer, GAME_STATES.COMPLETED]);
 
   const value = {
     gameState,

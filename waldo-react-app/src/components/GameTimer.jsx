@@ -4,19 +4,22 @@ import { useContext, useState, useRef, useEffect } from "react";
 
 export default function GameTimer() {
   // console.log('GameTimer rendered now >>', Date.now());
-  const { gameState, GAME_STATES } = useContext(GameContext);
+  const { gameState, GAME_STATES, gameCompletedLength } = useContext(GameContext);
   const { getStartTime } = useContext(TimerContext);
   const intervalRef = useRef(null);
   const [ elapsedTime, setElapsedTime ] = useState(0);
-  const seconds = (elapsedTime / 1000).toFixed(2)
-
+  
+  const seconds = gameState === GAME_STATES.COMPLETED
+    ? (gameCompletedLength / 1000).toFixed(2)
+    : (elapsedTime / 1000).toFixed(2);
 
   useEffect(() => {
     if (gameState === GAME_STATES.PLAYING) {
+      const startTime = getStartTime();
       setElapsedTime(0);
 
       intervalRef.current = setInterval(() => {
-        setElapsedTime(Date.now() - getStartTime());
+        setElapsedTime(Date.now() - startTime);
       }, 20);
       
       return () => {
@@ -24,8 +27,8 @@ export default function GameTimer() {
           clearInterval(intervalRef.current);
           intervalRef.current = null;
         }
-      };
-    } else if (gameState === GAME_STATES.IDLE || gameState === GAME_STATES.LOADING) {
+      }
+    } else if (gameState === GAME_STATES.IDLE || gameState === GAME_STATES.LOADING)  {
       setElapsedTime(0);
     }
   }, [gameState, getStartTime, GAME_STATES.PLAYING, GAME_STATES.IDLE, GAME_STATES.LOADING]);
