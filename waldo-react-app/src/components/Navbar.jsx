@@ -8,7 +8,7 @@ import { GameContext } from '../contexts/GameContext';
 
 
 export default function Navbar() {
-  console.log('Navbar rendered now >>', Date.now);
+  console.log('Navbar rendered now >>', Date.now());
   const navigate = useNavigate();
   const { signedIn, signOut } = useContext(AuthContext);
   const { resetGame } = useContext(GameContext);

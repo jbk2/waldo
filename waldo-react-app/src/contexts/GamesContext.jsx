@@ -11,7 +11,7 @@ export default function GamesProvider({children}) {
   const [ userGames, setUserGames ] = useState([]);
   const { user, signedIn } = useContext(AuthContext);
 
-  async function loadGames() {
+  const loadGames = useCallback(async () => {
     console.log('=== LOADGAMES CALLED ===');
     const response = await GameAPI.getGames();
     
@@ -22,7 +22,7 @@ export default function GamesProvider({children}) {
       console.error('=== LOADGAMES FAILED ===');
       console.error(response.data.message)
     }
-  };
+  }, []);
   
   const loadUserGames = useCallback(async () => {
     if(!user || !signedIn) return;
@@ -35,27 +35,21 @@ export default function GamesProvider({children}) {
       console.error(response.data.message);
     }
   }, [user, signedIn]);
-  
-  async function loadImages() {
+
+   const loadImages = useCallback(async () => {
     const imagesData = await ImageAPI.loadImages();
     const images = imagesData.images;
     const imgIdsAndTitles = images.map((img) => {
       return { image_id: img.id, title: img.title }
     })
     setImageIdsAndTitles(imgIdsAndTitles)
-  }
-  
-  const value = {
-    games,
-    loadGames,
-    userGames,
-    loadUserGames,
-    imageIdsAndTitles
-  };
+  }, []);
   
   useEffect(() => {
-    loadGames();
-  }, [user, signedIn]);
+    if(signedIn && user) {
+      loadGames();
+    }
+  }, [user, signedIn, loadGames]);
   
   useEffect(() => {
     if(signedIn && user) {
@@ -67,7 +61,15 @@ export default function GamesProvider({children}) {
   
   useEffect(() => {
     loadImages();
-  }, [])
+  }, [loadImages])
+  
+  const value = {
+    games,
+    loadGames,
+    userGames,
+    loadUserGames,
+    imageIdsAndTitles
+  };
 
   return(
     <GamesContext.Provider value={value}>

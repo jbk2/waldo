@@ -3,22 +3,20 @@ import { TimerContext } from '../contexts/TimerContext';
 import { useContext, useState, useRef, useEffect } from "react";
 
 export default function GameTimer() {
-  console.log('GameTimer rendered now >>', Date.now);
+  // console.log('GameTimer rendered now >>', Date.now());
   const { gameState, GAME_STATES } = useContext(GameContext);
   const { getStartTime } = useContext(TimerContext);
   const intervalRef = useRef(null);
-  const startTimeRef = useRef(null);
   const [ elapsedTime, setElapsedTime ] = useState(0);
   const seconds = (elapsedTime / 1000).toFixed(2)
 
 
   useEffect(() => {
     if (gameState === GAME_STATES.PLAYING) {
-      startTimeRef.current = getStartTime();
       setElapsedTime(0);
 
       intervalRef.current = setInterval(() => {
-        setElapsedTime(Date.now() - startTimeRef.current);
+        setElapsedTime(Date.now() - getStartTime());
       }, 20);
       
       return () => {
@@ -27,8 +25,10 @@ export default function GameTimer() {
           intervalRef.current = null;
         }
       };
+    } else if (gameState === GAME_STATES.IDLE || gameState === GAME_STATES.LOADING) {
+      setElapsedTime(0);
     }
-  }, [gameState, GAME_STATES.PLAYING]);
+  }, [gameState, getStartTime, GAME_STATES.PLAYING, GAME_STATES.IDLE, GAME_STATES.LOADING]);
 
   return(
     <div  id="game-timer" className="text-sm w-40 flex items-baseline">
