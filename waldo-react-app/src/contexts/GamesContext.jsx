@@ -6,10 +6,16 @@ import ImageAPI from "../utils/imageAPI";
 const GamesContext = createContext();
 
 export default function GamesProvider({children}) {
-  const [ imageIdsAndTitles, setImageIdsAndTitles ] = useState([]);
+  const [ images, setImages ] = useState([]);
   const [ games, setGames ] = useState([]);
   const [ userGames, setUserGames ] = useState([]);
   const { user, signedIn } = useContext(AuthContext);
+  const DIFFICULTY_PROPS = {
+    easy: { color: 'green-400', text_abbreviation: 'easy'},
+    medium: { color: 'blue-400', text_abbreviation: 'md'},
+    difficult: { color: 'orange-400', text_abbreviation: 'diff'},
+    very_difficult: { color: 'red-400', text_abbreviation: 'vDiff'}
+  }
 
   const loadGames = useCallback(async () => {
     console.log('=== LOADGAMES CALLED ===');
@@ -39,10 +45,11 @@ export default function GamesProvider({children}) {
    const loadImages = useCallback(async () => {
     const imagesData = await ImageAPI.loadImages();
     const images = imagesData.images;
-    const imgIdsAndTitles = images.map((img) => {
-      return { image_id: img.id, title: img.title }
+    console.log('LOAD IMAGES CALLED >>> IMAGES>>', images);
+    const imgs = images.map((img) => {
+      return { image_id: img.id, title: img.title, difficulty: img.difficulty }
     })
-    setImageIdsAndTitles(imgIdsAndTitles)
+    setImages(imgs)
   }, []);
   
   useEffect(() => {
@@ -68,7 +75,8 @@ export default function GamesProvider({children}) {
     loadGames,
     userGames,
     loadUserGames,
-    imageIdsAndTitles
+    images,
+    DIFFICULTY_PROPS
   };
 
   return(

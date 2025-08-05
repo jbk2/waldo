@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_07_29_113811) do
+ActiveRecord::Schema[8.0].define(version: 2025_08_05_093650) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -71,6 +71,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_07_29_113811) do
     t.string "title"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "difficulty", default: 0, null: false
+    t.index ["difficulty"], name: "index_images_on_difficulty"
   end
 
   create_table "sessions", force: :cascade do |t|

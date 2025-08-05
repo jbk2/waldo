@@ -1,8 +1,8 @@
 import GameTable from "./GameTable";
 import ImageAPI from "../utils/imageAPI";
-export default function GamesBoard({pastGameTime, games, imageIdsAndTitles}) {
+export default function GamesBoard({pastGameTime, games, images}) {
 
-  const imageArray = games.reduce((acc, game) => {
+  const imagesGames = games.reduce((acc, game) => {
     const imageId = game.image_id;
     const existingImageEl = acc.find(img => img.image_id === imageId);
 
@@ -26,7 +26,7 @@ export default function GamesBoard({pastGameTime, games, imageIdsAndTitles}) {
       )}
 
       <div className="flex flex-col mt-4">
-        { <GameTable games={games} imageArray={imageArray} imageIdsAndTitles={imageIdsAndTitles} /> }
+        { <GameTable games={games} imagesGames={imagesGames} images={images} /> }
       </div>
     </div>
   )

@@ -1,13 +1,15 @@
-import { useState, useEffect, useContext, useRef, useMemo } from "react"
-import { AuthContext } from "../contexts/AuthContext"
+import { useState, useEffect, useContext, useRef, useMemo } from "react";
+import { AuthContext } from "../contexts/AuthContext";
+import { GamesContext } from "../contexts/GamesContext";
 
-export default function GameTable({games, imageArray, imageIdsAndTitles}) {
+export default function GameTable({games, imagesGames, images}) {
   const [ selectedTabImgId, setSelectedTabImgId ] = useState(null)
   const { user } = useContext(AuthContext);
+  const { DIFFICULTY_PROPS } = useContext(GamesContext);
   const lastGameRow = useRef();
   const selectedTabGames = useMemo(() =>
-    imageArray.find(img => img.image_id === selectedTabImgId)?.games || [],
-    [imageArray, selectedTabImgId]
+    imagesGames.find(img => img.image_id === selectedTabImgId)?.games || [],
+    [imagesGames, selectedTabImgId]
   );
   const usersLastGame = useMemo(() =>
     games
@@ -17,10 +19,10 @@ export default function GameTable({games, imageArray, imageIdsAndTitles}) {
   );
   
   useEffect(() => {
-    if(imageArray && imageArray.length > 0) {
-      setSelectedTabImgId(imageArray[0].image_id)
+    if(imagesGames && imagesGames.length > 0) {
+      setSelectedTabImgId(imagesGames[0].image_id)
     }
-  }, [imageArray]);
+  }, [imagesGames]);
 
   
   useEffect(() => {
@@ -48,14 +50,14 @@ export default function GameTable({games, imageArray, imageIdsAndTitles}) {
     lastGameRow.current = element;
   };
 
-  if (!imageIdsAndTitles || !games || !imageArray || !selectedTabGames) {
+  if (!images || !games || !imagesGames || !selectedTabGames) {
     return <div>Loading</div>;
   }
 
   return(
     <>
       <div role="tablist" className="pl-4 tabs tabs-lift tabs-xs -mb-[1px]">
-        { imageIdsAndTitles.map((image) => {
+        { images.map((image) => {
           const isActive = selectedTabImgId === image.image_id;
           return(
             <a
@@ -64,7 +66,7 @@ export default function GameTable({games, imageArray, imageIdsAndTitles}) {
               key={image.image_id}
               onClick={() => handleTabClick(image.image_id)}
             >
-              {image.title}
+              {image.title} - {DIFFICULTY_PROPS[image.difficulty].text_abbreviation}
             </a>
           )
           })
