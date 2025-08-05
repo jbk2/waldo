@@ -1,5 +1,6 @@
 # Todo list
 
+- refactor UserGamesBoard variable setting logic
 - look at memoisation of loadImages, && others, in GamesContext
 - potentially refactor the navigation state setting object to use useReducer
   (as state has a different shape depending where it came from)?
@@ -11,7 +12,7 @@
 - move AuthContext fetches out to authAPI.js util class
 - create new images
   - build better way to create image characters from clicks?
-- extract game play option buttons out to separate component to be used in both dialogues
+- click on UserGamesBoard stats boxed sets GameBoard active tab
 
 ## All
 - handle error for reset_password with invalid token
