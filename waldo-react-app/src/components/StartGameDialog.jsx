@@ -13,7 +13,7 @@ export default function StartGameDialog() {
       className="fixed top-1/3 left-1/2 -translate-x-1/2 w-90 h-fit justify-center items-center
         bg-white border-2 rounded-md opacity-95 pb-8">
       <div className="flex flex-col">
-        <h1 className="w-full font-variation-settings-wght-700 m-10 mb-9">Which game would you like to play?</h1>
+        <h1 className="w-full font-variation-settings-wght-700 m-10 mb-4">Which game would you like to play?</h1>
         <GamePlayChoices dialogRef={dialogRef} />
       </div>
     </dialog>

@@ -24,7 +24,7 @@ export default function CompetitionBoard() {
   return(
     <>
       {userGames ? (
-        <UserGamesBoard userGames={userGames} />
+        <UserGamesBoard games={games} userGames={userGames} />
       ) : (
           <h1>You haven't played any games yet - Link here to go play</h1>
       )}
