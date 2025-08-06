@@ -1,17 +1,16 @@
 # Todo list
 
+- abstract Competition Board, UserGamesBoard, GamesBoard, GameTable logic out to ResultsContext
+- click on UserGamesBoard stats boxed sets GameBoard active tab
+- implement email conf for auth & password change
 - potentially refactor the navigation state setting object to use useReducer
   (as state has a different shape depending where it came from)?
-- competition table:
-  - add column sorting on BoardTables
 - intro functionality to stop games being able to be played twice?
-- implement email conf for auth & password change
 - monotype digits check
 - deal with the constant re-rendering, everywhere
 - move AuthContext fetches out to authAPI.js util class
 - create new images
   - build better way to create image characters from clicks?
-- click on UserGamesBoard stats boxed sets GameBoard active tab
 
 ## All
 - handle error for reset_password with invalid token
