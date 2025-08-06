@@ -23,10 +23,10 @@ export default function GamePlayChoices({dialogRef}) {
       <div className="flex flex-wrap justify-center gap-4">
         {
           images.map((image) => {
-            const difficultyColor = DIFFICULTY_PROPS[image.difficulty].color
+            const difficultyColor = DIFFICULTY_PROPS[image.difficulty].bg_color
             return(
               <div className="relative">
-                <div className={`absolute -bottom-1 -right-1 rounded-xs h-2 w-3 bg-${difficultyColor}`}></div>
+                <div className={`absolute -bottom-1 -right-1 rounded-xs h-2 w-3 ${difficultyColor}`}></div>
                 <button
                   onClick={() => handlePlayGameClick(image.title)}
                   key={image.image_id}  

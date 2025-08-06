@@ -10,7 +10,7 @@ export default function UserGamesBoard({games, userGames}) {
     return acc
   }, {});
   
-  const usersGamesByImage = userGames ? (userGames.reduce((acc, game) => {
+  const usersStatsByImage = userGames?.reduce((acc, game) => {
     const image_id = game.image.id
     const image_title = game.image.title
 
@@ -19,38 +19,24 @@ export default function UserGamesBoard({games, userGames}) {
         image_id,
         image_title,
         play_count: 0,
-        games: []
+        best_game: null,
+        rank: null
       }
     }
 
     acc[image_id].play_count += 1;
-    acc[image_id].games.push(game);
-    acc[image_id].games.sort((a, b) => a.time - b.time );
-    return acc
-  }, {})) : ({});
-  
-  const usersBestGamesByImage = Object.entries(usersGamesByImage).reduce((acc, [key, value]) => {
-    acc[key] = {
-      game_id: value.games[0].id,
-      game_time: value.games[0].time
+    if(!acc[image_id].best_game || game.time < acc[image_id].best_game.time) {
+      acc[image_id].best_game = game;
     }
-    return acc;
-  }, {});
-  
-  const usersBestGamesWithRank = Object.entries(usersBestGamesByImage).reduce((acc, [imageId, bestGameData]) => {
-    if(!acc[imageId]) acc[imageId] = {};
-    
-    const allImagesGames = gamesByImage[imageId] || [];
-    const rank = allImagesGames.findIndex(game => game.id === bestGameData.game_id) + 1
-    
-    acc[imageId] = {
-      game_id: bestGameData.game_id,
-      game_time: bestGameData.game_time,
-      rank: rank
-    }
-    
+
     return acc
   }, {});
+
+  Object.values(usersStatsByImage).forEach((image) => {
+    const allGamesForImage = gamesByImage[image.image_id];
+    const bestGameIndex = allGamesForImage.findIndex(game => game.id === image.best_game.id)
+    image.rank = bestGameIndex >= 0 ? bestGameIndex + 1 : null;
+  });
 
   const totalGamesCount = userGames.length;
 
@@ -64,7 +50,7 @@ export default function UserGamesBoard({games, userGames}) {
             <div className="stat-value">{totalGamesCount}</div>
           </div>
         </div>
-        {Object.values(usersGamesByImage).map((image) => (
+        {Object.values(usersStatsByImage).map((image) => (
           <div key={image.image_id} className="stats shadow">
             <div className="stat">
               <div className="stat-title">{image.image_title}</div>
@@ -74,9 +60,9 @@ export default function UserGamesBoard({games, userGames}) {
               <div className="stat-desc flex justify-end text-indigo-700">
                 <p className="">Best rank:&nbsp;</p>
                 <p className="ordinal">
-                  {usersBestGamesWithRank && usersBestGamesWithRank[image.image_id].rank}
+                  {image.rank}
                   </p>
-                <p className="ml-[1px] text-[0.5rem] align-super underline underline-offset-1 decoration-1">{getOrdinalSuffix(usersBestGamesWithRank[image.image_id].rank)}</p>
+                <p className="ml-[1px] text-[0.5rem] align-super underline underline-offset-1 decoration-1">{getOrdinalSuffix(image.rank)}</p>
               </div>
             </div>
           </div>

@@ -11,10 +11,10 @@ export default function GamesProvider({children}) {
   const [ userGames, setUserGames ] = useState([]);
   const { user, signedIn } = useContext(AuthContext);
   const DIFFICULTY_PROPS = {
-    easy: { color: 'green-400', text_abbreviation: 'easy'},
-    medium: { color: 'blue-400', text_abbreviation: 'md'},
-    difficult: { color: 'orange-400', text_abbreviation: 'diff'},
-    very_difficult: { color: 'red-400', text_abbreviation: 'vDiff'}
+    easy: { bg_color: 'bg-green-400', text_abbreviation: 'easy'},
+    medium: { bg_color: 'bg-blue-400', text_abbreviation: 'md'},
+    difficult: { bg_color: 'bg-orange-400', text_abbreviation: 'diff'},
+    very_difficult: { bg_color: 'bg-red-400', text_abbreviation: 'vDiff'}
   }
 
   const loadGames = useCallback(async () => {
