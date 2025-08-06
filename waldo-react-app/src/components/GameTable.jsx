@@ -1,16 +1,17 @@
 import { useState, useEffect, useContext, useRef, useMemo } from "react";
 import { AuthContext } from "../contexts/AuthContext";
 import { GamesContext } from "../contexts/GamesContext";
+import { ResultsContext } from "../contexts/ResultsContext";
 
 export default function GameTable({games, imagesGames, images}) {
-  const [ selectedTabImgId, setSelectedTabImgId ] = useState(null)
   const [ sortConfig, setSortConfig ] = useState({ key: null, direction: 'asc' });
   const { user } = useContext(AuthContext);
   const { DIFFICULTY_PROPS } = useContext(GamesContext);
+  const { activeTabImageId, setActiveTabImageId } = useContext(ResultsContext);
   const lastGameRow = useRef();
   const selectedTabGames = useMemo(() =>
-    imagesGames.find(img => img.image_id === selectedTabImgId)?.games || [],
-    [imagesGames, selectedTabImgId]
+    imagesGames.find(img => img.image_id === activeTabImageId)?.games || [],
+    [imagesGames, activeTabImageId]
   );
   // returns users last played game 
   const usersLastGame = useMemo(() =>
@@ -28,17 +29,13 @@ export default function GameTable({games, imagesGames, images}) {
       let aValue, bValue;
 
       switch(sortConfig.key) {
-        case 'rank':
+        case 'time':
           aValue = a.time;
           bValue = b.time;
           break;
         case 'username': 
           aValue = a.username.toLowerCase();
           bValue = b.username.toLowerCase();
-          break;
-        case 'time':
-          aValue = a.time;
-          bValue = b.time;
           break;
         default:
           return 0;
@@ -54,7 +51,7 @@ export default function GameTable({games, imagesGames, images}) {
   // default sets selectedTab to first image in imagesGames array
   useEffect(() => {
     if(imagesGames && imagesGames.length > 0) {
-      setSelectedTabImgId(imagesGames[0].image_id)
+      setActiveTabImageId(imagesGames[0].image_id)
     }
   }, [imagesGames]);
 
@@ -69,11 +66,10 @@ export default function GameTable({games, imagesGames, images}) {
   }, [selectedTabGames, usersLastGame])
 
   function handleTabClick(imageId) {
-    setSelectedTabImgId(imageId)
+    setActiveTabImageId(imageId)
   };
 
-  function handleSortClick(e) {
-    const sortKey = e.target.parentNode.id;
+  function handleSortClick(sortKey) {
     setSortConfig((prev) => ({
       key: sortKey,
       direction: prev.key === sortKey && prev.direction === 'asc' ? 'dsc' : 'asc'
@@ -101,7 +97,7 @@ export default function GameTable({games, imagesGames, images}) {
     <>
       <div role="tablist" className="pl-4 tabs tabs-lift tabs-xs -mb-[1px]">
         { images.map((image) => {
-          const isActive = selectedTabImgId === image.image_id;
+          const isActive = activeTabImageId === image.image_id;
           return(
             <a
               role="tab"
@@ -123,19 +119,19 @@ export default function GameTable({games, imagesGames, images}) {
                 <th id="rank">📈 Rank
                   <span
                     className="ml-1 text-[0.7rem] hover:cursor-pointer"
-                    onClick={handleSortClick}
+                    onClick={() => handleSortClick('time')}
                   >⇵</span>
                 </th>
                 <th id="username">👤 Username
                   <span
                     className="ml-1 text-[0.7rem] hover:cursor-pointer"
-                    onClick={handleSortClick}
+                    onClick={() => handleSortClick('username')}
                   >⇵</span>
                 </th>
                 <th id="time">⏱️ Time
                   <span
                     className="ml-1 text-[0.7rem] hover:cursor-pointer"
-                    onClick={handleSortClick}
+                    onClick={() => handleSortClick('time')}
                   >⇵</span>
                 </th>
               </tr>

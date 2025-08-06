@@ -1,7 +1,9 @@
+import { useContext } from "react";
 import { getOrdinalSuffix } from "../utils/stringUtils";
+import { ResultsContext } from "../contexts/ResultsContext";
 
 export default function UserGamesBoard({games, userGames}) {
-  
+  const { setActiveTabImageId } = useContext(ResultsContext);
   const gamesByImage = games.reduce((acc, game) => {
     if(!acc[game.image_id]) acc[game.image_id] = [];
     
@@ -51,7 +53,7 @@ export default function UserGamesBoard({games, userGames}) {
           </div>
         </div>
         {Object.values(usersStatsByImage).map((image) => (
-          <div key={image.image_id} className="stats shadow">
+          <div key={image.image_id} className="stats shadow hover:cursor-pointer" onClick={() => setActiveTabImageId(image.image_id)}>
             <div className="stat">
               <div className="stat-title">{image.image_title}</div>
               <div className="stat-value">{image.play_count}&nbsp;

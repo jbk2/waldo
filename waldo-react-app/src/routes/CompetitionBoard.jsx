@@ -3,6 +3,7 @@ import { useLocation, useNavigate } from "react-router-dom"
 import { GamesContext } from "../contexts/GamesContext";
 import { AuthContext } from "../contexts/AuthContext";
 import { UIContext } from "../contexts/UIContext";
+import ResultsProvider from "../contexts/ResultsContext";
 import UserGamesBoard from "../components/UserGamesBoard";
 import GamesBoard from "../components/GamesBoard";
 
@@ -22,13 +23,13 @@ export default function CompetitionBoard() {
   }
 
   return(
-    <>
+    <ResultsProvider>
       {userGames ? (
         <UserGamesBoard games={games} userGames={userGames} />
       ) : (
           <h1>You haven't played any games yet - Link here to go play</h1>
       )}
       <GamesBoard pastGameTime={pastGameTime} games={games} images={images} />
-    </>
+    </ResultsProvider>
   )
 }
