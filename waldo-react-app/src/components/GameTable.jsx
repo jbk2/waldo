@@ -86,7 +86,7 @@ export default function GameTable({games, imagesGames, images}) {
               { 
                 selectedTabGames.map((game, i) => {
                   const isUsersGame = game.user_id === user.id;
-                  const isUsersLastGame = game.id === usersLastGame.id;
+                  const isUsersLastGame = usersLastGame && game.id === usersLastGame.id;
                   return(
                     <tr
                       key={game.id}

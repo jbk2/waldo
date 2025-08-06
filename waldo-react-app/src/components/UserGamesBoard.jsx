@@ -33,7 +33,7 @@ export default function UserGamesBoard({games, userGames}) {
   }, {});
 
   Object.values(usersStatsByImage).forEach((image) => {
-    const allGamesForImage = gamesByImage[image.image_id];
+    const allGamesForImage = gamesByImage[image.image_id] || [];
     const bestGameIndex = allGamesForImage.findIndex(game => game.id === image.best_game.id)
     image.rank = bestGameIndex >= 0 ? bestGameIndex + 1 : null;
   });

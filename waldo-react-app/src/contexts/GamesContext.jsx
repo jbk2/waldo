@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback, createContext, useContext } from "react";
+import { useState, useEffect, useCallback, createContext, useContext, useMemo } from "react";
 import GameAPI from "../utils/gameAPI";
 import { AuthContext } from "./AuthContext";
 import ImageAPI from "../utils/imageAPI";
@@ -10,12 +10,12 @@ export default function GamesProvider({children}) {
   const [ games, setGames ] = useState([]);
   const [ userGames, setUserGames ] = useState([]);
   const { user, signedIn } = useContext(AuthContext);
-  const DIFFICULTY_PROPS = {
+  const DIFFICULTY_PROPS = useMemo(() => ({
     easy: { bg_color: 'bg-green-400', text_abbreviation: 'easy'},
-    medium: { bg_color: 'bg-blue-400', text_abbreviation: 'md'},
+    medium: { bg_color: 'bg-blue-400', text_abbreviation: 'med'},
     difficult: { bg_color: 'bg-orange-400', text_abbreviation: 'diff'},
     very_difficult: { bg_color: 'bg-red-400', text_abbreviation: 'vDiff'}
-  }
+  }), []);
 
   const loadGames = useCallback(async () => {
     console.log('=== LOADGAMES CALLED ===');
@@ -70,14 +70,19 @@ export default function GamesProvider({children}) {
     loadImages();
   }, [loadImages])
   
-  const value = {
+  const value = useMemo(() => ({
     games,
     loadGames,
     userGames,
     loadUserGames,
     images,
     DIFFICULTY_PROPS
-  };
+  }), [games,
+    loadGames,
+    userGames,
+    loadUserGames,
+    images,
+    DIFFICULTY_PROPS]);
 
   return(
     <GamesContext.Provider value={value}>
