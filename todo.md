@@ -1,8 +1,6 @@
 # Todo list
 
-
-- abstract Competition Board, UserGamesBoard, GamesBoard, GameTable logic out to ResultsContext
-- add link from bestrank in stats components to said game in the competition baord (abstract lastGameRow logic out to a 'focussed game row' or something, where last game sets it if user has a last game, or best rank link sets it if clicked)
+- refine styling/animation of focussedGame - should colour be temporary?
 - implement email conf for auth & password change
 - potentially refactor the navigation state setting object to use useReducer
   (as state has a different shape depending where it came from)?
