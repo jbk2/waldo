@@ -4,6 +4,7 @@ import { GamesContext } from "../contexts/GamesContext";
 
 export default function GameTable({games, imagesGames, images}) {
   const [ selectedTabImgId, setSelectedTabImgId ] = useState(null)
+  const [ sortConfig, setSortConfig ] = useState({ key: null, direction: 'asc' });
   const { user } = useContext(AuthContext);
   const { DIFFICULTY_PROPS } = useContext(GamesContext);
   const lastGameRow = useRef();
@@ -11,6 +12,7 @@ export default function GameTable({games, imagesGames, images}) {
     imagesGames.find(img => img.image_id === selectedTabImgId)?.games || [],
     [imagesGames, selectedTabImgId]
   );
+  // returns users last played game 
   const usersLastGame = useMemo(() =>
     games
       .filter((game) => game.user_id === user?.id)
@@ -18,13 +20,45 @@ export default function GameTable({games, imagesGames, images}) {
     [games, user?.id]
   );
   
+  // sorts games order based upon clicked header column
+  const sortedGames = useMemo(() => {
+    if(!sortConfig.key) return selectedTabGames;
+
+    const sorted = [...selectedTabGames].sort((a, b) => {
+      let aValue, bValue;
+
+      switch(sortConfig.key) {
+        case 'rank':
+          aValue = a.time;
+          bValue = b.time;
+          break;
+        case 'username': 
+          aValue = a.username.toLowerCase();
+          bValue = b.username.toLowerCase();
+          break;
+        case 'time':
+          aValue = a.time;
+          bValue = b.time;
+          break;
+        default:
+          return 0;
+        }
+
+      if (aValue < bValue) return sortConfig.direction === 'asc' ? -1 : 1;
+      if (aValue > bValue) return sortConfig.direction === 'asc' ? 1 : -1;
+      return 0;
+    });
+    return sorted;
+  }, [selectedTabGames, sortConfig]);
+
+  // default sets selectedTab to first image in imagesGames array
   useEffect(() => {
     if(imagesGames && imagesGames.length > 0) {
       setSelectedTabImgId(imagesGames[0].image_id)
     }
   }, [imagesGames]);
 
-  
+  // scrolls last game into view
   useEffect(() => {
     if(lastGameRow.current) {
       lastGameRow.current.scrollIntoView({
@@ -38,6 +72,14 @@ export default function GameTable({games, imagesGames, images}) {
     setSelectedTabImgId(imageId)
   };
 
+  function handleSortClick(e) {
+    const sortKey = e.target.parentNode.id;
+    setSortConfig((prev) => ({
+      key: sortKey,
+      direction: prev.key === sortKey && prev.direction === 'asc' ? 'dsc' : 'asc'
+    }));
+  }
+// sets styling for; all games, users games, and users last played game
   function getRowClasses(isUsersGame, isUsersLastGame) {
     const baseClasses = 'font-mono font-light';
     const usersGame = isUsersGame ? 'bg-[#FFFAF9] font-variation-settings-wght-600 underline decoration-indigo-400 underline-offset-3 decoration-wavy decoration-1' : '';
@@ -46,6 +88,7 @@ export default function GameTable({games, imagesGames, images}) {
     return `${baseClasses} ${usersGame} ${usersLastGame}`;
   };  
 
+  // sets lastGameRow ref
   const setRef = (element) => {
     lastGameRow.current = element;
   };
@@ -77,14 +120,29 @@ export default function GameTable({games, imagesGames, images}) {
           <table className="table table-xs border-t-0">
             <thead className="sticky top-0 bg-sky-50">
               <tr>
-                <th>📈 Rank</th>
-                <th>👤 Username</th>
-                <th>⏱️ Time</th>
+                <th id="rank">📈 Rank
+                  <span
+                    className="ml-1 text-[0.7rem] hover:cursor-pointer"
+                    onClick={handleSortClick}
+                  >⇵</span>
+                </th>
+                <th id="username">👤 Username
+                  <span
+                    className="ml-1 text-[0.7rem] hover:cursor-pointer"
+                    onClick={handleSortClick}
+                  >⇵</span>
+                </th>
+                <th id="time">⏱️ Time
+                  <span
+                    className="ml-1 text-[0.7rem] hover:cursor-pointer"
+                    onClick={handleSortClick}
+                  >⇵</span>
+                </th>
               </tr>
             </thead>
             <tbody>
               { 
-                selectedTabGames.map((game, i) => {
+                sortedGames.map((game) => {
                   const isUsersGame = game.user_id === user.id;
                   const isUsersLastGame = usersLastGame && game.id === usersLastGame.id;
                   return(
@@ -93,7 +151,7 @@ export default function GameTable({games, imagesGames, images}) {
                       className={getRowClasses(isUsersGame, isUsersLastGame)}
                       ref={isUsersLastGame ? setRef : null}
                       >
-                      <th>{i+1}</th>
+                      <th>{game.rank}</th>
                       <td>{game.username}</td>
                       <td>{(game.time / 1000).toFixed(2)}s</td>
                     </tr>

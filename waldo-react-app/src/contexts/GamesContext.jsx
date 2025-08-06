@@ -14,7 +14,7 @@ export default function GamesProvider({children}) {
     easy: { bg_color: 'bg-green-400', text_abbreviation: 'easy'},
     medium: { bg_color: 'bg-blue-400', text_abbreviation: 'med'},
     difficult: { bg_color: 'bg-orange-400', text_abbreviation: 'diff'},
-    very_difficult: { bg_color: 'bg-red-400', text_abbreviation: 'vDiff'}
+    very_difficult: { bg_color: 'bg-red-400', text_abbreviation: 'v.diff'}
   }), []);
 
   const loadGames = useCallback(async () => {

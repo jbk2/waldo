@@ -18,6 +18,12 @@ export default function GamesBoard({pastGameTime, games, images}) {
     return acc
   }, [])
 
+  imagesGames.forEach((image) => {
+    image.games.forEach((game, index) => {
+      game.rank = index + 1;
+    });
+  });
+
   return(
     <div className="flex flex-col items-center mt-8">
       <h1 className="text-xl font-variation-settings-wght-700 mb-2">Competition Board</h1>
