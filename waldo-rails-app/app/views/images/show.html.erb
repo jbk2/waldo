@@ -10,7 +10,7 @@
     </li>
   <% end %>
 </ul>
-<div id="image-container">
+<div id="image-container" class="">
   <%= image_tag @image.image, alt: @image.title %>
   
   <% @image.characters.each do |character| %>
@@ -24,8 +24,7 @@
         top: <%= character.start_y * 100 %>%;
         width: <%= (character.end_x - character.start_x) * 100 %>%;
         height: <%= (character.end_y - character.start_y) * 100 %>%;
-        border: 4px solid red;
-        padding: 4px;
+        border: 2px solid red;
         background-color: rgba(0, 0, 0, 0.2);
     "><span><%= character.name %></span>
     </div>

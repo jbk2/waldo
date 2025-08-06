@@ -120,12 +120,12 @@ export default function Game() {
         )}
 
         {/* sets character boundary marker if character clicked */}
-        {gameState === 'playing' && gameImage && gameImage.url !== placeholderImg && characters && characters.map((char) => {
+        {(gameState === GAME_STATES.PLAYING || gameState === GAME_STATES.COMPLETED) && characters.map((char) => {
           if(char.clicked) {
             return(
               <div
                 key={char.id}
-                className="absolute border-4 p-2 border-green-600 pointer-events-none"
+                className="absolute border-3 border-green-600 pointer-events-none"
                 style={{
                   left: `${char.start_x * 100}%`,
                   top: `${char.start_y * 100}%`,
