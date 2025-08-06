@@ -10,8 +10,9 @@ import GamesBoard from "../components/GamesBoard";
 
 export default function CompetitionBoard() {
   const { state } = useLocation()
+  console.log('nav state in Com board >>', state)
   const pastGameTime = state?.game.time;
-  const { games, userGames, images } = useContext(GamesContext);
+  const { userGames } = useContext(GamesContext);
   const { signedIn } = useContext(AuthContext);
   const { showAlert } = useContext(UIContext);
   const navigate = useNavigate();
@@ -23,13 +24,13 @@ export default function CompetitionBoard() {
   }
 
   return(
-    <ResultsProvider>
+    <ResultsProvider >
       {userGames ? (
-        <UserGamesBoard games={games} userGames={userGames} />
+        <UserGamesBoard />
       ) : (
           <h1>You haven't played any games yet - Link here to go play</h1>
       )}
-      <GamesBoard pastGameTime={pastGameTime} games={games} images={images} />
+      <GamesBoard pastGameTime={pastGameTime}/>
     </ResultsProvider>
   )
 }

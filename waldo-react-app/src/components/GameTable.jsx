@@ -3,29 +3,19 @@ import { AuthContext } from "../contexts/AuthContext";
 import { GamesContext } from "../contexts/GamesContext";
 import { ResultsContext } from "../contexts/ResultsContext";
 
-export default function GameTable({games, imagesGames, images}) {
+export default function GameTable() {
   const [ sortConfig, setSortConfig ] = useState({ key: null, direction: 'asc' });
   const { user } = useContext(AuthContext);
-  const { DIFFICULTY_PROPS } = useContext(GamesContext);
-  const { activeTabImageId, setActiveTabImageId } = useContext(ResultsContext);
+  const { DIFFICULTY_PROPS, images, games } = useContext(GamesContext);
+  const { activeTabImageId, setActiveTabImageId, imagesAndTheirGames,
+    activeTabGames, usersLastGame } = useContext(ResultsContext);
   const lastGameRow = useRef();
-  const selectedTabGames = useMemo(() =>
-    imagesGames.find(img => img.image_id === activeTabImageId)?.games || [],
-    [imagesGames, activeTabImageId]
-  );
-  // returns users last played game 
-  const usersLastGame = useMemo(() =>
-    games
-      .filter((game) => game.user_id === user?.id)
-      .sort((a, b) => new Date(b.created_at) - new Date(a.created_at))[0] || null,
-    [games, user?.id]
-  );
   
   // sorts games order based upon clicked header column
   const sortedGames = useMemo(() => {
-    if(!sortConfig.key) return selectedTabGames;
+    if(!sortConfig.key) return activeTabGames;
 
-    const sorted = [...selectedTabGames].sort((a, b) => {
+    const sorted = [...activeTabGames].sort((a, b) => {
       let aValue, bValue;
 
       switch(sortConfig.key) {
@@ -46,25 +36,8 @@ export default function GameTable({games, imagesGames, images}) {
       return 0;
     });
     return sorted;
-  }, [selectedTabGames, sortConfig]);
-
-  // default sets selectedTab to first image in imagesGames array
-  useEffect(() => {
-    if(imagesGames && imagesGames.length > 0) {
-      setActiveTabImageId(imagesGames[0].image_id)
-    }
-  }, [imagesGames]);
-
-  // scrolls last game into view
-  useEffect(() => {
-    if(lastGameRow.current) {
-      lastGameRow.current.scrollIntoView({
-        behaviour: 'smooth',
-        block: 'center'
-      })
-    }
-  }, [selectedTabGames, usersLastGame])
-
+  }, [activeTabGames, sortConfig]);
+ 
   function handleTabClick(imageId) {
     setActiveTabImageId(imageId)
   };
@@ -75,7 +48,7 @@ export default function GameTable({games, imagesGames, images}) {
       direction: prev.key === sortKey && prev.direction === 'asc' ? 'dsc' : 'asc'
     }));
   }
-// sets styling for; all games, users games, and users last played game
+
   function getRowClasses(isUsersGame, isUsersLastGame) {
     const baseClasses = 'font-mono font-light';
     const usersGame = isUsersGame ? 'bg-[#FFFAF9] font-variation-settings-wght-600 underline decoration-indigo-400 underline-offset-3 decoration-wavy decoration-1' : '';
@@ -84,12 +57,29 @@ export default function GameTable({games, imagesGames, images}) {
     return `${baseClasses} ${usersGame} ${usersLastGame}`;
   };  
 
-  // sets lastGameRow ref
-  const setRef = (element) => {
+  const setLastGameRowRef = (element) => {
     lastGameRow.current = element;
   };
 
-  if (!images || !games || !imagesGames || !selectedTabGames) {
+  // default sets selectedTab to first image in imagesGames array
+  useEffect(() => {
+    if(imagesAndTheirGames && imagesAndTheirGames.length > 0) {
+      setActiveTabImageId(imagesAndTheirGames[0].image_id)
+    }
+  }, [imagesAndTheirGames, setActiveTabImageId]);
+
+  // scrolls last game into view
+  useEffect(() => {
+    if(lastGameRow.current) {
+      lastGameRow.current.scrollIntoView({
+        behaviour: 'smooth',
+        block: 'center'
+      })
+    }
+  }, [activeTabGames, usersLastGame])
+
+
+  if (!images || !games || !imagesAndTheirGames || !activeTabGames) {
     return <div>Loading</div>;
   }
 
@@ -145,7 +135,7 @@ export default function GameTable({games, imagesGames, images}) {
                     <tr
                       key={game.id}
                       className={getRowClasses(isUsersGame, isUsersLastGame)}
-                      ref={isUsersLastGame ? setRef : null}
+                      ref={isUsersLastGame ? setLastGameRowRef : null}
                       >
                       <th>{game.rank}</th>
                       <td>{game.username}</td>

@@ -1,28 +1,9 @@
+// import { useContext } from "react";
 import GameTable from "./GameTable";
 import ImageAPI from "../utils/imageAPI";
-export default function GamesBoard({pastGameTime, games, images}) {
+import { GamesContext } from "../contexts/GamesContext";
 
-  const imagesGames = games.reduce((acc, game) => {
-    const imageId = game.image_id;
-    const existingImageEl = acc.find(img => img.image_id === imageId);
-
-    if(existingImageEl) {
-      existingImageEl.games.push(game);
-      existingImageEl.games.sort((a, b) => a.time - b.time);
-    } else {
-      acc.push({
-        image_id: imageId,
-        games: [game]
-      });
-    }
-    return acc
-  }, [])
-
-  imagesGames.forEach((image) => {
-    image.games.forEach((game, index) => {
-      game.rank = index + 1;
-    });
-  });
+export default function GamesBoard({pastGameTime}) {
 
   return(
     <div className="flex flex-col items-center mt-8">
@@ -32,7 +13,7 @@ export default function GamesBoard({pastGameTime, games, images}) {
       )}
 
       <div className="flex flex-col mt-4">
-        { <GameTable games={games} imagesGames={imagesGames} images={images} /> }
+        { <GameTable /> }
       </div>
     </div>
   )

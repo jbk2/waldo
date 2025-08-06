@@ -1,8 +1,10 @@
 import { useContext } from "react";
 import { getOrdinalSuffix } from "../utils/stringUtils";
+import { GamesContext } from "../contexts/GamesContext";
 import { ResultsContext } from "../contexts/ResultsContext";
 
-export default function UserGamesBoard({games, userGames}) {
+export default function UserGamesBoard({}) {
+  const { games, userGames } = useContext(GamesContext);
   const { setActiveTabImageId } = useContext(ResultsContext);
   const gamesByImage = games.reduce((acc, game) => {
     if(!acc[game.image_id]) acc[game.image_id] = [];
