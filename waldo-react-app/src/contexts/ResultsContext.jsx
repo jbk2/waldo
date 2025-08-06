@@ -1,4 +1,4 @@
-import { useState, createContext, useContext, useMemo } from "react"
+import { useState, createContext, useContext, useMemo, useEffect } from "react"
 import { GamesContext } from "./GamesContext"
 import { AuthContext } from "./AuthContext";
 
@@ -8,6 +8,7 @@ export default function ResultsProvider({children}) {
   const { user } = useContext(AuthContext);
   const { games } = useContext(GamesContext);
   const [ activeTabImageId, setActiveTabImageId ] = useState(null)
+  const [ focussedGameId, setFocussedGameId ] = useState(null)
 
   const imagesAndTheirGames = useMemo(() => {
     const result = games.reduce((acc, game) => {
@@ -40,19 +41,29 @@ export default function ResultsProvider({children}) {
     [imagesAndTheirGames, activeTabImageId]
   );
 
- const usersLastGame = useMemo(() =>
+  const usersLastGame = useMemo(() =>
     games
       .filter((game) => game.user_id === user?.id)
       .sort((a, b) => new Date(b.created_at) - new Date(a.created_at))[0] || null,
     [games, user?.id]
   );
 
+  useEffect(() => {
+    setFocussedGameId(usersLastGame?.id || null);
+  }, [usersLastGame]);
+
+  useEffect(() => {
+    console.log('ResultsContexts focussedGameID>>>', focussedGameId);
+  }, [])
+
   const value = {
     activeTabImageId,
     setActiveTabImageId,
     imagesAndTheirGames,
     activeTabGames,
-    usersLastGame
+    usersLastGame,
+    focussedGameId,
+    setFocussedGameId
   }
   
   return(

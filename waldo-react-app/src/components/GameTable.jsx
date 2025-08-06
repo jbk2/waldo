@@ -8,8 +8,8 @@ export default function GameTable() {
   const { user } = useContext(AuthContext);
   const { DIFFICULTY_PROPS, images, games } = useContext(GamesContext);
   const { activeTabImageId, setActiveTabImageId, imagesAndTheirGames,
-    activeTabGames, usersLastGame } = useContext(ResultsContext);
-  const lastGameRow = useRef();
+    activeTabGames, focussedGameId } = useContext(ResultsContext);
+  const focussedRow = useRef();
   
   // sorts games order based upon clicked header column
   const sortedGames = useMemo(() => {
@@ -49,16 +49,16 @@ export default function GameTable() {
     }));
   }
 
-  function getRowClasses(isUsersGame, isUsersLastGame) {
+  function getRowClasses(isUsersGame, isFocussedRow) {
     const baseClasses = 'font-mono font-light';
     const usersGame = isUsersGame ? 'bg-[#FFFAF9] font-variation-settings-wght-600 underline decoration-indigo-400 underline-offset-3 decoration-wavy decoration-1' : '';
-    const usersLastGame = isUsersLastGame ? 'text-red-500 animate-pulse' : '';
+    const focussedRow = isFocussedRow ? 'text-red-500 animate-pulse' : '';
     
-    return `${baseClasses} ${usersGame} ${usersLastGame}`;
+    return `${baseClasses} ${usersGame} ${focussedRow}`;
   };  
 
-  const setLastGameRowRef = (element) => {
-    lastGameRow.current = element;
+  const setFocussedRowRef = (element) => {
+    focussedRow.current = element;
   };
 
   // default sets selectedTab to first image in imagesGames array
@@ -70,13 +70,13 @@ export default function GameTable() {
 
   // scrolls last game into view
   useEffect(() => {
-    if(lastGameRow.current) {
-      lastGameRow.current.scrollIntoView({
+    if(focussedRow.current) {
+      focussedRow.current.scrollIntoView({
         behaviour: 'smooth',
         block: 'center'
       })
     }
-  }, [activeTabGames, usersLastGame])
+  }, [focussedGameId])
 
 
   if (!images || !games || !imagesAndTheirGames || !activeTabGames) {
@@ -130,12 +130,12 @@ export default function GameTable() {
               { 
                 sortedGames.map((game) => {
                   const isUsersGame = game.user_id === user.id;
-                  const isUsersLastGame = usersLastGame && game.id === usersLastGame.id;
+                  const isFocussedRow = game.id === focussedGameId;
                   return(
                     <tr
                       key={game.id}
-                      className={getRowClasses(isUsersGame, isUsersLastGame)}
-                      ref={isUsersLastGame ? setLastGameRowRef : null}
+                      className={getRowClasses(isUsersGame, isFocussedRow)}
+                      ref={focussedGameId === game.id ? setFocussedRowRef : null}
                       >
                       <th>{game.rank}</th>
                       <td>{game.username}</td>

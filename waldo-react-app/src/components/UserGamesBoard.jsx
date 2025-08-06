@@ -3,9 +3,9 @@ import { getOrdinalSuffix } from "../utils/stringUtils";
 import { GamesContext } from "../contexts/GamesContext";
 import { ResultsContext } from "../contexts/ResultsContext";
 
-export default function UserGamesBoard({}) {
+export default function UserGamesBoard() {
   const { games, userGames } = useContext(GamesContext);
-  const { setActiveTabImageId } = useContext(ResultsContext);
+  const { setActiveTabImageId, setFocussedGameId } = useContext(ResultsContext);
   const gamesByImage = games.reduce((acc, game) => {
     if(!acc[game.image_id]) acc[game.image_id] = [];
     
@@ -39,8 +39,16 @@ export default function UserGamesBoard({}) {
   Object.values(usersStatsByImage).forEach((image) => {
     const allGamesForImage = gamesByImage[image.image_id] || [];
     const bestGameIndex = allGamesForImage.findIndex(game => game.id === image.best_game.id)
-    image.rank = bestGameIndex >= 0 ? bestGameIndex + 1 : null;
+    image.best_rank = bestGameIndex >= 0 ? bestGameIndex + 1 : null;
   });
+
+  function handleBestGameClick(gameId, imageId) {
+    console.log('handlebestgame click gameID>>', gameId);
+    setActiveTabImageId(imageId);
+    setFocussedGameId(gameId);
+  }
+
+  console.log('userStatsBImage>>', usersStatsByImage);
 
   const totalGamesCount = userGames.length;
 
@@ -55,18 +63,39 @@ export default function UserGamesBoard({}) {
           </div>
         </div>
         {Object.values(usersStatsByImage).map((image) => (
-          <div key={image.image_id} className="stats shadow hover:cursor-pointer" onClick={() => setActiveTabImageId(image.image_id)}>
+          <div
+            key={image.image_id}
+            className="stats shadow hover:cursor-pointer"
+            onClick={(e) => {
+              console.log('🔥 Clicked element:', e.target);
+              console.log('🔥 Has data-best-rank?', e.target.closest('[data-best-rank]'));
+              if(!e.target.closest('[data-best-rank]')) {
+                console.log('🔥 Parent clicked');
+                setActiveTabImageId(image.image_id)
+              } else {
+                console.log('🔥 Best rank clicked - ignoring parent');
+              }
+            }}>
             <div className="stat">
               <div className="stat-title">{image.image_title}</div>
               <div className="stat-value">{image.play_count}&nbsp;
                 <span className="text-sm">games played</span>
               </div>
               <div className="stat-desc flex justify-end text-indigo-700">
-                <p className="">Best rank:&nbsp;</p>
-                <p className="ordinal">
-                  {image.rank}
-                  </p>
-                <p className="ml-[1px] text-[0.5rem] align-super underline underline-offset-1 decoration-1">{getOrdinalSuffix(image.rank)}</p>
+                <button
+                  data-best-rank
+                  className="ordinal hover:cursor-pointer bg-transparent border-none p-0 text-indigo-700 hover:underline flex items-center"
+                  onClick={() => {
+                    console.log('✅ Button clicked:', image.best_game.id, image.image_id);
+                    handleBestGameClick(image.best_game.id, image.image_id)
+                  }}
+                >
+                  <span>Best rank:&nbsp;</span>
+                  <span className="ordinal">{image.best_rank}</span>
+                  <span className="ml-[1px] text-[0.5rem] align-super underline underline-offset-1 decoration-1">
+                    {getOrdinalSuffix(image.best_rank)}
+                  </span>
+                </button>
               </div>
             </div>
           </div>
