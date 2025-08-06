@@ -1,13 +1,10 @@
 # Todo list
 
-- refactor UserGamesBoard variable setting logic
-- reset Image character positions
-- intro functionality to stop games being able to be played twice?
-- look at memoisation of loadImages, && others, in GamesContext
 - potentially refactor the navigation state setting object to use useReducer
   (as state has a different shape depending where it came from)?
 - competition table:
   - add column sorting on BoardTables
+- intro functionality to stop games being able to be played twice?
 - implement email conf for auth & password change
 - monotype digits check
 - deal with the constant re-rendering, everywhere
