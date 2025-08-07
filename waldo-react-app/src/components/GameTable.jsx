@@ -98,8 +98,7 @@ export default function GameTable() {
               {image.title} - {DIFFICULTY_PROPS[image.difficulty].text_abbreviation}
             </a>
           )
-          })
-        }
+        })}
       </div>
       <div className="max-w-140 min-w-100 rounded-box border border-gray-200 bg-base-100 overflow-y-auto">
         <div className="max-h-100 overflow-y-auto">

@@ -1,6 +1,6 @@
 # Todo list
 
-- refine styling/animation of focussedGame - should colour be temporary?
+
 - implement email conf for auth & password change
 - potentially refactor the navigation state setting object to use useReducer
   (as state has a different shape depending where it came from)?
@@ -10,6 +10,8 @@
 - move AuthContext fetches out to authAPI.js util class
 - create new images
   - build better way to create image characters from clicks?
+- introduce a user commitment to not cheating before score gets saved to competition board.
+- introduce a cheat code to help, e.g. click on the characters and get a riddle which might tell you where the character is
 
 ## All
 - handle error for reset_password with invalid token
