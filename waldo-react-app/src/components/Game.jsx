@@ -110,7 +110,7 @@ export default function Game() {
         {/* add click location visual border */}
         {gameState === GAME_STATES.PLAYING && clickCoords && gameImage && gameImage.url !== placeholderImg && (
           <div
-            className="absolute border-4 border-blue-800 w-6 h-8 pointer-events-none"
+            className="absolute border-4 rounded-lg border-blue-800 w-6 h-8 pointer-events-none"
             style={{
               left: `${clickCoords.x * 100}%`,
               top: `${clickCoords.y * 100}%`,
@@ -125,7 +125,7 @@ export default function Game() {
             return(
               <div
                 key={char.id}
-                className="absolute border-3 border-green-600 pointer-events-none"
+                className="absolute border-5 rounded-lg border-green-600 pointer-events-none"
                 style={{
                   left: `${char.start_x * 100}%`,
                   top: `${char.start_y * 100}%`,
