@@ -100,7 +100,40 @@
   }
   
   .animate-pulse {
-    animation: pulse-scale 0.6s ease-in-out 2;
+    animation: pulse-scale 0.6s ease-in-out 2; 
+  }
+
+  @keyframes color-red-fade {
+    0% {
+      color: black;
+    }
+    10% {
+      color: red;
+      transform: scale(1);
+    }
+    15% {
+      transform: scale(1.015);
+    }
+    20% {
+      transform: scale(1);
+    }
+    25% {
+      transform: scale(1.015);
+    }
+    30% {
+      transform: scale(1);
+    }
+    60% {
+      color: red;
+      transform: scale(1);
+    }
+    100% {
+      color: black;
+    }
+  }
+
+  .animate-red {
+    animation: color-red-fade 4s ease-in-out 1;
   }
   
   /* --------------------------------------------------------------- */

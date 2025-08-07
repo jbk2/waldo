@@ -42,19 +42,12 @@ export default function UserGamesBoard() {
     image.best_rank = bestGameIndex >= 0 ? bestGameIndex + 1 : null;
   });
 
-  function handleBestGameClick(gameId, imageId) {
-    console.log('handlebestgame click gameID>>', gameId);
-    setActiveTabImageId(imageId);
-    setFocussedGameId(gameId);
-  }
-
-  console.log('userStatsBImage>>', usersStatsByImage);
-
+  
   const totalGamesCount = userGames.length;
-
+  
   return(
     <div className="flex flex-col items-center mt-6">
-      <h1 className="text-lg font-variation-settings-wght-700 mb-2">Your games:</h1>
+      <h1 className="text-lg font-variation-settings-wght-700 mb-3">Your games:</h1>
       <div className="flex">
         <div className="stats shadow">
           <div className="stat">
@@ -67,29 +60,18 @@ export default function UserGamesBoard() {
             key={image.image_id}
             className="stats shadow hover:cursor-pointer"
             onClick={(e) => {
-              console.log('🔥 Clicked element:', e.target);
-              console.log('🔥 Has data-best-rank?', e.target.closest('[data-best-rank]'));
-              if(!e.target.closest('[data-best-rank]')) {
-                console.log('🔥 Parent clicked');
-                setActiveTabImageId(image.image_id)
-              } else {
-                console.log('🔥 Best rank clicked - ignoring parent');
-              }
+              setActiveTabImageId(image.image_id)
+              if(e.target.closest('[data-best-rank]')) setFocussedGameId(image.best_game.id);
             }}>
             <div className="stat">
               <div className="stat-title">{image.image_title}</div>
               <div className="stat-value">{image.play_count}&nbsp;
                 <span className="text-sm">games played</span>
               </div>
-              <div className="stat-desc flex justify-end text-indigo-700">
+              <div className="stat-desc flex justify-end text-indigo-700 hover:underline underline-offset-2">
                 <button
                   data-best-rank
-                  className="ordinal hover:cursor-pointer bg-transparent border-none p-0 text-indigo-700 hover:underline flex items-center"
-                  onClick={() => {
-                    console.log('✅ Button clicked:', image.best_game.id, image.image_id);
-                    handleBestGameClick(image.best_game.id, image.image_id)
-                  }}
-                >
+                  className="ordinal hover:cursor-pointer bg-transparent border-none p-0 text-indigo-700 flex items-center">
                   <span>Best rank:&nbsp;</span>
                   <span className="ordinal">{image.best_rank}</span>
                   <span className="ml-[1px] text-[0.5rem] align-super underline underline-offset-1 decoration-1">

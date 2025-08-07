@@ -99,7 +99,9 @@ export default function AuthProvider({children}) {
         setUser(data.user);
         if(navState) {
           GameAPI.saveGame(navState.game.imageId, navState.game.time);
-          navigate(navState.nextRoute, { state: { game: { time: navState.game.time, imageId: navState.game.imageId } } });
+          navigate(navState.nextRoute, { state: { game: { time: navState.game.time,
+            imageId: navState.game.imageId,
+            imageTitle: navState.game.imageTitle } } });
         } else {
           navigate('/');
         };

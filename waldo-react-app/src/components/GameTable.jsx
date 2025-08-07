@@ -52,7 +52,7 @@ export default function GameTable() {
   function getRowClasses(isUsersGame, isFocussedRow) {
     const baseClasses = 'font-mono font-light';
     const usersGame = isUsersGame ? 'bg-[#FFFAF9] font-variation-settings-wght-600 underline decoration-indigo-400 underline-offset-3 decoration-wavy decoration-1' : '';
-    const focussedRow = isFocussedRow ? 'text-red-500 animate-pulse' : '';
+    const focussedRow = isFocussedRow ? 'animate-red' : '';
     
     return `${baseClasses} ${usersGame} ${focussedRow}`;
   };  
@@ -85,7 +85,7 @@ export default function GameTable() {
 
   return(
     <>
-      <div role="tablist" className="pl-4 tabs tabs-lift tabs-xs -mb-[1px]">
+      <div role="tablist" className="mx-auto tabs tabs-lift tabs-xs -mb-[1px]">
         { images.map((image) => {
           const isActive = activeTabImageId === image.image_id;
           return(
