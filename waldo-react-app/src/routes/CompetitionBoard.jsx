@@ -10,7 +10,6 @@ import GamesBoard from "../components/GamesBoard";
 
 export default function CompetitionBoard() {
   const { state } = useLocation()
-  console.log('nav state in Comp board >>', state)
   const lastGameState = {
     time: state?.game.time,
     imageTitle: state?.game.imageTitle

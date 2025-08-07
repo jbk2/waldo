@@ -52,7 +52,7 @@ export default function GameTable() {
   function getRowClasses(isUsersGame, isFocussedRow) {
     const baseClasses = 'font-mono font-light';
     const usersGame = isUsersGame ? 'bg-[#FFFAF9] font-variation-settings-wght-600 underline decoration-indigo-400 underline-offset-3 decoration-wavy decoration-1' : '';
-    const focussedRow = isFocussedRow ? 'animate-red' : '';
+    const focussedRow = isFocussedRow ? 'animate-color-and-bounce' : '';
     
     return `${baseClasses} ${usersGame} ${focussedRow}`;
   };  
