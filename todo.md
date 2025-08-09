@@ -1,7 +1,11 @@
 # Todo list
 
-
-- implement email conf for auth & password change
+- User mailer
+  - update fixture
+  - investigate dual User record on sign up
+- implement production email:
+  - account confirmation for new users
+  - confirmation for auth & password change
 - potentially refactor the navigation state setting object to use useReducer
   (as state has a different shape depending where it came from)?
 - intro functionality to stop games being able to be played twice?
@@ -29,6 +33,7 @@
 - competition board component
 - save games, load games
 - contexts; 
+- mailers
 
 ##Rails app
 - test testLoadImages action 
