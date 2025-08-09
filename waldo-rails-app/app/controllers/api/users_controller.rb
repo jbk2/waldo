@@ -4,6 +4,7 @@ class Api::UsersController < ApplicationController
   def create
     @user = User.new(user_params)
     if @user.save
+      UserMailer.with(user: @user).confirmation_email.deliver_later
       render json: {
         message: "User created successfully",
         user: @user
