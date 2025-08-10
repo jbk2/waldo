@@ -9,6 +9,7 @@ RSpec.describe 'Users API', type: :request do
         post '/api/users', params: {
           user: {
             email_address: 'new@example.com',
+            username: 'test1',
             password: 'Password12!',
             password_confirmation: 'Password12!'
           }
@@ -24,6 +25,7 @@ RSpec.describe 'Users API', type: :request do
         post '/api/users', params: {
           user: {
             email_address: 'one@example.com',
+            username: 'test1',
             password: 'Password23!',
             password_confirmation: 'Password23!'
           }

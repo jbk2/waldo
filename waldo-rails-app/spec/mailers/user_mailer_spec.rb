@@ -2,12 +2,12 @@ require "rails_helper"
 
 RSpec.describe UserMailer, type: :mailer do
   describe "confirmation_email" do
-    let(:mail) { UserMailer.confirmation_email }
+    let(:mail) { UserMailer.with(email: 'to@example.org', username: 'test1').confirmation_email }
 
     it "renders the headers" do
-      expect(mail.subject).to eq("Welcome")
+      expect(mail.subject).to eq("Welcome to Waldo app")
       expect(mail.to).to eq(["to@example.org"])
-      expect(mail.from).to eq(["from@example.com"])
+      expect(mail.from).to eq(["james@bibble.com"])
     end
 
     it "renders the body" do
