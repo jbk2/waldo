@@ -1,6 +1,8 @@
 # Todo list
 
-- get React interation tests passing, and write increased coverage.
+- write increased React integration coverage for new behaviour:
+  - ?
+  - ?
 - potentially refactor the navigation state setting object to use useReducer
   (as state has a different shape depending where it came from)?
 - intro functionality to stop games being able to be played twice?
