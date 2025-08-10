@@ -7,7 +7,17 @@ expect.extend(matchers);
 // Mock fetch globally to prevent real API calls for component tests
 beforeAll(() => {
   window.fetch = vi.fn().mockImplementation((url) => {
-    console.log(`🔧 Mocking fetch for: ${url}`);
+    // console.log(`🔧 Mocking fetch for: ${url}`);
+    
+    if (url.includes('/api/session')) {
+      return Promise.resolve({
+        ok: true,
+        status: 200,
+        json: () => Promise.resolve({
+          user: { id: 1, username: 'testuser', email: 'test@example.com' }
+        })
+      });
+    }
     
     if (url.includes('/api/images')) {
       return Promise.resolve({
@@ -15,7 +25,7 @@ beforeAll(() => {
         status: 200,
         json: () => Promise.resolve({
           images: [
-            { id: 1, title: 'cake-factory', url: 'test-image.jpg' }
+            { id: 1, title: 'cake-factory', url: 'test-image.jpg', difficulty: 'easy' }
           ]
         })
       });

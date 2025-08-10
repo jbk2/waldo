@@ -18,7 +18,7 @@ export default function GamesProvider({children}) {
   }), []);
 
   const loadGames = useCallback(async () => {
-    console.log('=== LOADGAMES CALLED ===');
+    // console.log('=== LOADGAMES CALLED ===');
     const response = await GameAPI.getGames();
     
     if(response.ok) {
@@ -45,7 +45,7 @@ export default function GamesProvider({children}) {
    const loadImages = useCallback(async () => {
     const imagesData = await ImageAPI.loadImages();
     const images = imagesData.images;
-    console.log('LOAD IMAGES CALLED >>> IMAGES>>', images);
+    // console.log('LOAD IMAGES CALLED >>> IMAGES>>', images);
     const imgs = images.map((img) => {
       return { image_id: img.id, title: img.title, difficulty: img.difficulty }
     })

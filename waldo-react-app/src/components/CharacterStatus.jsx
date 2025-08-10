@@ -6,7 +6,6 @@ import odlaw from '../assets/images/odlaw-head.png';
 import { GameContext } from "../contexts/GameContext"
 
 export default function CharacterStatus() {
-  console.log('CharacterStatus rendered now >>', Date.now());
   const { characters } = useContext(GameContext)
   const headshots = {
     waldo: waldo,

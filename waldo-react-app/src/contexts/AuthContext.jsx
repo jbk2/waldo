@@ -20,7 +20,7 @@ export default function AuthProvider({children}) {
     .then(async res => {
       const data = await res.json();
       if(res.ok) {
-        console.log("user successfully authd, data user is >>>", data.user);
+        // console.log("user successfully authd, data user is >>>", data.user);
         setAuthChecked(true);
         setUser(data.user);
         setSignedIn(true);

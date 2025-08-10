@@ -1,64 +1,62 @@
 import '../setup.components.js';
 import { describe, it, expect, vi, beforeEach } from 'vitest';
-import { render, screen } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
+import { RouterProvider } from 'react-router-dom';
 import Game from '../../components/Game';
-import GameProvider from '../../contexts/GameContext';
-import GamesProvider from '../../contexts/GamesContext';
-import UIProvider from '../../contexts/UIContext';
-import AuthProvider from '../../contexts/AuthContext.jsx';
+import createTestRouter from '../testUtils/testRouter';
 
 describe('Game component', () => {
   beforeEach(() => {
     vi.spyOn(Image.prototype, 'src', 'set').mockImplementation(() => {});
   });
 
-  it('renders the game image', () => {
+  it('renders the game image', async () => {
+    const router = createTestRouter(['/']);
     render(
-      <UIProvider>
-        <AuthProvider>
-          <GamesProvider>
-            <GameProvider>
-              <Game />
-            </GameProvider>
-          </GamesProvider>
-        </AuthProvider>
-      </UIProvider>
+      <RouterProvider router={router}>
+        <Game />
+      </RouterProvider>
     );
-    
-    const gameImage = screen.getByAltText(/Waldo scene 1|placeholderImage/);
+
+    // Wait for the loading state to disappear
+    await waitFor(() => {
+      expect(screen.queryByText('Loading...')).not.toBeInTheDocument();
+    });
+
+    const gameImage = screen.getByAltText('placeholderImage');
     expect(gameImage).toBeInTheDocument();
   });
 
-  it('renders the game section container', () => {
+  it('renders the game section container', async () => {
+    const router = createTestRouter(['/']);
     render(
-      <UIProvider>
-        <AuthProvider>
-          <GamesProvider>
-            <GameProvider>
-              <Game />
-            </GameProvider>
-          </GamesProvider>
-        </AuthProvider>
-      </UIProvider>
+      <RouterProvider router={router}>
+        <Game />
+      </RouterProvider>
     );
-    
+
+    // Wait for the loading state to disappear
+    await waitFor(() => {
+      expect(screen.queryByText('Loading...')).not.toBeInTheDocument();
+    });
+
     const gameSection = screen.getByTestId('game-section');
     expect(gameSection).toBeInTheDocument();
   });
 
-  it('shows start game dialog when game is not running', () => {
+  it('shows start game dialog when game is not running', async () => {
+    const router = createTestRouter(['/']);
     render(
-      <UIProvider>
-        <AuthProvider>
-          <GamesProvider>
-            <GameProvider>
-              <Game />
-            </GameProvider>
-          </GamesProvider>
-        </AuthProvider>
-      </UIProvider>
+      <RouterProvider router={router}>
+        <Game />
+      </RouterProvider>
     );
-    
+
+    // Wait for the loading state to disappear
+    await waitFor(() => {
+      expect(screen.queryByText('Loading...')).not.toBeInTheDocument();
+    });
+
     expect(screen.getByText('Which game would you like to play?')).toBeInTheDocument();
   });
 });

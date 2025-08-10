@@ -10,16 +10,19 @@ import UIProvider from "../../contexts/UIContext";
 import AuthProvider from "../../contexts/AuthContext";
 import GamesProvider from "../../contexts/GamesContext";
 import GameProvider from "../../contexts/GameContext";
+import TimerProvider from "../../contexts/TimerContext";
 
 function TestAppWrapper() {
   return(
     <UIProvider>
       <AuthProvider>
-        <GamesProvider>
-          <GameProvider>
-            <App />
-          </GameProvider>
-        </GamesProvider>
+        <TimerProvider>
+          <GamesProvider>
+            <GameProvider>
+              <App />
+            </GameProvider>
+          </GamesProvider>
+        </TimerProvider>
       </AuthProvider>
     </UIProvider>
   )
