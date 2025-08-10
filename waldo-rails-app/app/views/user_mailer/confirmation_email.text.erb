@@ -1,11 +1,9 @@
-Thanks for joining the Where's Waldo app
+Thanks for joining our Where's Waldo app
 
-Hi <%= @username %>, Log in here
-<%= link_to "here", "#{Rails.application.credentials.dig('frontend_url')}/sign-in" %>
+Hi <%= @username %>, log in; <%= "#{Rails.application.credentials.dig('frontend_url')}/sign-in" %>,
 to have fun finding more of Waldo and his friends.
 
-Once logged in see how your performance compares on the
-<%= link_to "Competition Board", "#{Rails.application.credentials.dig('frontend_url')}/competition-board" %>.
-Competition Board
+Once logged in see how your performance compares on the Compeittion Board here; 
+<%= "#{Rails.application.credentials.dig('frontend_url')}/competition-board" %>
 
 

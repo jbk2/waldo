@@ -5,8 +5,8 @@ class UserMailer < ApplicationMailer
   #   en.user_mailer.new.subject
   #
   def confirmation_email
-    user = params[:user]
-    @username = user.username
-    mail to: user.email_address, subject: "Welcome to Waldo app"
+    @email = params[:email]
+    @username = params[:username]
+    mail to: @email_address, subject: "Welcome to Waldo app"
   end
 end

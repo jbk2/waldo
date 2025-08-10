@@ -1,12 +1,13 @@
-<h1>Thanks for joining the Where's Waldo app</h1>
+<h1>Thanks for joining our Where's Waldo app</h1>
 <p>
-  Hi <%= @username %>, Log in 
-  <span>&nbsp;<%= link_to "here", "#{Rails.application.credentials.dig('frontend_url')}/sign-in" %>&nbsp;</span>
+  Hi <%= @username %>,
+  </br>
+  </br>
+  <span><%= link_to "Log in", "#{Rails.application.credentials.dig('frontend_url')}/sign-in" %></span>
   to have fun finding more of Waldo and his friends.
 </p>
 <p>Once logged in see how your performance compares on the
   <span>
     &nbsp;<%= link_to "Competition Board", "#{Rails.application.credentials.dig('frontend_url')}/competition-board" %>.
   </span>
-  Competition Board
 </p>
