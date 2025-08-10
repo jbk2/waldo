@@ -8,7 +8,9 @@ export default function StartGameDialog() {
   
   return(
     <dialog
-      ref={dialogRef} id="startGameDialog"
+      ref={dialogRef}
+      id="startGameDialog"
+      data-testid="startGameDialog"
       open
       className="fixed top-1/3 left-1/2 -translate-x-1/2 w-90 h-fit justify-center items-center
         bg-white border-2 rounded-md opacity-95 pb-8">

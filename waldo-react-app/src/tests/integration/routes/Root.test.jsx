@@ -12,6 +12,7 @@ describe("root '/' page integration test", () => {
   let testRouter;
 
   beforeEach(async () => {
+    await testDatabase.loadTestImages();
     user = userEvent.setup();
     testRouter = createTestRouter(['/']);
     render(<RouterProvider router={testRouter} />)
@@ -23,13 +24,15 @@ describe("root '/' page integration test", () => {
   });
 
   it('allows user to select and start a game', async () => {
-    await testDatabase.loadTestImages();
     testRouter.navigate('/')
 
     const placeholderImage = await screen.findByRole('img', { name: /placeholderImage/ });
     expect(placeholderImage).toBeInTheDocument();
 
-    const cakeFactoryBtn = await screen.findByRole('button', { name: 'Cake Factory' })
+    const startGameDialog = await screen.findByTestId('startGameDialog');
+    expect(startGameDialog).toBeInTheDocument();
+
+    const cakeFactoryBtn = await screen.findByRole('button', { name: 'Cake-factory' })
     expect(cakeFactoryBtn).toBeInTheDocument();
     await user.click(cakeFactoryBtn);
     

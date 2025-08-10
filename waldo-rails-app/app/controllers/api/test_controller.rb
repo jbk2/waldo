@@ -114,16 +114,16 @@ class Api::TestController < ApplicationController
 
   def load_test_images
     Rails.logger.info "\e[42;1mLoading test images...\e[0m"
-    
+
     # Create a test image with the attachment
-    image = Image.new(title: 'cake-factory')
+    image = Image.new(title: 'cake-factory', difficulty: 'easy')
     image.image.attach(
       io: File.open(Rails.root.join("spec/fixtures/test_image1.webp")),
       filename: "test_image1.webp",
       content_type: "image/webp"
     )
     image.save!
-    
+
     # Create test characters
     image.characters.create!(
       name: 'waldo',
