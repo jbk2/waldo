@@ -56,13 +56,17 @@ Rails server thus run `setup.integration.js` which checks server is running.
 
 #### General use
   - See test scripts defined in package.json:
-    - `npm test:components` - tests components only, i.e. no Rails server required.
-    - `npm test:integration` - tests integration tests only (/tests/routes/...), i.e. does require server. This script starts server, runs tests, and shuts server down.
+    - `npm run test:components` - tests components only, i.e. no Rails server required.
+    - `npm run test:integration` - tests integration tests only (/tests/routes/*), i.e. does require server.
+      This script starts server, runs tests, and shuts server down. To get Rails server output in test log 
+      output then add --log-to-stdout after the server start command of the `test:start-server` script.
     - `npm run:all` runs foreman which, defined in ./Procfile.test, spins up a test Rails server
       then runs ALL vitest tests.
-    To run specific test files 
-    - `npx vitest -- src/tests/routes/auth/SignIn` But if running an integration test which requires Rails
-      server you will need to start that server manually, with `RAILS_ENV=test bin/rails server -p 3001 --log-to-stdout`
+    To run specific test files:
+    - `npm run test:integration:file src/tests/path/to/file` - runs the given integration test file only.
+    - `npx vitest -- src/tests/routes/auth/SignIn` But if running an integration test, which neccesarily
+      requires a Rails server, you will need to start that server manually, do so with 
+      `RAILS_ENV=test bin/rails server -p 3001 --log-to-stdout` on another process.
       
 #### Integration tests
   - note that integration tests need to call a real, running in test env mode, rails server's
