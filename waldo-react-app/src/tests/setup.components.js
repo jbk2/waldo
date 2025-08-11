@@ -25,7 +25,10 @@ beforeAll(() => {
         status: 200,
         json: () => Promise.resolve({
           images: [
-            { id: 1, title: 'cake-factory', url: 'test-image.jpg', difficulty: 'easy' }
+            { id: 1, title: 'cake-factory', url: 'test-image.jpg', difficulty: 'easy' },
+            { id: 2, title: 'ali-baba', url: 'test-image.jpg', difficulty: 'medium' },
+            { id: 3, title: 'musketeers', url: 'test-image.jpg', difficulty: 'difficult' },
+            { id: 4, title: 'troy', url: 'test-image.jpg', difficulty: 'very_difficult' }
           ]
         })
       });
