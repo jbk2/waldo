@@ -1,5 +1,5 @@
 export const testDatabase = {
-  // creates User fixtures in Rails test db 
+  // creates User fixtures in Rails test db
   async loadUserFixtures() {
     const response = await fetch('/api/test/load_user_fixtures', {
       method: 'POST',

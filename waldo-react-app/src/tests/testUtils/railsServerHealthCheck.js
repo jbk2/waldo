@@ -15,8 +15,7 @@ async function testRailsServerUp() {
     };
   }
   
-  console.log('✅ Rails server is accepting connections');
-  console.log(`📊 Server status: ${healthResponse.status} OK`);
+  console.log('✅ Rails server is accepting connections', `📊 Server status: ${healthResponse.status} OK`);
   return { success: true, message: 'Connectivity OK' };
 }
 

@@ -60,7 +60,7 @@ beforeAll(async () => {
     }
     
     const baseUrl = 'http://localhost:3001';
-    const fullUrl = `${baseUrl}${url}`;
+    const fullUrl = `${baseUrl}${url.startsWith('/') ? '' : '/'}${url}`;
     
     // Add proper headers for tests calling Rails API
     const headers = {

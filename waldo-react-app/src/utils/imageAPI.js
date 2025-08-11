@@ -40,7 +40,7 @@ export default class ImageAPI {
       }
       
       const data = await response.json();
-      console.log('Raw API response:', data);
+      // console.log('Raw API response:', data);
       
       return data;
     } catch (error) {
