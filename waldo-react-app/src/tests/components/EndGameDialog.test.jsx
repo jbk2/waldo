@@ -1,6 +1,5 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { render, screen } from '@testing-library/react';
-import { RouterProvider } from 'react-router-dom';
 import { GameContext } from '../../contexts/GameContext.jsx';
 import { AuthContext } from '../../contexts/AuthContext.jsx';
 import EndGameDialog from '../../components/EndGameDialog.jsx';
