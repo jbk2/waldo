@@ -3,7 +3,7 @@ import { Navigate, useNavigate } from "react-router-dom";
 import { GameContext } from "../contexts/GameContext";
 import { GamesContext } from "../contexts/GamesContext";
 import { capitalize } from '../utils/stringUtils';
-import DifficultyIllustration from "./DifficultyIllustration";
+// import DifficultyIllustration from "./DifficultyIllustration";
 
 export default function GamePlayChoices({dialogRef}) {
   const { prepareGame, resetGameState } = useContext(GameContext)

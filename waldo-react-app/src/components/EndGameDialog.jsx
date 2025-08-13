@@ -43,7 +43,7 @@ export default function EndGameDialog() {
     <dialog ref={dialogRef} id="endGameDialog"
       open
       className="fixed top-1/3 left-1/2 -translate-x-1/2 w-98 h-fit opacity-95
-        bg-white border-2 rounded-md justify-center items-center p-9">
+        bg-white border-1 rounded-md justify-center items-center p-9">
       <p>
         Well done, you found all the characters 🎉.<br/>
         It took you
