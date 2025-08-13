@@ -93,6 +93,7 @@ export default function GameTable() {
               role="tab"
               className={`tab ${isActive ? 'tab-active [--tab-border-color:#e5e7eb]' : ''} `}
               key={image.image_id}
+              data-testid={`tab-image-id-${image.image_id}`}
               onClick={() => handleTabClick(image.image_id)}
             >
               {image.title} - {DIFFICULTY_PROPS[image.difficulty].text_abbreviation}
@@ -133,6 +134,7 @@ export default function GameTable() {
                   return(
                     <tr
                       key={game.id}
+                      data-testid={`game-id-${game.id}`}
                       className={getRowClasses(isUsersGame, isFocussedRow)}
                       ref={focussedGameId === game.id ? setFocussedRowRef : null}
                       >
