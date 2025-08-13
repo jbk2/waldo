@@ -8,6 +8,7 @@ import SignUp from './routes/auth/SignUp'
 import RequestResetPassword from './routes/auth/RequestResetPassword'
 import ResetPassword from './routes/auth/ResetPassword'
 import CompetitionBoard from '/src/routes/CompetitionBoard'
+import Welcome from './components/Welcome'
 import UIProvider from './contexts/UIContext'
 import AuthProvider from './contexts/AuthContext'
 import GameProvider from './contexts/GameContext'
@@ -25,6 +26,13 @@ const router = createBrowserRouter([
       { path: '/request-reset-password', element: <RequestResetPassword />},
       { path: '/reset-password', element: <ResetPassword />},
       { path: '/competition-board', element: <CompetitionBoard /> },
+    ]
+  },
+  {
+    path: '/welcome',
+    element: <App />,
+    children: [
+      { index: true, element: <Welcome /> }
     ]
   }
 ])
