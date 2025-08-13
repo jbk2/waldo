@@ -1,8 +1,7 @@
 # Todo list
 
-- write increased React integration coverage for new behaviour:
-  - ?
-  - ?
+- Update Welcome component as public readme illustartion
+- Write an error page
 - potentially refactor the navigation state setting object to use useReducer
   (as state has a different shape depending where it came from)?
 - intro functionality to stop games being able to be played twice?
