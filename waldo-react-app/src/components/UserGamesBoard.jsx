@@ -50,7 +50,7 @@ export default function UserGamesBoard() {
       <h1 className="text-lg font-variation-settings-wght-700 mb-3">Your games:</h1>
       <div className="flex">
         <div className="stats shadow">
-          <div className="stat">
+          <div className="stat" data-testid="total-games">
             <div className="stat-title">Total Games Played</div>
             <div className="stat-value">{totalGamesCount}</div>
           </div>
@@ -58,6 +58,7 @@ export default function UserGamesBoard() {
         {Object.values(usersStatsByImage).map((image) => (
           <div
             key={image.image_id}
+            data-testid={`stats-by-image-id-${image.image_id}`}
             className="stats shadow hover:cursor-pointer"
             onClick={(e) => {
               setActiveTabImageId(image.image_id)
