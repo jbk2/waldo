@@ -34,7 +34,7 @@ export default function GameTimer() {
   }, [gameState, getStartTime, GAME_STATES.PLAYING, GAME_STATES.IDLE, GAME_STATES.LOADING]);
 
   return(
-    <div  id="game-timer" className="text-sm w-40 flex items-baseline">
+    <div  id="game-timer" className="text-sm flex flex-col mr-2 md:flex-row md:items-baseline">
       Elapsed time:&nbsp;
       <div className='flex w-14 items-baseline justify-start'>
         <span className={`text-md font-mono font-medium

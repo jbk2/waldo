@@ -27,11 +27,11 @@ export default function CharacterStatus() {
       {sortedCharacters.map((char) => {
         return(
           <div key={char.name} id={`${char.name}-status`}
-            className={`flex flex-col gap-1 items-center w-20
+            className={`flex flex-col gap-1 items-center w-16 lg:w-20
               ${char.clicked ? 'animate-scale-pulse-twice font-[620] underline-offset-3 \
               underline decoration-1.5 decoration-wavy decoration-green-600' : ''}`}>
             <img src={headshots[char.name]} alt={char.name} className='h-10' />
-            <p role="status" className='text-sm'>{char.clicked ? 'Found ✅' : 'Not Found'}</p>
+            <p role="status" className='text-xs lg:text-sm'>{char.clicked ? 'Found ✅' : 'Not Found'}</p>
           </div>
         )
       })}

@@ -77,8 +77,8 @@ export default function Game() {
   };
   
   return(
-    <div data-testid="game-section" className="w-full flex justify-center mt-12">
-      <div className="relative min-w-[1450px] max-w-[2000px] m-4">
+    <div data-testid="game-section" className="w-full flex mt-12">
+      <div className="relative m-4 min-w-[1450px] max-w-[1700px] mx-auto">
         {/* Show placeholder when no game image */}
         {gameImage ? (
           <img
@@ -86,14 +86,14 @@ export default function Game() {
             src={gameImage.url}
             onLoad={handleImageLoaded}
             onClick={handleImageClick}
-            className={`w-full border-1 rounded ${gameImgBlured && 'blur-xs opacity-80'}
+            className={`border-1 rounded ${gameImgBlured && 'blur-xs opacity-80'}
               ${gameRunning && 'hover:cursor-pointer'}`}
             name={gameImage.title}
           />
         ) : (
           <img
             src={placeholderImg}
-            className={`w-full border-2 rounded ${gameImgBlured && 'blur-xs opacity-80'}`}
+            className={`border-1 rounded ${gameImgBlured && 'blur-xs opacity-80'}`}
             alt="placeholderImage"
           />
         )}
