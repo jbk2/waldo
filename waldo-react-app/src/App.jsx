@@ -1,7 +1,6 @@
 import './assets/stylesheets/index.css'
 import { useEffect, useContext } from 'react';
 import { Outlet } from 'react-router-dom'
-import { UIContext } from './contexts/UIContext';
 import { AuthContext } from './contexts/AuthContext';
 import Navbar from './components/Navbar'
 import Alert from './components/Alert';
