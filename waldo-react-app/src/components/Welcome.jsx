@@ -27,34 +27,24 @@ export default function Welcome() {
             <p className='inline text-[#CC0000] text-[0.8rem] font-variation-settings-wght-700 mt-[22px] ml-[2px]'>API</p>
           </div>
           <ul className="">
-            <li className="leading-7 pl-2 text-[14px] text-gray-800">🖇️&nbsp;&nbsp;Complex forms; nesting, custom actions, hotwire.</li>
-            <li className="leading-7 pl-2 text-[14px] text-gray-800">👫&nbsp;&nbsp;Advanced associations; many to many, custom validation, callbacks, delegation.</li>
-            <li className="leading-7 pl-2 text-[14px] text-gray-800">🔐&nbsp;&nbsp;Authentication with Devise; devise controller extension.</li>
-            <li className="leading-7 pl-2 text-[14px] text-gray-800">⚙️&nbsp;&nbsp;Helpers & POROs:</li>
-            <ul className="pl-6 list-disc list-inside">
-              <li className="leading-5 text-[14px] text-gray-800">Hand built image processing; size, format, purge, via ActiveStorage (direct serve) & Vips.</li>
-              <li className="leading-5 text-[14px] text-gray-800">Helpers; time formatting in views, devise controller & action helpers, conversation service.</li>
-            </ul>
-            <li className="mt-1 leading-7 pl-2 text-[14px] text-gray-800">🔔&nbsp;&nbsp;Notifications; hand built message UI Notification service.</li>
-            <li className="mt-1 leading-7 pl-2 text-[14px] text-gray-800">📥&nbsp;&nbsp;ActiveJob;</li>
-            <ul className="pl-6 list-disc list-inside">
-              <li className="leading-5 text-[14px] text-gray-800">ProcessImageJob; size and format processing of uploaded images.</li>
-              <li className="leading-5 text-[14px] text-gray-800">BroadcastMessageJob; building and broadcasting user scoped messages & conversations.</li>
-              <li className="leading-5 text-[14px] text-gray-800">MessageNotificationJob; managing UI notifications for message read state.</li>
-            </ul>
-            <li className="mt-1 leading-7 pl-2 text-[14px] text-gray-800">🗄️&nbsp;&nbsp;ActiveStorage; attachments, variants, metadata, direct serve. </li>
+            <li className="leading-7 pl-2 text-[14px] text-gray-800">🔄&nbsp;&nbsp;Rails API app - API namespaced routes and controllers.</li>
+            <li className="leading-7 pl-2 text-[14px] text-gray-800">🔐&nbsp;&nbsp;Rails 8 authentication implementation.</li>
+            <li className="mt-1 leading-7 pl-2 text-[14px] text-gray-800">🗄️&nbsp;&nbsp;ActiveStorage; attachments, variants.</li>
             <li className="mt-1 leading-7 pl-[6px] text-[14px] text-gray-800">
-              <span className="mr-[3px]"><img src={postgresLogo} alt="postgres logo" className='w-5'/></span>
-              ActiveRecord; postgres, seeding, attachments, variants, metadata, direct serve.
+              <span className="mr-[3px]"><img src={postgresLogo} alt="postgres logo" className='w-[16px] inline'/></span>
+              <p className='inline ml-1'>ActiveRecord; postgres, seeding, attachments, variants, metadata, direct serve.</p>
             </li>
-            <li className="leading-7 pl-2 text-[14px] text-gray-800">🔌&nbsp;&nbsp;ActionCable; managing conversation scoped subcriptions and broadcast DOM updates.</li>
-            <li className="leading-7 pl-2 text-[14px] text-gray-800">📧&nbsp;&nbsp;ActionMailer; user_mailer sends welcome_email on user sign ups.</li>
+            <li className="leading-7 pl-2 text-[14px] text-gray-800">📧&nbsp;&nbsp;ActionMailer – transactional sign up and password reset mailers.</li>
+            <li className="leading-7 pl-2 text-[14px] text-gray-800">
+              <img src={rspecLogo} alt="rspec logo" className='w-[17px] inline'/>
+              <p className='inline ml-1'>All routes, models & mailers unit tested with Rspec.</p>
+            </li>
           </ul>
         </section>
         <section id="rails-testing" className='max-w-140'>
           <div className='flex mb-2 ml-1'>
             <img src={rspecLogo} alt="rspec logo" className='w-8' />
-            <p className='inline text-red-600 text-[0.8rem] font-variation-settings-wght-700 mt-[21px] ml-1'>RSPEC</p>
+            <p className='inline text-red-600 text-[0.8rem] font-variation-settings-wght-700 mt-[21px] ml-1'>Rspec</p>
           </div>
           <ul className="pl-6 list-disc list-outside">
             <li className="leading-6 text-[14px] text-gray-800">Use of factories, fixtures, selenium.</li>
