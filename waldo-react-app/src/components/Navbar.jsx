@@ -26,7 +26,7 @@ export default function Navbar() {
   return(
     <>
       <header className='grid grid-cols-[4fr_auto_5fr] lg:grid-cols-[1fr_auto_1fr] gap-4 p-3 items-center w-full
-        fixed top-0 z-50 h-fit xl:h-[8rem] bg-white border-b-1 overflow-hidden'>
+        sticky top-0 z-50 h-fit xl:h-[8rem] bg-white border-b-1 overflow-hidden'>
         <div data-testid='character-status-col' className='flex flex-col md:flex-row gap-2 md:gap-4 xl:gap-8 mt-3 xl:justify-end xl:mr-20'>
           <CharacterStatus />
         </div>

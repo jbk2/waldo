@@ -19,7 +19,8 @@ export default function App() {
     <>
       <Alert />
       <Navbar />
-      <main className='pt-[8rem] min-h-[calc(100vh-8rem)]'>
+      <main className='min-h-[calc(100vh-8rem)]'>
+      {/* <main className='pt-[calc(4rem+1rem)] xl:pt-[8rem] min-h-[calc(100vh-4rem)] xl:min-h-[calc(100vh-8rem)]'> */}
         <Outlet context={{}} />
       </main>
     </>
