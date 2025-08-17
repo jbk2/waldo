@@ -17,12 +17,12 @@ export default function Welcome() {
         <p className="inline text-md text-gray-600">A toy Where's Waldo app, built by</p>
         <a href="https://github.com/jbk2/fakebook/blob/main/README.md" className="inline link link-primary text-sm">&nbsp;James Kemp</a>
         <p className='inline'>, to demonstrate use of the following libraries, technologies & techniques:&nbsp;</p>
-        <div className='flex gap-20 md:gap-30 xl:gap-50 justify-center mt-3.5'>
+        <div className='flex gap-20 md:gap-30 xl:gap-50 justify-center mt-2'>
           <a href="https://github.com/jbk2/fakebook/blob/main/README.md" className="inline link link-primary text-sm">Code repo</a>
           <a href="https://github.com/jbk2/fakebook/blob/main/README.md" className="inline link link-primary text-sm">Detailed readme</a>
         </div>
       </div>
-      <div className='flex flex-col lg:flex-row justify-center items-center lg:items-start gap-10 mx-4 my-10'>
+      <div className='flex flex-col lg:flex-row justify-center items-center lg:items-start gap-10 mx-4 mt-10'>
         <section id="rails" className='max-w-140'>
           <div id='section-header' className='flex gap-10 mb-3.5'>
             <div className='flex w-25'>
