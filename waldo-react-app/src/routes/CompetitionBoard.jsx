@@ -20,7 +20,7 @@ export default function CompetitionBoard() {
   const navigate = useNavigate();
 
   if(!signedIn) {
-    showAlert('Sign in or sign up to view the competition board')
+    showAlert('Sign in to view the competition board')
     navigate('/sign-in')
     return;
   }

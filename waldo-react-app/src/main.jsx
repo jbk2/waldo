@@ -27,13 +27,6 @@ const router = createBrowserRouter([
       { path: '/reset-password', element: <ResetPassword />},
       { path: '/competition-board', element: <CompetitionBoard /> },
     ]
-  },
-  {
-    path: '/welcome',
-    element: <App />,
-    children: [
-      { index: true, element: <Welcome /> }
-    ]
   }
 ])
 
