@@ -16,7 +16,7 @@ WORKDIR /rails
 
 # Install base packages
 RUN apt-get update -qq && \
-    apt-get install --no-install-recommends -y curl libjemalloc2 libvips sqlite3 && \
+    apt-get install --no-install-recommends -y curl libjemalloc2 libvips postgresql-client && \
     rm -rf /var/lib/apt/lists /var/cache/apt/archives
 
 # Set production environment
@@ -30,7 +30,7 @@ FROM base AS build
 
 # Install packages needed to build gems
 RUN apt-get update -qq && \
-    apt-get install --no-install-recommends -y build-essential git libyaml-dev pkg-config && \
+    apt-get install --no-install-recommends -y build-essential git libyaml-dev pkg-confi libpq-dev && \
     rm -rf /var/lib/apt/lists /var/cache/apt/archives
 
 # Install application gems
@@ -45,11 +45,13 @@ COPY . .
 # Precompile bootsnap code for faster boot times
 RUN bundle exec bootsnap precompile app/ lib/
 
-
-
-
 # Final stage for app image
 FROM base
+
+# Install runtime packages
+RUN apt-get update -qq && \
+    apt-get install --no-install-recommends -y curl postgresql-client nano && \
+    rm -rf /var/lib/apt/lists /var/cache/apt/archives
 
 # Copy built artifacts: gems, application
 COPY --from=build "${BUNDLE_PATH}" "${BUNDLE_PATH}"
@@ -65,5 +67,5 @@ USER 1000:1000
 ENTRYPOINT ["/rails/bin/docker-entrypoint"]
 
 # Start server via Thruster by default, this can be overwritten at runtime
-EXPOSE 80
+EXPOSE 3000
 CMD ["./bin/thrust", "./bin/rails", "server"]
