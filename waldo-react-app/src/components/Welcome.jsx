@@ -23,12 +23,12 @@ export default function Welcome({setViewedWelcome}) {
       </div>
       <div className='flex flex-col lg:flex-row justify-center items-center lg:items-start gap-7 lg:gap-10 mx-4 mt-5 lg:mt-10'>
         <section id="rails" className='max-w-140'>
-          <div id='section-header' className='flex gap-10 mb-3.5'>
-            <div className='flex w-25'>
+          <div id='section-header' className='flex gap-8 mb-3.5'>
+            <div className='flex w-fit'>
               <img src={railsLogo} alt="rails logo" className='w-22 inline' />
               <p className='inline text-[#CC0000] text-[0.8rem] font-variation-settings-wght-700 mt-[21px] ml-[2px]'>API</p>
             </div>
-            <p className='text-3xl inline self-end w-6 mt-2'>+</p>
+            <p className='text-3xl inline self-end w-fit mt-2'>+</p>
             <div className='flex w-25'>
               <img src={rspecLogo} alt="rspec logo" className='w-8 mt-1 inline' />
               <p className='inline text-red-600 text-[0.8rem] font-variation-settings-wght-700 mt-[21px] ml-1'>Rspec</p>
@@ -51,11 +51,11 @@ export default function Welcome({setViewedWelcome}) {
         </section>
         <section id="react" className='max-w-140'>
           <div id='section-header' className='flex gap-10 mb-3.5'>
-            <div className='flex w-25'>
+            <div className='flex w-fit'>
               <img src={reactLogo} alt="react logo" className='w-9 inline' />
               <p className='inline text-[0.8rem] font-variation-settings-wght-500 mt-[21px] ml-[2px]'>React</p>
             </div>
-            <p className='text-3xl inline self-end w-6 mt-2'>+</p>
+            <p className='text-3xl inline self-end w-fit mt-2'>+</p>
             <div className='flex w-25'>
               <img src={viteLogo} alt="vite logo" className='w-7 mt-1 inline' />
               <p className='inline text-[0.8rem] font-variation-settings-wght-500 mt-[21px] ml-1'>Vite</p>
