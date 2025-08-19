@@ -27,15 +27,20 @@ waldo-rails-app/config/credentials/test.key
 # React app ignores
 waldo-react-app/node_modules/
 waldo-react-app/dist/
+waldo-react-app/dist-ssr/
 waldo-react-app/build/
+waldo-react-app/logs/
 waldo-react-app/.env*
 waldo-react-app/.env.local
 waldo-react-app/.env.development.local
 waldo-react-app/.env.test.local
 waldo-react-app/.env.production.local
+waldo-react-app/*.local
 waldo-react-app/npm-debug.log*
 waldo-react-app/yarn-debug.log*
 waldo-react-app/yarn-error.log*
+waldo-react-app/pnpm-debug.log*
+waldo-react-app/lerna-debug.log*
 waldo-react-app/coverage/
 waldo-react-app/.nyc_output
 
@@ -44,9 +49,15 @@ waldo-react-app/.nyc_output
 .vscode/
 .cursor/
 .ruby-lsp/
+.idea/
 *.log
 *.tmp
 *.temp
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
 
 # Database
 *.sqlite3
