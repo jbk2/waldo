@@ -13,7 +13,7 @@ def random_time_ms
 end
 
 def check_image_file_exists(filename)
-  image_path = Rails.root.join('..', 'waldo-game-imgs', filename)
+  image_path = Rails.root.join('waldo-game-imgs', filename)
   unless File.exist?(image_path)
     raise "Image file not found: #{filename} at path: #{image_path}"
   end

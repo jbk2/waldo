@@ -23,6 +23,7 @@ waldo-rails-app/config/master.key
 waldo-rails-app/config/credentials/development.key
 waldo-rails-app/config/credentials/production.key
 waldo-rails-app/config/credentials/test.key
+waldo-rails-app/waldo-game-imgs
 
 # React app ignores
 waldo-react-app/node_modules/
@@ -69,4 +70,3 @@ ehthumbs.db
 Desktop.ini
 
 # root Waldo game images
-waldo-game-imgs
