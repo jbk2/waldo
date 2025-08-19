@@ -1,9 +1,8 @@
 # Todo list
 
-- 
-- update dns script  & SERVER README
-- Update Welcome component as public readme illustartion
+- harden systemd dns script
 - Write an error page
+- Wenda icon not accurate
 - potentially refactor the navigation state setting object to use useReducer
   (as state has a different shape depending where it came from)?
 - intro functionality to stop games being able to be played twice?
