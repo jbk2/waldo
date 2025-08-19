@@ -1,5 +1,7 @@
 # Todo list
 
+- 
+- update dns script  & SERVER README
 - Update Welcome component as public readme illustartion
 - Write an error page
 - potentially refactor the navigation state setting object to use useReducer

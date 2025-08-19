@@ -58,3 +58,7 @@ ________________________________________________________________________________
 
   ### To use the hosted app
 ...
+
+## DB Seeding
+- In order to seed a fresh db the seeds.rb uses hard coded image and character data, and expects the image files to be located in from rails root ../waldo-game-imgs
+- It will not seed create images or games if there are any present at all already
