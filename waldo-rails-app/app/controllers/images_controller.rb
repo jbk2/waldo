@@ -27,7 +27,7 @@ class ImagesController < ApplicationController
 
   def image_params
     params.require(:image).permit(
-      :image, :title,
+      :image, :title, :difficulty,
       characters_attributes: [:id, :name, :start_x, :end_x, :start_y, :end_y]
       )
   end
