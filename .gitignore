@@ -67,3 +67,6 @@ waldo-react-app/.nyc_output
 Thumbs.db
 ehthumbs.db
 Desktop.ini
+
+# root Waldo game images
+waldo-game-imgs
