@@ -125,7 +125,7 @@ export default function Game() {
             return(
               <div
                 key={char.id}
-                className="absolute border-5 rounded-lg border-green-600 pointer-events-none"
+                className="absolute border-4 rounded-md border-green-600 pointer-events-none"
                 style={{
                   left: `${char.start_x * 100}%`,
                   top: `${char.start_y * 100}%`,
