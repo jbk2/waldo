@@ -11,9 +11,9 @@ export default function Welcome({setViewedWelcome}) {
 
   
   return(
-    <div className=' mt-[4vh] md:mt-[7vh] xl:mt-[9vh] mx-4'>
+    <div className='mt-[4vh] md:mt-[7vh] xl:mt-[9vh] mx-4 text-gray-600'>
       <div id="intro-text" className='max-w-130 lg:max-w-230 mx-auto'>
-        <p className="inline text-md text-gray-600">A toy Where's Waldo app, built by</p>
+        <p className="inline text-md">A toy Where's Waldo app, built by</p>
         <a href="https://github.com/jbk2/fakebook/blob/main/README.md" className="inline link link-primary text-sm">&nbsp;James Kemp</a>
         <p className='inline'>, to demonstrate use of the following libraries, technologies & techniques:&nbsp;</p>
         <div className='flex gap-2 md:gap-3 xl:gap-5 justify-left mt-2'>

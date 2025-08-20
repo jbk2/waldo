@@ -16,13 +16,13 @@ export default function App() {
   if (!authChecked) return <div className="grid place-items-center min-h-screen font-bold text-xl">Loading...</div>;
 
   return (
-    <>
+    <div className='bg-[var(--color-bg-primary)]'>
       <Alert />
       <Navbar />
       <main className='min-h-[calc(100vh-8rem)]'>
       {/* <main className='pt-[calc(4rem+1rem)] xl:pt-[8rem] min-h-[calc(100vh-4rem)] xl:min-h-[calc(100vh-8rem)]'> */}
         <Outlet context={{}} />
       </main>
-    </>
+    </div>
   )
 }

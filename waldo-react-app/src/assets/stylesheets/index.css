@@ -21,6 +21,40 @@
   font-family: 'raleway';
   font-variation-settings: "wght" 400;
   color-scheme: light;
+  
+/* ---------------------- Root Color variables --------------------- */
+  --color-primary: var(--color-indigo-700);
+  --color-secondary: var(--color-violet-500);
+  --color-accent: var(--color-cyan-500);
+
+  --color-success: var(--color-emerald-500);
+  --color-warning: var(--color-amber-500);
+  --color-error: var(--color-red-500);
+  --color-info: var(--color-blue-500);
+
+  --color-difficulty-easy: var(--color-green-400);
+  --color-difficulty-medium: var(--color-blue-400);
+  --color-difficulty-difficult: var(--color-orange-400);
+  --color-difficulty-very-difficult: var(--color-red-400);
+
+  --color-text-primary: black;
+  --color-text-secondary: var(--color-gray-900);
+  --color-text-tertiary: var(--color-gray-500);
+  --color-text-muted: var(--color-gray-400);
+  --color-text-bright: var(--color-green-500);
+
+  --color-bg-primary: var(--color-white);
+  --color-bg-secondary: var(--color-gray-50);
+  --color-bg-tertiary: var(--color-gray-100);
+  
+  --color-btn-primary: var(--color-indigo-700);
+  --color-btn-secondary: var(--color-cyan-400);
+  --color-btn-tertiary: var(--color-gray-100);
+
+  --color-border-primary: black;
+  --color-border-secondary: var(--color-gray-300);
+  
+  --color-decoration-primary: var(--color-indigo-400);
 }
 
 @layer utilities {

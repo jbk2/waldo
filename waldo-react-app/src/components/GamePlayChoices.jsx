@@ -32,8 +32,9 @@ export default function GamePlayChoices({dialogRef}) {
                   <button
                     onClick={() => handlePlayGameClick(image.title)}
                       
-                    className="h-fit w-34 p-3 px-4 rounded-lg hover:cursor-pointer
-                    border-2 border-indigo-300 hover:border-indigo-400 bg-cyan-400 hover:bg-cyan-500
+                    className="h-fit w-34 p-3 px-4 rounded-lg hover:cursor-pointer border-2
+                    bg-[var(--color-btn-secondary)] hover:bg-[hsl(from_var(--color-btn-secondary)_h_s_calc(l*0.90))]
+                    border-[var(--color-border-secondary)] hover:border-[hsl(from_var(--color-border-secondary)_h_s_calc(l*0.90))]
                     font-variation-settings-wght-600 font-raleway text-sm tracking-wide">
                     {capitalize(image.title)}
                   </button>

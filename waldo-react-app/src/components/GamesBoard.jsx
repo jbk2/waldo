@@ -13,9 +13,9 @@ export default function GamesBoard({lastGameState}) {
       <h1 className="text-xl font-variation-settings-wght-700 mb-2">Competition Board</h1>
       { time && imageTitle && (
         <p className="text-md">Your last game completed
-          <span className="text-indigo-800">&nbsp;"{capitalize(imageTitle)}"&nbsp;</span>
+          <span className="text-[var(--color-primary)]">&nbsp;"{capitalize(imageTitle)}"&nbsp;</span>
           in
-          <span className="text-indigo-800">&nbsp;{(time / 1000).toFixed(2)}&nbsp;</span>
+          <span className="text-[var(--color-primary)]">&nbsp;{(time / 1000).toFixed(2)}&nbsp;</span>
           seconds.
         </p>
       )}

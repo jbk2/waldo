@@ -25,8 +25,8 @@ export default function Navbar() {
 
   return(
     <>
-      <header className='grid grid-cols-[4fr_auto_5fr] lg:grid-cols-[1fr_auto_1fr] gap-4 p-3 items-center w-full
-        sticky top-0 z-50 h-fit xl:h-[8rem] bg-white border-b-1 overflow-hidden'>
+      <header className='grid grid-cols-[4fr_auto_5fr] lg:grid-cols-[1fr_auto_1fr] gap-4 p-5 items-center w-full
+        sticky top-0 z-50 h-fit xl:h-[8rem] bg-[var(--color-bg-primary)] text-[var(--color-text-primary)] border-b-1 overflow-hidden'>
         <div data-testid='character-status-col' className='flex flex-col md:flex-row gap-2 md:gap-4 xl:gap-8 mt-3 xl:justify-end xl:mr-20'>
           <CharacterStatus />
         </div>
@@ -37,22 +37,23 @@ export default function Navbar() {
             Where's Waldo?
           </Link>
             <div className='flex justify-center xl:justify-end'>
-              <Link to='/competition-board' onClick={resetGame} className='text-xs text-green-500
-                font-variation-settings-wght-600 underline decoration-indigo-400 underline-offset-3
+              <Link to='/competition-board' onClick={resetGame} className='text-xs text-[var(--color-text-bright)]
+                font-variation-settings-wght-600 underline decoration-[var(--color-decoration-primary)] underline-offset-3
                 decoration-wavy decoration-1 hover:scale-104 transition-transform origin-center transform-gpu'>
                 Competition Board
               </Link>
             </div>
         </div>
         <div className='flex flex-col gap-1'>
-          <div data-testid='gametimer-col' className='flex flex-col xl:flex-row ml-10 md:ml-16 xl:ml-24'>
+          <div data-testid='gametimer-col' className='flex lg:items-center flex-col lg:flex-row
+          gap-1 xl:gap-0 ml-0 xs:ml-4 md:ml-16 xl:ml-24'>
             <GameTimer />
             {signedIn ?
-              <button type="button" onClick={handleSignOut} className='btn w-20 ml-2'>
+              <button type="button" onClick={handleSignOut} className='btn btn-soft w-20 ml-2'>
                 SignOut
               </button>
               :
-              <button type="button" onClick={handleSignIn} className='btn w-20'>
+              <button type="button" onClick={handleSignIn} className='btn btn-soft w-20'>
                 SignIn
               </button>
             }

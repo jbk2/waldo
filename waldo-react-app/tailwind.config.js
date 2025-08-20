@@ -3,6 +3,9 @@ export default {
   content: ['./index.html', './src/**/*.{js,jsx,ts,tsx}'],
   theme: {
     extend: {
+      screens: {
+        xs: "510px",
+      },
       colors:   { debug: '#ff00ff' }, // bg-debug
       fontFamily: {
         'playrite': ['"playrite"'],

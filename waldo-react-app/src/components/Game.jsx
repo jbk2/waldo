@@ -99,7 +99,7 @@ export default function Game() {
         )}
         {/* Show loading overlay when loading */}
         {gameState === GAME_STATES.LOADING && (
-          <div className="absolute inset-8 rounded flex items-center justify-center -transform-y-20 bg-gray-100 bg-opacity-90 z-10">
+          <div className="absolute inset-8 rounded flex items-center justify-center -transform-y-20 bg-[var(--color-bg-tertiary)] z-10">
             <div className="text-center absolute top-1/4">
               <div className="loading loading-spinner text-accent loading-xl mx-auto mb-4"></div>
               <p className="text-2xl">Loading game image...</p>
@@ -110,7 +110,7 @@ export default function Game() {
         {/* add click location visual border */}
         {gameState === GAME_STATES.PLAYING && clickCoords && gameImage && gameImage.url !== placeholderImg && (
           <div
-            className="absolute border-4 rounded-lg border-blue-800 w-6 h-8 pointer-events-none"
+            className="absolute border-4 rounded-lg border-[var(--color-primary)] w-6 h-8 pointer-events-none"
             style={{
               left: `${clickCoords.x * 100}%`,
               top: `${clickCoords.y * 100}%`,
@@ -125,7 +125,7 @@ export default function Game() {
             return(
               <div
                 key={char.id}
-                className="absolute border-4 rounded-md border-green-600 pointer-events-none"
+                className="absolute border-4 rounded-md border-[var(--color-success)] pointer-events-none"
                 style={{
                   left: `${char.start_x * 100}%`,
                   top: `${char.start_y * 100}%`,
