@@ -1,5 +1,6 @@
 # Todo list
 
+- variablaize css, & for dark mode
 - harden systemd dns script
 - Write an error page
 - Wenda icon not accurate
