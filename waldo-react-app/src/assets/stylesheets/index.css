@@ -20,6 +20,7 @@
 :root {
   font-family: 'raleway';
   font-variation-settings: "wght" 400;
+  color-scheme: light;
 }
 
 @layer utilities {
