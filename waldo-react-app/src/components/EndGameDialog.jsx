@@ -43,13 +43,13 @@ export default function EndGameDialog() {
     <dialog ref={dialogRef} id="endGameDialog"
       open
       className="fixed top-1/3 left-1/2 -translate-x-1/2 w-98 h-fit opacity-95
-        bg-white border-1 rounded-md justify-center items-center p-9">
+        bg-[var(--color-bg-primary)] border-1 rounded-md justify-center items-center p-9">
       <p>
         Well done, you found all the characters 🎉.<br/>
         It took you
         <span>{gameCompletedLengthSeconds < 20 ? ' only - ' : ' - '}</span>
         <span className="text-md font-mono font-medium tabular-nums lining-nums underline
-          decoration-wavy decoration-1 decoration-green-600 underline-offset-3 pr-[1px]">
+          decoration-wavy decoration-1 decoration-[var(--color-decoration-green)] underline-offset-3 pr-[1px]">
           { gameCompletedLengthSeconds }
         </span>
         s.
@@ -59,7 +59,7 @@ export default function EndGameDialog() {
           <Link
             to='/competition-board'
             state={{ game: { time: gameCompletedLength, imageTitle: gameImage.title }}}
-            className="hover:pointer-cursor link">here</Link>.
+            className="hover:pointer-cursor link underline-offset-3">here</Link>.
           </>
         )}
       </p>

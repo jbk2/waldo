@@ -63,7 +63,7 @@ export default function ResetPassword() {
           required
         />
         {passwordConfirmation && passwordConfirmation.length >= 8 && !passwordsMatch && (
-          <p className="text-red-500 text-sm">Passwords do not match</p>
+          <p className="text-[var(--color-error)] text-sm">Passwords do not match</p>
         )}
         <button
           type="submit"

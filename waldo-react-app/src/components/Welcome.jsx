@@ -11,7 +11,7 @@ export default function Welcome({setViewedWelcome}) {
 
   
   return(
-    <div className='mt-[4vh] md:mt-[7vh] xl:mt-[9vh] mx-4 text-gray-600'>
+    <div className='mt-[4vh] md:mt-[7vh] xl:mt-[9vh] mx-4 text-[var(--color-text-secondary)]'>
       <div id="intro-text" className='max-w-130 lg:max-w-230 mx-auto'>
         <p className="inline text-md">A toy Where's Waldo app, built by</p>
         <a href="https://github.com/jbk2/fakebook/blob/main/README.md" className="inline link link-primary text-sm">&nbsp;James Kemp</a>
@@ -26,15 +26,15 @@ export default function Welcome({setViewedWelcome}) {
           <div id='section-header' className='flex gap-8 mb-3.5'>
             <div className='flex w-fit'>
               <img src={railsLogo} alt="rails logo" className='w-22 inline' />
-              <p className='inline text-[#CC0000] text-[0.8rem] font-variation-settings-wght-700 mt-[21px] ml-[2px]'>API</p>
+              <p className='inline text-[var(--color-rails-logo)] text-[0.8rem] font-variation-settings-wght-700 mt-[23px] ml-[2px]'>API</p>
             </div>
             <p className='text-3xl inline self-end w-fit mt-2'>+</p>
             <div className='flex w-25'>
               <img src={rspecLogo} alt="rspec logo" className='w-8 mt-1 inline' />
-              <p className='inline text-red-600 text-[0.8rem] font-variation-settings-wght-700 mt-[21px] ml-1'>Rspec</p>
+              <p className='inline text-[var(--color-rspec-logo)] text-[0.8rem] font-variation-settings-wght-700 mt-[21px] ml-1'>Rspec</p>
             </div>
           </div>
-          <div className='grid grid-cols-[24px_auto] gap-2 text-sm text-gray-800'>
+          <div className='grid grid-cols-[24px_auto] gap-2 text-sm'>
             <p className=''>🔄</p>
             <p className=''>Rails API app - API namespaced routes and controllers.</p>
             <p className=''>🔐</p>
@@ -53,15 +53,15 @@ export default function Welcome({setViewedWelcome}) {
           <div id='section-header' className='flex gap-10 mb-3.5'>
             <div className='flex w-fit'>
               <img src={reactLogo} alt="react logo" className='w-9 inline' />
-              <p className='inline text-[0.8rem] font-variation-settings-wght-500 mt-[21px] ml-[2px]'>React</p>
+              <p className='inline text-[0.8rem] font-variation-settings-wght-600 mt-[21px] ml-[2px]'>React</p>
             </div>
             <p className='text-3xl inline self-end w-fit mt-2'>+</p>
             <div className='flex w-25'>
               <img src={viteLogo} alt="vite logo" className='w-7 mt-1 inline' />
-              <p className='inline text-[0.8rem] font-variation-settings-wght-500 mt-[21px] ml-1'>Vite</p>
+              <p className='inline text-[0.8rem] font-variation-settings-wght-600 mt-[21px] ml-1'>Vite</p>
             </div>
           </div>
-          <div className='grid grid-cols-[24px_auto] gap-2 text-sm text-gray-800'>
+          <div className='grid grid-cols-[24px_auto] gap-2 text-sm'>
             <p className=''>🪝</p>
             <p className=''>Hooks; state, context, effect, callback, memo, ref, navigate, params.</p>
             <img src={reactRouterLogo} alt="react router logo" className='w-[16px] inline mt-[5px]'/>

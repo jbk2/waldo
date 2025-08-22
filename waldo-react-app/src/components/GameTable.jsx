@@ -51,7 +51,7 @@ export default function GameTable() {
 
   function getRowClasses(isUsersGame, isFocussedRow) {
     const baseClasses = 'font-mono font-light';
-    const usersGame = isUsersGame ? 'bg-[#FFFAF9] font-variation-settings-wght-600 underline decoration-indigo-400 underline-offset-3 decoration-wavy decoration-1' : '';
+    const usersGame = isUsersGame ? 'bg-[var(--color-bg-row-focus)] font-variation-settings-wght-600 underline decoration-[var(--color-decoration-indigo)] underline-offset-3 decoration-wavy decoration-1' : '';
     const focussedRow = isFocussedRow ? 'animate-color-and-bounce' : '';
     
     return `${baseClasses} ${usersGame} ${focussedRow}`;
@@ -91,7 +91,7 @@ export default function GameTable() {
           return(
             <a
               role="tab"
-              className={`tab ${isActive ? 'tab-active [--tab-border-color:#e5e7eb]' : ''} `}
+              className={`tab ${isActive ? 'tab-active [--tab-border-color:var(--color-border-tertiary)]' : ''} `}
               key={image.image_id}
               data-testid={`tab-image-id-${image.image_id}`}
               onClick={() => handleTabClick(image.image_id)}
@@ -101,10 +101,10 @@ export default function GameTable() {
           )
         })}
       </div>
-      <div className="max-w-140 min-w-100 rounded-box border border-gray-200 bg-base-100 overflow-y-auto">
+      <div className="max-w-140 min-w-100 rounded-box border border-[var(--color-border-tertiary)] bg-[var(--color-bg-primary)] overflow-y-auto">
         <div className="max-h-100 overflow-y-auto">
           <table className="table table-xs border-t-0">
-            <thead className="sticky top-0 bg-sky-50">
+            <thead className="sticky top-0 bg-[var(--color-bg-header)]">
               <tr>
                 <th id="rank">📈 Rank
                   <span

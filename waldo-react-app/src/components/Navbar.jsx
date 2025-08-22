@@ -38,7 +38,7 @@ export default function Navbar() {
           </Link>
             <div className='flex justify-center xl:justify-end'>
               <Link to='/competition-board' onClick={resetGame} className='text-xs text-[var(--color-text-bright)]
-                font-variation-settings-wght-600 underline decoration-[var(--color-decoration-primary)] underline-offset-3
+                font-variation-settings-wght-600 underline decoration-[var(--color-decoration-indigo)] underline-offset-3
                 decoration-wavy decoration-1 hover:scale-104 transition-transform origin-center transform-gpu'>
                 Competition Board
               </Link>

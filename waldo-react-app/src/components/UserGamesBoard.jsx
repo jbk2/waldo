@@ -69,10 +69,10 @@ export default function UserGamesBoard() {
               <div className="stat-value">{image.play_count}&nbsp;
                 <span className="text-sm">games played</span>
               </div>
-              <div className="stat-desc flex justify-end text-indigo-700 hover:underline underline-offset-2">
+              <div className="stat-desc flex justify-end text-[var(--color-primary)] hover:underline underline-offset-2">
                 <button
                   data-best-rank
-                  className="ordinal hover:cursor-pointer bg-transparent border-none p-0 text-indigo-700 flex items-center">
+                  className="ordinal hover:cursor-pointer bg-transparent border-none p-0 flex items-center">
                   <span>Best rank:&nbsp;</span>
                   <span className="ordinal">{image.best_rank}</span>
                   <span className="ml-[1px] text-[0.5rem] align-super underline underline-offset-1 decoration-1">
