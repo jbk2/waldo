@@ -27,7 +27,7 @@ export default function GamePlayChoices({dialogRef}) {
               const difficultyColor = DIFFICULTY_PROPS[image.difficulty].bg_color
               const difficultyText = DIFFICULTY_PROPS[image.difficulty].text_abbreviation
               return(
-                <div className="relative" key={image.image_id}>
+                <div className="relative dark:text-gray-700" key={image.image_id}>
                   <div className={`-top-0.5 -left-0.5 text-[0.6rem] absolute rounded-xs h-3 w-6 p-0 text-center leading-3 ${difficultyColor}`}>{difficultyText}</div>
                   <button
                     onClick={() => handlePlayGameClick(image.title)}
@@ -35,6 +35,7 @@ export default function GamePlayChoices({dialogRef}) {
                     className="h-fit w-34 p-3 px-4 rounded-lg hover:cursor-pointer border-2
                     bg-[var(--color-btn-secondary)] hover:bg-[hsl(from_var(--color-btn-secondary)_h_s_calc(l*0.90))]
                     border-[var(--color-border-secondary)] hover:border-[hsl(from_var(--color-border-secondary)_h_s_calc(l*0.90))]
+                    dark:border-gray-400 dark:hover:border-[hsl(from_var(--color-gray-400)_h_s_calc(l*0.70))]
                     font-variation-settings-wght-600 font-raleway text-sm tracking-wide">
                     {capitalize(image.title)}
                   </button>

@@ -33,7 +33,7 @@ export default function Navbar() {
         
         <div data-testid="typemark-col" className='mb-2 text-center'>
           <Link to={'/'} onClick={resetGame} className='font-playrite text-4xl md:text-5xl xl:text-6xl text-center mt-8
-            hover:cursor-pointer'>
+            hover:cursor-pointer dark:text-neutral-100 '>
             Where's Waldo?
           </Link>
             <div className='flex justify-center xl:justify-end'>

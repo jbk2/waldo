@@ -91,7 +91,7 @@ export default function GameTable() {
           return(
             <a
               role="tab"
-              className={`tab ${isActive ? 'tab-active [--tab-border-color:var(--color-border-tertiary)]' : ''} `}
+              className={`tab dark:[--tab-border-color:neutral-50] ${isActive ? 'tab-active [--tab-border-color:var(--color-border-tertiary)]' : ''} `}
               key={image.image_id}
               data-testid={`tab-image-id-${image.image_id}`}
               onClick={() => handleTabClick(image.image_id)}
@@ -104,7 +104,7 @@ export default function GameTable() {
       <div className="max-w-140 min-w-100 rounded-box border border-[var(--color-border-tertiary)] bg-[var(--color-bg-primary)] overflow-y-auto">
         <div className="max-h-100 overflow-y-auto">
           <table className="table table-xs border-t-0">
-            <thead className="sticky top-0 bg-[var(--color-bg-header)]">
+            <thead className="sticky top-0 bg-[var(--color-bg-header)] dark:text-neutral-100">
               <tr>
                 <th id="rank">📈 Rank
                   <span

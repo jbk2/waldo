@@ -9,13 +9,13 @@ export default function GamesBoard({lastGameState}) {
   const { imageTitle } = lastGameState;
 
   return(
-    <div className="flex flex-col items-center mt-8">
+    <div className="flex flex-col items-center mt-8 text-[var(--color-text-primary)]">
       <h1 className="text-xl font-variation-settings-wght-700 mb-2">Competition Board</h1>
       { time && imageTitle && (
-        <p className="text-md">Your last game completed
-          <span className="text-[var(--color-primary)]">&nbsp;"{capitalize(imageTitle)}"&nbsp;</span>
-          in
-          <span className="text-[var(--color-primary)]">&nbsp;{(time / 1000).toFixed(2)}&nbsp;</span>
+        <p className="text-md">Your last game was
+          <span className="">&nbsp;"{capitalize(imageTitle)}"</span>
+          , completed in
+          <span className="font-mono text-sm text-[var(--color-primary)] mx-1">{(time / 1000).toFixed(2)}</span>
           seconds.
         </p>
       )}

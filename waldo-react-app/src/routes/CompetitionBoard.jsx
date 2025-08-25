@@ -27,12 +27,14 @@ export default function CompetitionBoard() {
 
   return(
     <ResultsProvider >
-      {userGames ? (
-        <UserGamesBoard />
-      ) : (
-          <h1>You haven't played any games yet - Link here to go play</h1>
-      )}
-      <GamesBoard lastGameState={lastGameState}/>
+      <div className="mt-[4vh] md:mt-[7vh] xl:mt-[9vh]">
+        {userGames ? (
+          <UserGamesBoard />
+        ) : (
+            <h1>You haven't played any games yet - Link here to go play</h1>
+        )}
+        <GamesBoard lastGameState={lastGameState}/>
+      </div>
     </ResultsProvider>
   )
 }

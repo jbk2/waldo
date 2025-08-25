@@ -46,9 +46,9 @@ export default function UserGamesBoard() {
   const totalGamesCount = userGames.length;
   
   return(
-    <div className="flex flex-col items-center mt-6">
+    <div className="flex flex-col items-center mt-6 text-[var(--color-text-primary)]">
       <h1 className="text-lg font-variation-settings-wght-700 mb-3">Your games:</h1>
-      <div className="flex">
+      <div className="flex gap-3 flex-wrap justify-center">
         <div className="stats shadow">
           <div className="stat" data-testid="total-games">
             <div className="stat-title">Total Games Played</div>
