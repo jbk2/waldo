@@ -1,8 +1,6 @@
 # Todo list
 
-- variablaize css, & for dark mode
 - harden systemd dns script
-- Write an error page
 - Wenda icon not accurate
 - potentially refactor the navigation state setting object to use useReducer
   (as state has a different shape depending where it came from)?
