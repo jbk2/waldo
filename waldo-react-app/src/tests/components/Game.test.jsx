@@ -5,6 +5,12 @@ import { RouterProvider } from 'react-router-dom';
 import Game from '../../components/Game';
 import createTestRouter from '../testUtils/testRouter';
 
+vi.mock('../../routes/HomePage', () => {
+  return {
+    default: Game
+  };
+});
+
 describe('Game component', () => {
   beforeEach(() => {
     vi.spyOn(Image.prototype, 'src', 'set').mockImplementation(() => {});
