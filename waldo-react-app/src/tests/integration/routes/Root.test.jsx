@@ -1,7 +1,7 @@
 import '../../setup.integration.js';
 import { describe, it, expect, afterEach, beforeEach } from "vitest";
+import userEvent from '@testing-library/user-event';
 import { render, screen, cleanup } from '@testing-library/react';
-import userEvent from '@testing-library/user-event'
 import { RouterProvider } from "react-router-dom";
 import createTestRouter from "../../testUtils/testRouter.jsx";
 import { testDatabase } from "../../testUtils/railsTestDatabaseAPI.js";
@@ -23,8 +23,11 @@ describe("root '/' page integration test", () => {
     await testDatabase.cleanup();
   });
 
+
   it('allows user to select and start a game', async () => {
     testRouter.navigate('/')
+    const proceedBtn = await screen.findByRole('button', { name: /Proceed to app/ });
+    await user.click(proceedBtn)
 
     const placeholderImage = await screen.findByRole('img', { name: /placeholderImage/ });
     expect(placeholderImage).toBeInTheDocument();
