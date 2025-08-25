@@ -52,7 +52,7 @@ export default function UserGamesBoard() {
         <div className="stats shadow">
           <div className="stat" data-testid="total-games">
             <div className="stat-title">Total Games Played</div>
-            <div className="stat-value">{totalGamesCount}</div>
+            <div className="stat-value -mt-4">{totalGamesCount}</div>
           </div>
         </div>
         {Object.values(usersStatsByImage).map((image) => (
