@@ -24,15 +24,11 @@
   
 /* ---------------------- Root Color variables --------------------- */
   --color-primary: var(--color-indigo-700);
-  /* --color-secondary: var(--color-violet-500); */
-  /* --color-accent: var(--color-cyan-500); */
   --color-rails-logo: #CC0000;
   --color-rspec-logo: var(--color-red-600);
 
   --color-success: var(--color-emerald-500);
-  /* --color-warning: var(--color-amber-500); */
   --color-error: var(--color-red-500);
-  /* --color-info: var(--color-blue-500); */
   
   --color-difficulty-easy: var(--color-green-400);
   --color-difficulty-medium: var(--color-blue-400);
@@ -41,8 +37,6 @@
   
   --color-text-primary: black;
   --color-text-secondary: var(--color-gray-800);
-  /* --color-text-tertiary: var(--color-gray-500); */
-  /* --color-text-muted: var(--color-gray-400); */
   --color-text-bright: var(--color-green-500);
   --color-text-alert: var(--color-cyan-700);
 
@@ -53,9 +47,7 @@
   --color-bg-header: var(--color-sky-50);
   --color-bg-row-focus: rgba(254, 252, 232, 0.6);
   
-  /* --color-btn-primary: var(--color-indigo-700); */
   --color-btn-secondary: var(--color-cyan-400);
-  /* --color-btn-tertiary: var(--color-gray-100); */
   
   --color-border-primary: black;
   --color-border-secondary: var(--color-gray-300);
@@ -72,7 +64,7 @@
     --color-bg-primary: var(--color-gray-900);
     --color-bg-secondary: var(--color-gray-800);
     --color-bg-tertiary: var(--color-gray-800);
-    
+
     --color-bg-header: var(--color-sky-900);
     --color-bg-row-focus: var(--color-gray-800);
   }
