@@ -39,11 +39,11 @@
   --color-text-secondary: var(--color-gray-800);
   --color-text-bright: var(--color-green-500);
   --color-text-alert: var(--color-cyan-700);
-
+  
   --color-bg-primary: var(--color-white);
   --color-bg-secondary: var(--color-gray-50);
   --color-bg-tertiary: var(--color-gray-100);
-
+  
   --color-bg-header: var(--color-sky-50);
   --color-bg-row-focus: rgba(254, 252, 232, 0.6);
   
@@ -56,17 +56,19 @@
   --color-decoration-indigo: var(--color-indigo-400);
   --color-decoration-green: var(--color-green-600);
   --color-decoration-fuchsia: var(--color-fuchsia-300);
-
+  
   @media (prefers-color-scheme: dark) {
     --color-text-primary: var(--color-neutral-300);
     --color-text-secondary: var(--color-neutral-300);
-  
+    
     --color-bg-primary: var(--color-gray-900);
     --color-bg-secondary: var(--color-gray-800);
     --color-bg-tertiary: var(--color-gray-800);
-
+    
     --color-bg-header: var(--color-sky-900);
     --color-bg-row-focus: var(--color-gray-800);
+    
+    --color-text-alert: var(--color-cyan-100);
   }
 }
 
