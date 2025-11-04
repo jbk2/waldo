@@ -14,7 +14,8 @@
     "test:components:file": "vitest run --config vitest.config.components.js",
     "test:integration": "trap 'npm run test:cleanup' EXIT && npm run test:start-server && vitest run --config vitest.config.integration.js src/tests/integration/",
     "test:integration:file": "trap 'npm run test:cleanup' EXIT && npm run test:start-server && vitest run --config vitest.config.integration.js",
-    "test:all": "npm run test:components && npm run test:integration"
+    "test:all": "npm run test:components && npm run test:integration",
+    "typecheck": "tsc --noEmit -p ."
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.1.6",
