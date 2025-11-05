@@ -53,27 +53,26 @@ export default function EndGameDialog() {
           { gameCompletedLengthSeconds }
         </span>
         s.
-        { signedIn && (
+        { signedIn ? (
           <>
-          &nbsp;See your score rank&nbsp;
-          <Link
-            to='/competition-board'
-            state={{ game: { time: gameCompletedLength, imageTitle: gameImage.title }}}
-            className="hover:pointer-cursor link underline-offset-3">here</Link>.
+            &nbsp;See your score rank&nbsp;
+            <Link
+              to='/competition-board'
+              state={{ game: { time: gameCompletedLength, imageTitle: gameImage.title }}}
+              className="hover:pointer-cursor link underline-offset-3">here
+            </Link>.
+          </>
+        ) : (
+          <>
+            <br />
+              <span onClick={handleSignIn} className="link font-variation-settings-wght-600">Sign in </span>
+              <span>or</span>
+              <span onClick={handleSignUp} className="link font-variation-settings-wght-600"> sign up </span>
+              <span>to rank your score and play other games</span>
+            <br />
           </>
         )}
       </p>
-      { !signedIn && (
-        <>
-          <br />
-            <span onClick={handleSignIn} className="link font-variation-settings-wght-600">Sign in </span>
-            <span>or</span>
-            <span onClick={handleSignUp} className="link font-variation-settings-wght-600"> sign up </span>
-            <span>to rank your score and play other games</span>
-          <br />
-        </>
-      )}
-
       <p className="text-center font-variation-settings-wght-500 mt-5 mb-1">
         ⏬&nbsp;&nbsp;&nbsp;&nbsp;PLAY AGAIN&nbsp;&nbsp;&nbsp;&nbsp;⏬
       </p>
