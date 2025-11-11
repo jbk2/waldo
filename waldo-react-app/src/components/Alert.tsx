@@ -2,8 +2,8 @@ import { useState, useEffect, useContext } from "react"
 import { UIContext } from "../contexts/UIContext"
 
 export default function Alert() {
-  const [visible, setVisible] = useState(false)
-  const [message, setMessage] = useState(null)
+  const [visible, setVisible] = useState<boolean>(false)
+  const [message, setMessage] = useState<string | null>(null)
   const { alert } = useContext(UIContext);
 
   useEffect(() => {
