@@ -11,7 +11,8 @@
     "allowJs": true,
     "resolveJsonModule": true,
     "types": ["vite/client", "vitest/globals"],
-    "skipLibCheck": true
+    "skipLibCheck": true,
   },
-  "include": ["src"]
+  "include": ["src"],
+  "exclude": ["node_modules", "dist"]
 }
