@@ -2,10 +2,11 @@ import { useLocation, useRouteError, isRouteErrorResponse, Link } from 'react-ro
 
 export default function Error() {
   const { pathname, search } = useLocation();
-  const error = useRouteError();
+  const error = useRouteError() as any;
+ 
   const details = isRouteErrorResponse(error)
     ? `${error.status} ${error.statusText}`
-    : (error?.message ?? 'Unknown error');
+    : error?.message || 'Unknown error';
 
   return (
     <div className="flex flex-col justify-center items-center mt-[20vh]">
