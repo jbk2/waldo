@@ -8,18 +8,19 @@ import reactLogo from '../assets/images/logos/react-logo.svg';
 import reactRouterLogo from '../assets/images/logos/react-router-logo.svg';
 
 export default function Welcome({setViewedWelcome}) {
-
   
   return(
     <div className='mt-[4vh] md:mt-[7vh] xl:mt-[9vh] mx-4 text-[var(--color-text-secondary)]'>
       <div id="intro-text" className='max-w-130 lg:max-w-230 mx-auto'>
-        <p className="inline text-md">A toy Where's Waldo app, built by</p>
-        <a href="https://github.com/jbk2/fakebook/blob/main/README.md" className="inline link link-primary">&nbsp;James Kemp</a>
+        <p className="inline text-md">A little Where's Waldo app, built by</p>
+        <a href="https://github.com/jbk2" className="inline link link-primary">&nbsp;James Kemp</a>
         <p className='inline'>, to demonstrate use of the following libraries, technologies & techniques:&nbsp;</p>
         <div className='flex gap-2 xl:gap-4 justify-left mt-2'>
-          <a href="https://github.com/jbk2/fakebook/blob/main/README.md" className="inline link link-primary">Code repo</a>
+          <a href="https://github.com/jbk2/waldo" className="inline link link-primary">Code repo</a>
           <p>|</p>
-          <a href="https://github.com/jbk2/fakebook/blob/main/README.md" className="inline link link-primary">Detailed readme</a>
+          <a href="https://github.com/jbk2/waldo/blob/main/waldo-react-app/README.md" className="inline link link-primary">React readme</a>
+          <p>|</p>
+          <a href="https://github.com/jbk2/waldo/blob/main/waldo-rails-app/README.md" className="inline link link-primary">Rails readme</a>
         </div>
       </div>
       <div className='flex flex-col lg:flex-row justify-center items-center lg:items-start gap-7 lg:gap-10 mx-4 mt-5 lg:mt-10'>

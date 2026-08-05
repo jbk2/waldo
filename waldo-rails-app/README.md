@@ -1,5 +1,6 @@
 # README
-# The Odin Project - React Course, [project 4](https://www.theodinproject.com/lessons/react-new-where-s-waldo-a-photo-tagging-app#project-solution): Where's Waldo?
+
+# Where's Waldo? - Rails API App
 
 ## Environment:
 - Ruby 3.3.0

@@ -1,4 +1,6 @@
-# The Odin Project - React Course, [project 4](https://www.theodinproject.com/lessons/react-new-where-s-waldo-a-photo-tagging-app#project-solution): Where's Waldo?
+# README
+
+# Where's Waldo? - React App
 
 ## General description
 A frontend React app "Where's Waldo" game, which features:
