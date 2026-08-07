@@ -76,7 +76,7 @@ Rails server thus run `setup.integration.js` which checks server is running.
     `RAILS_ENV=test bin/rails server -p 3001 --log-to-stdout` before integration tests
     can be successfully run.
   - note /src/tests/setup.js which has a beforeAll call to ensureServerReady()
-      in /src/tests/utils/serverHealthCheck.js, which provides output on Rails test server status.
+      in /src/tests/testUtils/railsServerHealthCheck.js, which provides output on Rails test server status.
   - the integration tests have the /src/tests/utils/testDatabase.js module defining fetch calls to
     Rails server endpoints providing and managing fixture data. Rails has a TestController managing
     those endpoints at /app/controllers/api/test_controller.rb.
